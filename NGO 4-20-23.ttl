@@ -18,7 +18,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix keyword: <http://franz.com/ns/keyword#> .
-@base <http://www.semanticweb.org/mdebe/ontologies/NGO> .
+@base <http://www.semanticweb.org/mdebe/ontologies/NGO#> .
 
 <http://www.semanticweb.org/mdebe/ontologies/NGO> rdf:type owl:Ontology ;
                                                    dc:creator <https://orcid.org/0000-0002-8824-9577> ;
@@ -513,14 +513,12 @@ ns1:indicatorIdentifier rdf:type owl:DatatypeProperty ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#aadhaarNo
 ns2:aadhaarNo rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:beneficieryProperty ;
-              rdfs:comment "Aadhaar card number of the beneficiary" ;
               rdfs:label "aadhaar No" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#achievements
 ns2:achievements rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:projectProperty ;
-                 rdfs:comment "Achievements of the project" ;
                  rdfs:label "achievements" .
 
 
@@ -528,7 +526,6 @@ ns2:achievements rdf:type owl:DatatypeProperty ;
 ns2:activeStatus rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
                  rdfs:domain ns2:Organization ;
-                 rdfs:comment "Status of the NGO (e.g. active, inactive)" ;
                  rdfs:label "active Status" .
 
 
@@ -538,7 +535,6 @@ ns2:age rdf:type owl:DatatypeProperty ;
         rdf:type owl:FunctionalProperty ;
         rdfs:domain ns2:Person ;
         rdfs:range xsd:integer ;
-        rdfs:comment "Age of the beneficiary" ;
         rdfs:label "age" .
 
 
@@ -551,49 +547,42 @@ ns2:altitude rdf:type owl:DatatypeProperty ;
 ns2:areasOfOperation rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
                      rdfs:domain ns2:Organization ;
-                     rdfs:comment "Areas of operation of the NGO" ;
                      rdfs:label "areas Of Operation" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#assistantSecretaryEmail
 ns2:assistantSecretaryEmail rdf:type owl:DatatypeProperty ;
                             rdfs:subPropertyOf ns2:ngoContactPropery ;
-                            rdfs:comment "Email address of the assistant secretary of the NGO board" ;
                             rdfs:label "assistant Secretary Email" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#assistantSecretaryMobile
 ns2:assistantSecretaryMobile rdf:type owl:DatatypeProperty ;
                              rdfs:subPropertyOf ns2:ngoContactPropery ;
-                             rdfs:comment "Phone number of the assistant secretary of the NGO board" ;
                              rdfs:label "assistant Secretary Mobile" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#assistantSecretaryName
 ns2:assistantSecretaryName rdf:type owl:DatatypeProperty ;
                            rdfs:subPropertyOf ns2:ngoContactPropery ;
-                           rdfs:comment "Name of the assistant secretary of the NGO board" ;
                            rdfs:label "assistant Secretary Name" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#audioCodec
 ns2:audioCodec rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:videoProperty ;
-               rdfs:comment "Codec used to encode the audio in the video" ;
                rdfs:label "audio Codec" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#audioId
 ns2:audioId rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:audioProperty ;
-            rdfs:comment "Unique identifier for the audio file." ;
             rdfs:label "audio Id" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#audioName
 ns2:audioName rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:audioProperty ;
-              rdfs:comment "Name of the audio file." ;
               rdfs:label "audio Name" .
 
 
@@ -607,14 +596,12 @@ ns2:audioProperty rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#audioSize
 ns2:audioSize rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:audioProperty ;
-              rdfs:comment "Size of the audio file in bytes." ;
               rdfs:label "audio Size" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#auditReport
 ns2:auditReport rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoFinanceProperty ;
-                rdfs:comment "Audit report of the financial activities of the NGO" ;
                 rdfs:label "audit Report" .
 
 
@@ -623,7 +610,6 @@ ns2:avgMonthlyExpenditure rdf:type owl:DatatypeProperty ;
                           rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                           rdf:type owl:FunctionalProperty ;
                           rdfs:domain ns2:NGOFinance ;
-                          rdfs:comment "Average monthly expenditure of the NGO in the fiscal year" ;
                           rdfs:label "has Average Monthly Expenditure" .
 
 
@@ -631,28 +617,24 @@ ns2:avgMonthlyExpenditure rdf:type owl:DatatypeProperty ;
 ns2:avgMonthlyOverhead rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                        rdfs:range xsd:decimal ;
-                       rdfs:comment "Average monthly overhead cost of the NGO in the fiscal year" ;
                        rdfs:label "avg Monthly Overhead" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#beneficiaryGroup
 ns2:beneficiaryGroup rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:projectProperty ;
-                     rdfs:comment "Group of people who are beneficiaries of the project" ;
                      rdfs:label "beneficiary Group" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#beneficiaryId
 ns2:beneficiaryId rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:beneficieryProperty ;
-                  rdfs:comment "Unique identifier for the beneficiary" ;
                   rdfs:label "beneficiary Id" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#beneficiaryLocation
 ns2:beneficiaryLocation rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf ns2:beneficieryProperty ;
-                        rdfs:comment "Location of the beneficiary" ;
                         rdfs:label "beneficiary Location" .
 
 
@@ -672,7 +654,6 @@ ns2:bitrate rdf:type owl:DatatypeProperty ;
 ns2:block rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf ns2:geographyProperty ;
           rdfs:domain ns2:Place ;
-          rdfs:comment "Name of the block" ;
           rdfs:label "block" .
 
 
@@ -680,7 +661,6 @@ ns2:block rdf:type owl:DatatypeProperty ;
 ns2:budget rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:projectProperty ;
            rdfs:range xsd:decimal ;
-           rdfs:comment "Total budget for the project" ;
            rdfs:label "budget" .
 
 
@@ -688,7 +668,6 @@ ns2:budget rdf:type owl:DatatypeProperty ;
 ns2:budgetAllocation rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:projectProperty ;
                      rdfs:range xsd:decimal ;
-                     rdfs:comment "Amount allocated from the budget for the project" ;
                      rdfs:label "budget Allocation" .
 
 
@@ -696,28 +675,24 @@ ns2:budgetAllocation rdf:type owl:DatatypeProperty ;
 ns2:budgetUtilization rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:projectProperty ;
                       rdfs:range xsd:decimal ;
-                      rdfs:comment "Amount utilized from the budget for the project" ;
                       rdfs:label "budget Utilization" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#cameraManufacturer
 ns2:cameraManufacturer rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:imageProperty ;
-                       rdfs:comment "Manufacturer of the camera used to take the image." ;
                        rdfs:label "camera Manufacturer" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#cameraModel
 ns2:cameraModel rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:imageProperty ;
-                rdfs:comment "Model of the camera used to take the image." ;
                 rdfs:label "camera Model" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#chairmanEmail
 ns2:chairmanEmail rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:ngoContactPropery ;
-                  rdfs:comment "Email address of the chairman of the NGO board" ;
                   rdfs:label "chairman Email" .
 
 
@@ -725,7 +700,6 @@ ns2:chairmanEmail rdf:type owl:DatatypeProperty ;
 ns2:chairmanMobile rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf ns2:ngoContactPropery ;
                    rdfs:domain ns2:Agent ;
-                   rdfs:comment "Phone number of the chairman of the NGO board" ;
                    rdfs:label "mobile" .
 
 
@@ -733,8 +707,7 @@ ns2:chairmanMobile rdf:type owl:DatatypeProperty ;
 ns2:chairmanName rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoContactPropery ;
                  rdfs:domain ns2:Agent ;
-                 rdfs:comment "Name of the chairman of the NGO board" ,
-                              "This will go away as we make them objects but leaving it for now due to existing data" ;
+                 rdfs:comment "This will go away as we make them objects but leaving it for now due to existing data" ;
                  rdfs:label "chairman" .
 
 
@@ -742,7 +715,6 @@ ns2:chairmanName rdf:type owl:DatatypeProperty ;
 ns2:channels rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:audioProperty ;
              rdfs:range xsd:integer ;
-             rdfs:comment "Number of audio channels in the file." ;
              rdfs:label "channels" .
 
 
@@ -757,8 +729,7 @@ ns2:chiefFunctionary rdf:type owl:DatatypeProperty ;
 ns2:city rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf ns2:geographyProperty ;
          rdfs:domain ns2:Place ;
-         rdfs:comment "Name of the city" ,
-                      "This will go away as we make them objects but leaving it for now due to existing data" ;
+         rdfs:comment "This will go away as we make them objects but leaving it for now due to existing data" ;
          rdfs:label "city" .
 
 
@@ -772,7 +743,6 @@ ns2:cityOfRegistration rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#codec
 ns2:codec rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf ns2:audioProperty ;
-          rdfs:comment "Number of audio channels in the file." ;
           rdfs:label "codec" .
 
 
@@ -780,7 +750,6 @@ ns2:codec rdf:type owl:DatatypeProperty ;
 ns2:colorDepth rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:imageProperty ;
                rdfs:range xsd:integer ;
-               rdfs:comment "Number of bits per pixel (e.g. 24)." ;
                rdfs:label "color Depth" .
 
 
@@ -788,7 +757,6 @@ ns2:colorDepth rdf:type owl:DatatypeProperty ;
 ns2:consultantExpenses rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                        rdfs:range xsd:decimal ;
-                       rdfs:comment "Expenses incurred on consultants by the NGO" ;
                        rdfs:label "consultant Expenses" .
 
 
@@ -796,7 +764,6 @@ ns2:consultantExpenses rdf:type owl:DatatypeProperty ;
 ns2:consultants rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                 rdfs:range xsd:integer ;
-                rdfs:comment "Number of consultants hired by the NGO" ;
                 rdfs:label "consultants" .
 
 
@@ -804,7 +771,6 @@ ns2:consultants rdf:type owl:DatatypeProperty ;
 ns2:country rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:geographyProperty ;
             rdfs:domain ns2:Place ;
-            rdfs:comment "Name of the country" ;
             rdfs:label "country" .
 
 
@@ -831,7 +797,6 @@ ns2:description rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#disability
 ns2:disability rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:beneficieryProperty ;
-               rdfs:comment "Disability status of the beneficiary" ;
                rdfs:label "disability" .
 
 
@@ -839,14 +804,12 @@ ns2:disability rdf:type owl:DatatypeProperty ;
 ns2:district rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:geographyProperty ;
              rdfs:domain ns2:Place ;
-             rdfs:comment "Name of the district" ;
              rdfs:label "district" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#documentsLink
 ns2:documentsLink rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:projectProperty ;
-                  rdfs:comment "Link to documents related to the project" ;
                   rdfs:label "documents Link" .
 
 
@@ -859,21 +822,18 @@ ns2:duration rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#economicStatus
 ns2:economicStatus rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf ns2:beneficieryProperty ;
-                   rdfs:comment "Economic status of the beneficiary" ;
                    rdfs:label "economic Status" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#educationLevel
 ns2:educationLevel rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf ns2:beneficieryProperty ;
-                   rdfs:comment "Education level of the beneficiary" ;
                    rdfs:label "education Level" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#email
 ns2:email rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf ns2:beneficieryProperty ;
-          rdfs:comment "Email address of the beneficiary" ;
           rdfs:label "email" .
 
 
@@ -881,7 +841,6 @@ ns2:email rdf:type owl:DatatypeProperty ;
 ns2:employmentExpenses rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                        rdfs:range xsd:decimal ;
-                       rdfs:comment "Expenses incurred on the employment of staff by the NGO" ;
                        rdfs:label "employment Expenses" .
 
 
@@ -890,7 +849,6 @@ ns2:endDate rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:projectProperty ;
             rdfs:domain ns2:Event ;
             rdfs:range xsd:dateTime ;
-            rdfs:comment "Date when the project ended" ;
             rdfs:label "end Date" .
 
 
@@ -903,7 +861,6 @@ ns2:environmentalVision rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#executiveDirector
 ns2:executiveDirector rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoContactPropery ;
-                      rdfs:comment "Name of the executive director of the NGO" ;
                       rdfs:label "executive Director" .
 
 
@@ -911,7 +868,6 @@ ns2:executiveDirector rdf:type owl:DatatypeProperty ;
 ns2:externalFundingReceived rdf:type owl:DatatypeProperty ;
                             rdfs:subPropertyOf ns2:projectProperty ;
                             rdfs:range xsd:decimal ;
-                            rdfs:comment "Amount of external funding received for the project" ;
                             rdfs:label "external Funding Received" .
 
 
@@ -919,7 +875,6 @@ ns2:externalFundingReceived rdf:type owl:DatatypeProperty ;
 ns2:fCRAExpiration rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                    rdfs:domain ns2:NGORegistration ;
-                   rdfs:comment "Expiration date of FCRA registration of the NGO" ;
                    rdfs:label "f C R A Expiration" .
 
 
@@ -927,7 +882,6 @@ ns2:fCRAExpiration rdf:type owl:DatatypeProperty ;
 ns2:fCRANo rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
            rdfs:domain ns2:NGORegistration ;
-           rdfs:comment "FCRA registration number of the NGO" ;
            rdfs:label "f C R A No" .
 
 
@@ -936,7 +890,6 @@ ns2:fCRARegdate rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                 rdfs:domain ns2:NGORegistration ;
                 rdfs:range xsd:dateTime ;
-                rdfs:comment "Date of FCRA registration of the NGO" ;
                 rdfs:label "f C R A Regdate" .
 
 
@@ -944,7 +897,6 @@ ns2:fCRARegdate rdf:type owl:DatatypeProperty ;
 ns2:fCRAStatus rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                rdfs:domain ns2:NGORegistration ;
-               rdfs:comment "Status of FCRA registration of the NGO" ;
                rdfs:label "f C R A Status" .
 
 
@@ -952,7 +904,6 @@ ns2:fCRAStatus rdf:type owl:DatatypeProperty ;
 ns2:fCRAUpload rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                rdfs:domain ns2:NGORegistration ;
-               rdfs:comment "File link to FCRA registration upload" ;
                rdfs:label "f C R A Upload" .
 
 
@@ -961,7 +912,6 @@ ns2:facebook rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:ngoContactPropery ;
              rdfs:domain ns2:Agent ;
              rdfs:range xsd:anyURI ;
-             rdfs:comment "Facebook page of the NGO organization" ;
              rdfs:label "facebook" .
 
 
@@ -969,7 +919,6 @@ ns2:facebook rdf:type owl:DatatypeProperty ;
 ns2:familySize rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:beneficieryProperty ;
                rdfs:range xsd:integer ;
-               rdfs:comment "Number of people in beneficiary's family" ;
                rdfs:label "family Size" .
 
 
@@ -983,7 +932,6 @@ ns2:fax rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#fieldOffices
 ns2:fieldOffices rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoContactPropery ;
-                 rdfs:comment "List of field offices of the NGO" ;
                  rdfs:label "field Offices" .
 
 
@@ -991,7 +939,6 @@ ns2:fieldOffices rdf:type owl:DatatypeProperty ;
 ns2:fileLink rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:mediaProperty ,
                                 ns2:videoProperty ;
-             rdfs:comment "Link to the video file" ;
              rdfs:label "file Link" .
 
 
@@ -1005,7 +952,6 @@ ns2:firstName rdf:type owl:DatatypeProperty ;
 ns2:fiscalYear rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                rdfs:range xsd:integer ;
-               rdfs:comment "Fiscal year of the financial report" ;
                rdfs:label "fiscal Year" .
 
 
@@ -1019,7 +965,6 @@ ns2:format rdf:type owl:DatatypeProperty ;
 ns2:frameRate rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:videoProperty ;
               rdfs:range xsd:decimal ;
-              rdfs:comment "Number of frames per second" ;
               rdfs:label "frame Rate" .
 
 
@@ -1027,7 +972,6 @@ ns2:frameRate rdf:type owl:DatatypeProperty ;
 ns2:fulltimeEmployees rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                       rdfs:range xsd:integer ;
-                      rdfs:comment "Number of full-time employees in the NGO" ;
                       rdfs:label "fulltime Employees" .
 
 
@@ -1035,7 +979,6 @@ ns2:fulltimeEmployees rdf:type owl:DatatypeProperty ;
 ns2:fulltimeVolunteers rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                        rdfs:range xsd:integer ;
-                       rdfs:comment "Number of full-time volunteers in the NGO" ;
                        rdfs:label "fulltime Volunteers" .
 
 
@@ -1043,14 +986,12 @@ ns2:fulltimeVolunteers rdf:type owl:DatatypeProperty ;
 ns2:fundraisingExpenses rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                         rdfs:range xsd:decimal ;
-                        rdfs:comment "Expenses incurred on fundraising activities by the NGO" ;
                         rdfs:label "fundraising Expenses" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#gender
 ns2:gender rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:beneficieryProperty ;
-           rdfs:comment "Gender of the beneficiary" ;
            rdfs:label "gender" .
 
 
@@ -1058,7 +999,6 @@ ns2:gender rdf:type owl:DatatypeProperty ;
 ns2:geoCode rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:geographyProperty ;
             rdfs:domain ns2:Place ;
-            rdfs:comment "Geocode of the address" ;
             rdfs:label "geo Code" .
 
 
@@ -1071,28 +1011,24 @@ ns2:geographyProperty rdf:type owl:DatatypeProperty ;
 ns2:gst rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
         rdfs:domain ns2:NGORegistration ;
-        rdfs:comment "Goods and Services Tax (GST) number of the NGO" ;
         rdfs:label "gst" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#healthStatus
 ns2:healthStatus rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:beneficieryProperty ;
-                 rdfs:comment "Health status of the beneficiary" ;
                  rdfs:label "health Status" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#imageId
 ns2:imageId rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:imageProperty ;
-            rdfs:comment "Unique identifier for the image." ;
             rdfs:label "image Id" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#imageName
 ns2:imageName rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:imageProperty ;
-              rdfs:comment "Name of the image." ;
               rdfs:label "image Name" .
 
 
@@ -1107,14 +1043,12 @@ ns2:imageProperty rdf:type owl:DatatypeProperty ;
 ns2:imageSize rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:imageProperty ;
               rdfs:range xsd:integer ;
-              rdfs:comment "Size of the image file in bytes." ;
               rdfs:label "image Size" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#impact
 ns2:impact rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:projectProperty ;
-           rdfs:comment "The impact of the project" ;
            rdfs:label "impact" .
 
 
@@ -1122,7 +1056,6 @@ ns2:impact rdf:type owl:DatatypeProperty ;
 ns2:income rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:beneficieryProperty ;
            rdfs:range xsd:decimal ;
-           rdfs:comment "Income of the beneficiary" ;
            rdfs:label "income" .
 
 
@@ -1131,7 +1064,6 @@ ns2:instagram rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:ngoContactPropery ;
               rdfs:domain ns2:Agent ;
               rdfs:range xsd:anyURI ;
-              rdfs:comment "Instagram handle of the NGO organization" ;
               rdfs:label "instagram" .
 
 
@@ -1162,7 +1094,6 @@ ns2:latitude rdf:type owl:DatatypeProperty ;
 ns2:legalStatus rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
                 rdfs:domain ns2:Organization ;
-                rdfs:comment "Legal status of the NGO (e.g. registered, unregistered)" ;
                 rdfs:label "legal Status" .
 
 
@@ -1170,14 +1101,12 @@ ns2:legalStatus rdf:type owl:DatatypeProperty ;
 ns2:logo rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
          rdfs:domain ns2:Organization ;
-         rdfs:comment "URL or path to the NGO's logo" ;
          rdfs:label "logo" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#longTermLoan
 ns2:longTermLoan rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoFinanceProperty ;
-                 rdfs:comment "Long term loan taken by the NGO in the fiscal year" ;
                  rdfs:label "long Term Loan" .
 
 
@@ -1190,7 +1119,6 @@ ns2:longitude rdf:type owl:DatatypeProperty ;
 ns2:mailingAddress rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf ns2:ngoContactPropery ;
                    rdfs:domain ns2:Agent ;
-                   rdfs:comment "Mailing address of the NGO" ;
                    rdfs:label "mailing Address" .
 
 
@@ -1204,21 +1132,18 @@ ns2:majorActivitiesAndAchievements rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#majorFunders
 ns2:majorFunders rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoFinanceProperty ;
-                 rdfs:comment "Major funders of the NGO in the fiscal year" ;
                  rdfs:label "major Funders" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#manager
 ns2:manager rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:projectProperty ;
-            rdfs:comment "Person in charge of managing the project" ;
             rdfs:label "manager" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#maritalStatus
 ns2:maritalStatus rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:beneficieryProperty ;
-                  rdfs:comment "Marital status of the beneficiary" ;
                   rdfs:label "marital Status" .
 
 
@@ -1232,7 +1157,6 @@ ns2:maximumAnualBudget rdf:type owl:DatatypeProperty ;
 ns2:mediaLink rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:beneficieryProperty ,
                                  ns2:projectProperty ;
-              rdfs:comment "Link to media related to the project" ;
               rdfs:label "media Link" .
 
 
@@ -1252,7 +1176,6 @@ ns2:minimumAnualBudget rdf:type owl:DatatypeProperty ;
 ns2:missionStatement rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
                      rdfs:domain ns2:Organization ;
-                     rdfs:comment "Statement describing the NGO's mission" ;
                      rdfs:label "mission Statement" .
 
 
@@ -1267,7 +1190,6 @@ ns2:modificationDate rdf:type owl:DatatypeProperty ;
 ns2:municipality rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:geographyProperty ;
                  rdfs:domain ns2:Place ;
-                 rdfs:comment "Name of the municipality" ;
                  rdfs:label "municipality" .
 
 
@@ -1275,14 +1197,12 @@ ns2:municipality rdf:type owl:DatatypeProperty ;
 ns2:natureListed rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                  rdfs:domain ns2:NGORegistration ;
-                 rdfs:comment "Nature of the NGO listed under the FCRA" ;
                  rdfs:label "nature Listed" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#natureOfIntervention
 ns2:natureOfIntervention rdf:type owl:DatatypeProperty ;
                          rdfs:subPropertyOf ns2:projectProperty ;
-                         rdfs:comment "Type of intervention" ;
                          rdfs:label "nature Of Intervention" .
 
 
@@ -1295,7 +1215,6 @@ ns2:ngoBackgroundProperty rdf:type owl:DatatypeProperty ;
 ns2:ngoBudgetAllocation rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                         rdfs:range xsd:decimal ;
-                        rdfs:comment "Budget allocation of the NGO in the fiscal year. Renamed this to ngoBudgetAllocation to differentiate between this and the column in the Project table." ;
                         rdfs:label "ngo Budget Allocation" .
 
 
@@ -1303,14 +1222,11 @@ ns2:ngoBudgetAllocation rdf:type owl:DatatypeProperty ;
 ns2:ngoBudgetUtilization rdf:type owl:DatatypeProperty ;
                          rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                          rdfs:range xsd:decimal ;
-                         rdfs:comment """Budget utilization of the NGO in the fiscal year
-Renamed this to ngoBudgetUtilization to differentiate between this and the column in the Project table.""" ;
                          rdfs:label "ngo Budget Utilization" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#ngoContactPropery
 ns2:ngoContactPropery rdf:type owl:DatatypeProperty ;
-                      rdfs:subPropertyOf ns2:facebook ;
                       rdfs:domain ns2:Agent ;
                       rdfs:label "ngo Contact Propery" .
 
@@ -1331,8 +1247,7 @@ ns2:ngoID rdf:type owl:DatatypeProperty ;
 ns2:ngoName rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:ngoContactPropery ;
             rdfs:domain ns2:NGO ;
-            rdfs:comment "Name of the NGO" ,
-                         "Use this for NGO FTI" ;
+            rdfs:comment "Use this for NGO FTI" ;
             rdfs:label "name" .
 
 
@@ -1344,7 +1259,6 @@ ns2:ngoRegistrationProperty rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#ngoType
 ns2:ngoType rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
-            rdfs:comment "Type of NGO (e.g., non-profit, charity, foundation)" ;
             rdfs:label "type Of N G O" .
 
 
@@ -1352,7 +1266,6 @@ ns2:ngoType rdf:type owl:DatatypeProperty ;
 ns2:noOfBeneficiaries rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:projectProperty ;
                       rdfs:range xsd:integer ;
-                      rdfs:comment "Number of beneficiaries of the project" ;
                       rdfs:label "no Of Beneficiaries" .
 
 
@@ -1364,7 +1277,6 @@ ns2:notes rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#objective
 ns2:objective rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:projectProperty ;
-              rdfs:comment "Objective of the project" ;
               rdfs:label "objective" .
 
 
@@ -1372,7 +1284,6 @@ ns2:objective rdf:type owl:DatatypeProperty ;
 ns2:objectives rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
                rdfs:domain ns2:Organization ;
-               rdfs:comment "Statement describing the NGO's objectives" ;
                rdfs:label "objectives" .
 
 
@@ -1380,14 +1291,12 @@ ns2:objectives rdf:type owl:DatatypeProperty ;
 ns2:occupancyExpenses rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                       rdfs:range xsd:decimal ;
-                      rdfs:comment "Expenses incurred on occupancy by the NGO" ;
                       rdfs:label "occupancy Expenses" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#occupation
 ns2:occupation rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:beneficieryProperty ;
-               rdfs:comment "Occupation of the beneficiary" ;
                rdfs:label "occupation" .
 
 
@@ -1396,7 +1305,6 @@ ns2:officePhone rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoContactPropery ;
                 rdfs:domain ns2:Agent ;
                 rdfs:range xsd:string ;
-                rdfs:comment "Phone number of the NGO office" ;
                 rdfs:label "office Phone" .
 
 
@@ -1404,7 +1312,6 @@ ns2:officePhone rdf:type owl:DatatypeProperty ;
 ns2:orgEmail rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:ngoContactPropery ;
              rdfs:domain ns2:Agent ;
-             rdfs:comment "Email address of the NGO organization" ;
              rdfs:label "email" .
 
 
@@ -1412,7 +1319,6 @@ ns2:orgEmail rdf:type owl:DatatypeProperty ;
 ns2:orgType rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:ngoContactPropery ;
             rdfs:domain ns2:Agent ;
-            rdfs:comment "Type of NGO (e.g., non-profit, charity, etc.)" ;
             rdfs:label "org Type" .
 
 
@@ -1420,8 +1326,7 @@ ns2:orgType rdf:type owl:DatatypeProperty ;
 ns2:orgWebsite rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoContactPropery ;
                rdfs:domain ns2:Agent ;
-               rdfs:comment "Note: Range for this should be xsd:AnyIRI. However, the current values are strings so that causes a type error. I will fix. MD" ,
-                            "Website of the NGO organization" ;
+               rdfs:comment "Note: Range for this should be xsd:AnyIRI. However, the current values are strings so that causes a type error. I will fix. MD" ;
                rdfs:label "website" .
 
 
@@ -1438,7 +1343,6 @@ ns2:otherSocials rdf:type owl:DatatypeProperty ;
 ns2:pan rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
         rdfs:domain ns2:NGORegistration ;
-        rdfs:comment "Permanent account number of the NGO" ;
         rdfs:label "pan" .
 
 
@@ -1446,7 +1350,6 @@ ns2:pan rdf:type owl:DatatypeProperty ;
 ns2:parttimeEmployees rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                       rdfs:range xsd:integer ;
-                      rdfs:comment "Number of part-time employees in the NGO" ;
                       rdfs:label "parttime Employees" .
 
 
@@ -1454,7 +1357,6 @@ ns2:parttimeEmployees rdf:type owl:DatatypeProperty ;
 ns2:parttimeVolunteers rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                        rdfs:range xsd:integer ;
-                       rdfs:comment "Number of part-time volunteers in the NGO" ;
                        rdfs:label "parttime Volunteers" .
 
 
@@ -1469,7 +1371,6 @@ ns2:percentageOfSDGAchieved rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#phone
 ns2:phone rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf ns2:beneficieryProperty ;
-          rdfs:comment "Phone number of the beneficiary" ;
           rdfs:label "phone" .
 
 
@@ -1477,7 +1378,6 @@ ns2:phone rdf:type owl:DatatypeProperty ;
 ns2:physicalAddress rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf ns2:ngoContactPropery ;
                     rdfs:domain ns2:Agent ;
-                    rdfs:comment "Physical address of the NGO" ;
                     rdfs:label "physical Address" .
 
 
@@ -1485,7 +1385,6 @@ ns2:physicalAddress rdf:type owl:DatatypeProperty ;
 ns2:pin rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ns2:geographyProperty ;
         rdfs:domain ns2:Place ;
-        rdfs:comment "Postal Index Number or ZIP code" ;
         rdfs:label "pin" .
 
 
@@ -1493,7 +1392,6 @@ ns2:pin rdf:type owl:DatatypeProperty ;
 ns2:primaryPoc rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoContactPropery ;
                rdfs:domain ns2:Agent ;
-               rdfs:comment "Name of the primary point of contact for the NGO" ;
                rdfs:label "primary Poc" .
 
 
@@ -1501,7 +1399,6 @@ ns2:primaryPoc rdf:type owl:DatatypeProperty ;
 ns2:primaryPocPhone rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf ns2:ngoContactPropery ;
                     rdfs:domain ns2:Agent ;
-                    rdfs:comment "Phone number of the primary point of contact for the NGO" ;
                     rdfs:label "primary Poc Phone" .
 
 
@@ -1514,14 +1411,12 @@ ns2:projectID rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#projectId
 ns2:projectId rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:projectProperty ;
-              rdfs:comment "Unique identifier for a project" ;
               rdfs:label "project Id" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#projectLocation
 ns2:projectLocation rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf ns2:projectProperty ;
-                    rdfs:comment "Location of the project" ;
                     rdfs:label "project Location" .
 
 
@@ -1534,7 +1429,6 @@ ns2:projectNGOId rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#projectName
 ns2:projectName rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:projectProperty ;
-                rdfs:comment "Name of the project" ;
                 rdfs:label "project Name" .
 
 
@@ -1548,29 +1442,25 @@ ns2:projectProperty rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#projectSector
 ns2:projectSector rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:projectProperty ;
-                  rdfs:comment "Sector where the project belongs" ;
                   rdfs:label "project Sector" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#projectType
 ns2:projectType rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:projectProperty ;
-                rdfs:comment "Type of project" ;
                 rdfs:label "project Type" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#rationCard
 ns2:rationCard rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:beneficieryProperty ;
-               rdfs:comment "Ration card number of the beneficiary" ;
                rdfs:label "ration Card" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#regDate
 ns2:regDate rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
-            rdfs:comment "Date of registration of the NGO" ,
-                         "In the future need to convert these to xsd:dateTime" ;
+            rdfs:comment "In the future need to convert these to xsd:dateTime" ;
             rdfs:label "date Of Registration" .
 
 
@@ -1578,7 +1468,6 @@ ns2:regDate rdf:type owl:DatatypeProperty ;
 ns2:regNo rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
           rdfs:domain ns2:NGORegistration ;
-          rdfs:comment "Registration number of the NGO" ;
           rdfs:label "reg No" .
 
 
@@ -1592,7 +1481,6 @@ ns2:registeredWith rdf:type owl:DatatypeProperty ;
 ns2:registrar rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
               rdfs:domain ns2:NGORegistration ;
-              rdfs:comment "Name of the registrar who registered the NGO" ;
               rdfs:label "registrar" .
 
 
@@ -1605,14 +1493,12 @@ ns2:registrationNumber rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#religion
 ns2:religion rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:beneficieryProperty ;
-             rdfs:comment "Religion of the beneficiary" ;
              rdfs:label "religion" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#reportLink
 ns2:reportLink rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:projectProperty ;
-               rdfs:comment "Link to the project report" ;
                rdfs:label "report Link" .
 
 
@@ -1626,7 +1512,6 @@ ns2:requiresHelpWith rdf:type owl:DatatypeProperty ;
 ns2:resolution rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:imageProperty ,
                                   ns2:videoProperty ;
-               rdfs:isDefinedBy "Resolution of the image (e.g. 1920x1080). Width and height of the video in pixels" ;
                rdfs:label "resolution" .
 
 
@@ -1634,21 +1519,18 @@ ns2:resolution rdf:type owl:DatatypeProperty ;
 ns2:sampleRate rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:audioProperty ;
                rdfs:range xsd:integer ;
-               rdfs:comment "Sample rate of the audio file in Hz." ;
                rdfs:label "sample Rate" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#scheduleVii
 ns2:scheduleVii rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:projectProperty ;
-                rdfs:comment "Schedule VII of the Indian Companies Act" ;
                 rdfs:label "schedule Vii" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#sdgIndicator
 ns2:sdgIndicator rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:projectProperty ;
-                 rdfs:comment "Sustainable Development Goals indicator" ;
                  rdfs:label "sdg Indicator" .
 
 
@@ -1656,7 +1538,6 @@ ns2:sdgIndicator rdf:type owl:DatatypeProperty ;
 ns2:secondaryPoc rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf ns2:ngoContactPropery ;
                  rdfs:domain ns2:Agent ;
-                 rdfs:comment "Name of the secondary point of contact for the NGO" ;
                  rdfs:label "secondary Poc" .
 
 
@@ -1664,21 +1545,18 @@ ns2:secondaryPoc rdf:type owl:DatatypeProperty ;
 ns2:secondaryPocPhone rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoContactPropery ;
                       rdfs:domain ns2:Agent ;
-                      rdfs:comment "Phone number of the secondary point of contact for the NGO" ;
                       rdfs:label "secondary Poc Phone" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#secretaryEmail
 ns2:secretaryEmail rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf ns2:ngoContactPropery ;
-                   rdfs:comment "Email address of the secretary of the NGO board" ;
                    rdfs:label "secretary Email" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#secretaryMobile
 ns2:secretaryMobile rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf ns2:ngoContactPropery ;
-                    rdfs:comment "Phone number of the secretary of the NGO board" ;
                     rdfs:label "secretary Mobile" .
 
 
@@ -1686,14 +1564,12 @@ ns2:secretaryMobile rdf:type owl:DatatypeProperty ;
 ns2:secretaryName rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:ngoContactPropery ;
                   rdfs:domain ns2:Agent ;
-                  rdfs:comment "Name of the secretary of the NGO board" ;
                   rdfs:label "secretary" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#sourceOfFunds
 ns2:sourceOfFunds rdf:type owl:DatatypeProperty ;
                   rdfs:subPropertyOf ns2:ngoFinanceProperty ;
-                  rdfs:comment "Source of funds for the NGO in the fiscal year" ;
                   rdfs:label "source Of Funds" .
 
 
@@ -1702,7 +1578,6 @@ ns2:startDate rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:projectProperty ;
               rdfs:domain ns2:Event ;
               rdfs:range xsd:dateTime ;
-              rdfs:comment "Date when the project started" ;
               rdfs:label "start Date" .
 
 
@@ -1710,7 +1585,6 @@ ns2:startDate rdf:type owl:DatatypeProperty ;
 ns2:state rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf ns2:geographyProperty ;
           rdfs:domain ns2:Agent ;
-          rdfs:comment "Name of the state or province" ;
           rdfs:label "state" .
 
 
@@ -1723,7 +1597,6 @@ ns2:stateOfRegistration rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#status
 ns2:status rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:projectProperty ;
-           rdfs:comment "Current status of the project" ;
            rdfs:label "status" .
 
 
@@ -1742,14 +1615,12 @@ ns2:tags rdf:type owl:DatatypeProperty ;
 ns2:tan rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
         rdfs:domain ns2:NGORegistration ;
-        rdfs:comment "Tax account number of the NGO" ;
         rdfs:label "tan" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#technicalSupport
 ns2:technicalSupport rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:ngoContactPropery ;
-                     rdfs:comment "Name of the technical support personnel for the NGO" ;
                      rdfs:label "technical Support" .
 
 
@@ -1758,8 +1629,7 @@ ns2:totalAssets rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                 rdf:type owl:FunctionalProperty ;
                 rdfs:domain ns2:NGOFinance ;
-                rdfs:comment "Datatype should be xsd:decimal but leaving it undefined because of current data" ,
-                             "Total assets owned by the NGO in the fiscal year" ;
+                rdfs:comment "Datatype should be xsd:decimal but leaving it undefined because of current data" ;
                 rdfs:label "total Assets" .
 
 
@@ -1769,8 +1639,7 @@ ns2:totalExpense rdf:type owl:DatatypeProperty ;
                  rdf:type owl:FunctionalProperty ;
                  rdfs:domain ns2:NGOFinance ;
                  rdfs:range xsd:decimal ;
-                 rdfs:comment "This should be usable for queries (all values should be either missing or decimals)" ,
-                              "Total expenses incurred by the NGO in the fiscal year" ;
+                 rdfs:comment "This should be usable for queries (all values should be either missing or decimals)" ;
                  rdfs:label "has Total Expenditure" .
 
 
@@ -1778,8 +1647,7 @@ ns2:totalExpense rdf:type owl:DatatypeProperty ;
 ns2:totalFundingGap rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                     rdfs:domain ns2:NGOFinance ;
-                    rdfs:comment "Datatype should be xsd:decimal. Leaving it undefined due to current data" ,
-                                 "The difference between the total income and total expenses" ;
+                    rdfs:comment "Datatype should be xsd:decimal. Leaving it undefined due to current data" ;
                     rdfs:label "has Total Funding Gap" .
 
 
@@ -1787,7 +1655,6 @@ ns2:totalFundingGap rdf:type owl:DatatypeProperty ;
 ns2:totalGrant rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                rdfs:range xsd:decimal ;
-               rdfs:comment "Total grant received by the NGO in the fiscal year" ;
                rdfs:label "total Grant" .
 
 
@@ -1796,8 +1663,7 @@ ns2:totalIncome rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                 rdf:type owl:FunctionalProperty ;
                 rdfs:range xsd:decimal ;
-                rdfs:comment "This should be usable for queries. All values should be either missing or xsd:decimal" ,
-                             "Total income received by the NGO in the fiscal year" ;
+                rdfs:comment "This should be usable for queries. All values should be either missing or xsd:decimal" ;
                 rdfs:label "has Annual Budget" .
 
 
@@ -1805,7 +1671,6 @@ ns2:totalIncome rdf:type owl:DatatypeProperty ;
 ns2:totalLiabilities rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                      rdfs:range xsd:decimal ;
-                     rdfs:comment "Total liabilities owned by the NGO in the fiscal year" ;
                      rdfs:label "total Liabilities" .
 
 
@@ -1813,7 +1678,6 @@ ns2:totalLiabilities rdf:type owl:DatatypeProperty ;
 ns2:town rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf ns2:geographyProperty ;
          rdfs:domain ns2:Place ;
-         rdfs:comment "Name of the town" ;
          rdfs:label "town" .
 
 
@@ -1828,49 +1692,42 @@ ns2:twitter rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:ngoContactPropery ;
             rdfs:domain ns2:Agent ;
             rdfs:range xsd:anyURI ;
-            rdfs:comment "Twitter handle of the NGO organization" ;
             rdfs:label "twitter" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#viceChairmanEmail
 ns2:viceChairmanEmail rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoContactPropery ;
-                      rdfs:comment "Email address of the vice chairman of the NGO board" ;
                       rdfs:label "vice Chairman Email" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#viceChairmanMobile
 ns2:viceChairmanMobile rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf ns2:ngoContactPropery ;
-                       rdfs:comment "Phone number of the vice chairman of the NGO board" ;
                        rdfs:label "vice Chairman Mobile" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#viceChairmanName
 ns2:viceChairmanName rdf:type owl:DatatypeProperty ;
                      rdfs:subPropertyOf ns2:ngoContactPropery ;
-                     rdfs:comment "Name of the vice chairman of the NGO board" ;
                      rdfs:label "vice Chairman Name" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#videoCodec
 ns2:videoCodec rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf ns2:videoProperty ;
-               rdfs:comment "Codec used to encode the video" ;
                rdfs:label "video Codec" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#videoId
 ns2:videoId rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:videoProperty ;
-            rdfs:comment "Unique identifier for the video" ;
             rdfs:label "video Id" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#videoName
 ns2:videoName rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:videoProperty ;
-              rdfs:comment "Name of the video" ;
               rdfs:label "video Name" .
 
 
@@ -1885,7 +1742,6 @@ ns2:videoProperty rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#videoSize
 ns2:videoSize rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:videoProperty ;
-              rdfs:comment "Size of the video file in bytes" ;
               rdfs:label "video Size" .
 
 
@@ -1893,7 +1749,6 @@ ns2:videoSize rdf:type owl:DatatypeProperty ;
 ns2:village rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:geographyProperty ;
             rdfs:domain ns2:Geography ;
-            rdfs:comment "Name of the village" ;
             rdfs:label "village" .
 
 
@@ -1901,8 +1756,7 @@ ns2:village rdf:type owl:DatatypeProperty ;
 ns2:vision rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
            rdfs:domain ns2:Organization ;
-           rdfs:comment "Statement describing the NGO's vision" ,
-                        "Use this for NGO FTI" ;
+           rdfs:comment "Use this for NGO FTI" ;
            rdfs:label "vision" .
 
 
@@ -1910,7 +1764,6 @@ ns2:vision rdf:type owl:DatatypeProperty ;
 ns2:volunteerExpenses rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf ns2:ngoFinanceProperty ;
                       rdfs:range xsd:decimal ;
-                      rdfs:comment "Expenses incurred on volunteers by the NGO" ;
                       rdfs:label "volunteer Expenses" .
 
 
@@ -1918,21 +1771,18 @@ ns2:volunteerExpenses rdf:type owl:DatatypeProperty ;
 ns2:ward rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf ns2:geographyProperty ;
          rdfs:domain ns2:Geography ;
-         rdfs:comment "Name of the ward" ;
          rdfs:label "ward" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#whatsNext
 ns2:whatsNext rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf ns2:projectProperty ;
-              rdfs:comment "Future plans for the project" ;
               rdfs:label "whats Next" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#whatsapp
 ns2:whatsapp rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ns2:ngoContactPropery ;
-             rdfs:comment "WhatsApp number of the NGO organization" ;
              rdfs:label "whatsapp" .
 
 
@@ -1940,7 +1790,6 @@ ns2:whatsapp rdf:type owl:DatatypeProperty ;
 ns2:yearEstablished rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf ns2:ngoBackgroundProperty ;
                     rdfs:domain ns2:Organization ;
-                    rdfs:comment "Year the NGO was established" ;
                     rdfs:label "year Established" .
 
 
@@ -1949,7 +1798,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf ns2:ngoContactPropery ;
             rdfs:domain ns2:Agent ;
             rdfs:range xsd:anyURI ;
-            rdfs:comment "Youtube channel of the NGO organization" ;
             rdfs:label "youtube" .
 
 
@@ -1957,7 +1805,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#12ANo> rdf:type owl:DatatypeProperty ;
                                                         rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                         rdfs:domain ns2:NGORegistration ;
-                                                        rdfs:comment "12A registration number of the NGO" ;
                                                         rdfs:label "12 A No" .
 
 
@@ -1966,7 +1813,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
                                                              rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                              rdfs:domain ns2:NGORegistration ;
                                                              rdfs:range xsd:dateTime ;
-                                                             rdfs:comment "Date of 12A registration of the NGO" ;
                                                              rdfs:label "12 A Regdate" .
 
 
@@ -1974,7 +1820,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#12AUpload> rdf:type owl:DatatypeProperty ;
                                                             rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                             rdfs:domain ns2:NGORegistration ;
-                                                            rdfs:comment "File link to 12A registration upload" ;
                                                             rdfs:label "12 A Upload" .
 
 
@@ -1982,7 +1827,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#35ACNo> rdf:type owl:DatatypeProperty ;
                                                          rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                          rdfs:domain ns2:NGORegistration ;
-                                                         rdfs:comment "35AC registration number of the NGO" ;
                                                          rdfs:label "35 A C No" .
 
 
@@ -1990,7 +1834,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#35ACRegdate> rdf:type owl:DatatypeProperty ;
                                                               rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                               rdfs:domain ns2:NGORegistration ;
-                                                              rdfs:comment "Date of 35AC registration of the NGO" ;
                                                               rdfs:label "35 A C Regdate" .
 
 
@@ -1998,7 +1841,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#35ACUpload> rdf:type owl:DatatypeProperty ;
                                                              rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                              rdfs:domain ns2:NGORegistration ;
-                                                             rdfs:comment "File link to 35AC registration upload" ;
                                                              rdfs:label "35 A C Upload" .
 
 
@@ -2006,7 +1848,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#80GNo> rdf:type owl:DatatypeProperty ;
                                                         rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                         rdfs:domain ns2:NGORegistration ;
-                                                        rdfs:comment "80G registration number of the NGO" ;
                                                         rdfs:label "80 G No" .
 
 
@@ -2015,7 +1856,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
                                                              rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                              rdfs:domain ns2:NGORegistration ;
                                                              rdfs:range xsd:dateTime ;
-                                                             rdfs:comment "Date of 80G registration of the NGO" ;
                                                              rdfs:label "80 G Regdate" .
 
 
@@ -2023,7 +1863,6 @@ ns2:youtube rdf:type owl:DatatypeProperty ;
 <http://www.semanticweb.org/mdebe/ontologies/NGO#80GUpload> rdf:type owl:DatatypeProperty ;
                                                             rdfs:subPropertyOf ns2:ngoRegistrationProperty ;
                                                             rdfs:domain ns2:NGORegistration ;
-                                                            rdfs:comment "File link to 80G registration upload" ;
                                                             rdfs:label "80 G Upload" .
 
 
@@ -19657,4 +19496,4 @@ ns2:p rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
                                          ]
  ] .
 
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+###  Generated by the OWL API (version 4.5.24.2023-01-14T21:28:32Z) https://github.com/owlcs/owlapi
