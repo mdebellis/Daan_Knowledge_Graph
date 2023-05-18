@@ -1,0 +1,149 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fti: <http://franz.com/ns/allegrograph/2.2/textindex/>
+PREFIX sdg: <http://www.semanticweb.org/mdebe/ontologies/UN_SDG#>
+
+DELETE {?ngo sdg:hasAnnualBudget ?bdgstr.}
+INSERT {?ngo sdg:hasAnnualBudget ?bdgstr.}
+WHERE {?ngo sdg:hasAnnualBudget ?bdgstr.
+       BIND((IF(?bdgstr = "", 0, xsd:decimal(?bdgstr))) AS ?bdg)}
+	   
+DELETE {?ngo sdg:hasAnnualBudget ?bdgstr.}
+INSERT {?ngo sdg:hasAnnualBudget ?bdg.}
+WHERE {?ngo sdg:hasAnnualBudget ?bdgstr.
+      BIND(COALESCE(xsd:decimal(?bdgstr), 0) AS ?bdg)}
+	  
+SELECT ?sdg 
+WHERE {?sdg fti:match 'poverty'.}
+
+SELECT ?s 
+WHERE {?s fti:matchExpression '(or "poverty" "hunger")'.}
+
+SELECT ?ngo
+WHERE {?ngo fti:matchExpression '(or "poverty" "income")'.}
+
+SELECT  ?sdg ?kw
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.}
+
+DELETE {?sdg sdg:hasKeyword ?kw.}
+INSERT {?sdg sdg:hasKeyword ?strkw.}
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		BIND(xsd:string(?kw) as ?strkw)}
+
+SELECT ?ngo ?kw
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		?ngo fti:match ?kw.}
+		
+SELECT ?ngo ?kw
+WHERE {?sdg a sdg:PunnedClass;
+	    sdg:hasKeyword ?kw.
+		?ngo fti:match ?kw.}
+		
+SELECT DISTINCT ?foundngo ?kw
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		?ngo a sdg:NGO;
+		sdg:hasNGOName ?ngoname.
+		BIND(IF(CONTAINS(?ngoname,?kw),?ngo, owl:Nothing) AS ?foundngo) 
+		FILTER(?foundngo != owl:Nothing)}
+		
+DELETE {?ngo sdg:hasAnnualBudget ?bdg.}
+INSERT {?ngo sdg:hasAnnualBudget ?bdgdec.}
+WHERE {?ngo sdg:hasAnnualBudget ?bdg. 
+	   BIND(STRBEFORE(?bdg, " ") AS ?bdgnm)
+	   BIND(IF(?bdgnm != "", ?bdgnm, ?bdg) AS ?newbdg)
+	   BIND(xsd:decimal(?newbdg) AS ?bdgdec)
+	   }
+	   
+DELETE {?ngo sdg:hasTotalExpenditure ?exp.}
+INSERT {?ngo sdg:hasTotalExpenditure ?expdec.}
+WHERE {?ngo sdg:hasTotalExpenditure ?exp. 
+	   BIND(STRAFTER(?exp, " ") AS ?expnm)
+	   BIND(IF(?expnm != "", ?expnm, ?exp) AS ?newexp)
+	   BIND(xsd:decimal(?newexp) AS ?expdec)
+	   }
+	   
+DELETE {?ngo sdg:hasIndex ?i.}
+INSERT {?ngo sdg:hasIndex ?in.}
+WHERE {?ngo a sdg:NGO;
+        sdg:hasIndex ?i.
+		BIND(xsd:string(xsd:integer(?i)) AS ?in)}
+		
+SELECT ?ngo ?ngoname
+WHERE {?ngo a sdg:NGO;
+        sdg:hasIndex ?i.
+		BIND(CONCAT("NGO-",?i) AS ?ngoname)}
+		
+INSERT {?ngo rdfs:label ?ngoname.}	
+WHERE {?ngo a sdg:NGO;
+        sdg:hasIndex ?i.
+		BIND(CONCAT("NGO-",?i) AS ?ngoname)}
+
+SELECT ?ngo ?p ?o 		
+WHERE {?ngo a sdg:NGO;
+            ?p ?o.
+	   FILTER(?p != sdg:hasNGOName && ?p != sdg:hasNGOVision && ?p != sdg:hasNGODescription && ?p != sdg:hasNRAddress)
+	   FILTER(CONTAINS(?o, " "))}
+
+SELECT ?ngo ?te			
+WHERE {?ngo sdg:hasTotalExpenditure ?te.
+        FILTER(CONTAINS(?te, " "))}	
+		
+SELECT  ?sdg (COUNT(?sdg) AS ?sdgcount)
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		?ngo a sdg:NGO;
+                rdfs:label ?ngolbl;
+		sdg:hasNGOName ?ngoname.
+		BIND(IF(CONTAINS(?ngoname,?kw),?ngo, owl:Nothing) AS ?foundngo) 
+		FILTER(?foundngo != owl:Nothing)}
+GROUP BY ?sdg
+
+SELECT ?ngolbl ?sdg ?sdgcount
+WHERE { {SELECT (COUNT(?sdg) AS ?sdgcount) 
+		 WHERE {BIND(IF(CONTAINS(?ngoname,?kw),?ngo, owl:Nothing) AS ?foundngo) 
+		        FILTER(?foundngo != owl:Nothing)}}
+		{?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		?ngo a sdg:NGO;
+        rdfs:label ?ngolbl;
+		sdg:hasNGOName ?ngoname.
+		}}
+		
+INSERT DATA
+	{sdg:relatesToSDG a owl:ObjectProperty.}
+	
+SELECT DISTINCT ?foundngo ?kw
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		?ngo a sdg:NGO;
+		sdg:hasNGOVision ?ngoname.
+		BIND(IF(CONTAINS(?ngoname,?kw),?ngo, owl:Nothing) AS ?foundngo) 
+		FILTER(?foundngo != owl:Nothing)}
+		
+INSERT {?ngo sdg:relatesToSDG ?sdg.}
+WHERE {?sdg rdfs:subClassOf sdg:SustainableDevelopmentGoal;
+	    sdg:hasKeyword ?kw.
+		?ngo a sdg:NGO;
+		sdg:hasNGOVision ?ngoname.
+		BIND(IF(CONTAINS(?ngoname,?kw),?ngo, owl:Nothing) AS ?foundngo) 
+		FILTER(?foundngo != owl:Nothing)}
+		
+SELECT ?ngo ?sdg
+WHERE {?ngo a sdg:NGO;
+        sdg:relatesToSDG ?sdg.}
+ORDER BY ?ngo
+
+SELECT *
+WHERE {?ngo a sdg:NGO;
+        sdg:relatesToSDG sdg:NoPoverty;
+		sdg:hasAnnualBudget ?ab;
+		sdg:requiresHelpWith "Finance".
+		FILTER(10000000.0 < ?ab && ?ab < 40000000.0)}
+
+		
+		
