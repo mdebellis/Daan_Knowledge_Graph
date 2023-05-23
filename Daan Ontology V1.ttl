@@ -209,6 +209,12 @@ ngo:createdBy rdf:type owl:ObjectProperty ;
 ngo:createdEntity rdf:type owl:ObjectProperty .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#currentUIProfile
+ngo:currentUIProfile rdf:type owl:ObjectProperty ;
+                     rdfs:domain ngo:KGState ;
+                     rdfs:range ngo:UIProfile .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#executesProject
 ngo:executesProject rdf:type owl:ObjectProperty ;
                     owl:inverseOf ngo:projectExecutedBy ;
@@ -2223,7 +2229,7 @@ ngo:NGOContact rdf:type owl:Class ;
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#NGOFinance
 ngo:NGOFinance rdf:type owl:Class ;
                rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ;
-               rdfs:label "N G O Finance" .
+               rdfs:label "NGO Finance" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#NGOFunder
@@ -2664,7 +2670,7 @@ ngo:Tripura_SDG_Measure rdf:type owl:Class ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#UIProfile
 ngo:UIProfile rdf:type owl:Class ;
-              rdfs:subClassOf ngo:KGState ;
+              rdfs:subClassOf prov:Location ;
               dcterms:description "A profile that describes the preferences for the types of Agents that a Funder prefers to fund" ;
               rdfs:comment """# SPARQL query based on profile:
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -2912,13 +2918,13 @@ sdg:GenderEquality5b rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#Gender_Equality
 sdg:Gender_Equality rdf:type owl:NamedIndividual ,
                              sdg:SDGGoal ;
-                    ngo:isSDGGoalFor ngo:HDFCBank ,
+                    ngo:isSDGGoalFor ngo:DaminiSocialEnterprises ,
+                                     ngo:HDFCBank ,
                                      ngo:ICICIBank ,
                                      ngo:KotakMahindraBank ,
                                      ngo:StateBankofIndia ,
                                      ngo:a0188f42-6fd1-495c-b69a-3c76bb4d775a ,
                                      ngo:a6347a83-96f9-4a43-bf0f-2ff6d4e5ecb8 ,
-                                     ngo:acb46dbb-c0f1-4015-a80e-bc921c20615a ,
                                      ngo:b6d18bc4-b777-41e1-aafa-a51930f27602 ,
                                      ngo:ba2e1113-3747-48f2-b4b0-30a6b99c1f96 ,
                                      ngo:c374ea0f-d124-41f4-ba83-9bafbf719990 ,
@@ -2996,7 +3002,8 @@ sdg:Good_Health_And_Well_Being rdf:type owl:NamedIndividual ,
                                              <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#2e87d1be-37a6-4ee4-9a08-eced3c9e6304> ,
                                              <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#20caafe7-9b5f-40c2-a4ad-09403c7b039f> ,
                                              <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#3a3fcc3f-b2f8-42c1-b83b-8da5d55ad273> ;
-                               ngo:isSDGGoalFor ngo:HDFCBank ,
+                               ngo:isSDGGoalFor ngo:GauravJyotiWelfareSociety ,
+                                                ngo:HDFCBank ,
                                                 ngo:ICICIBank ,
                                                 ngo:Infosys ,
                                                 ngo:KotakMahindraBank ,
@@ -3020,7 +3027,6 @@ sdg:Good_Health_And_Well_Being rdf:type owl:NamedIndividual ,
                                                 ngo:f20b1264-c4de-49e7-87dc-2e582c77cf45 ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#0a1f8433-a719-4d54-a1cd-c6d57a168201> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#0cb5a2fe-c168-447d-9f6d-a8235460aab2> ,
-                                                <http://www.semanticweb.org/mdebe/ontologies/NGO#038ca13f-5e4f-4a5b-99f1-f0f52c983b72> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#071d8c7e-296a-41c2-ad11-0541fa02d394> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#11a63efa-4921-4793-a8b7-37ab9adb3025> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#158497bd-bdfb-4575-9b39-cbbc0a62ff5e> ,
@@ -7227,6 +7233,35 @@ sdg:fec6fd3b-00a1-4f10-841e-265e980f190b rdf:type owl:NamedIndividual ,
                                                                                                  rdfs:label "SDG_Target_2.b" .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#AREducationalAcadamy
+ngo:AREducationalAcadamy rdf:type owl:NamedIndividual ,
+                                  ngo:NGORecipient ;
+                         ngo:hasLocation ngo:Rajnandgaon ;
+                         ngo:chairmanMobile "9397942777" ;
+                         ngo:chairmanName "K Santoshi Sharma" ;
+                         ngo:chiefFunctionary "K Santoshi Sharma" ;
+                         ngo:city "Hyderabad" ;
+                         ngo:cityOfRegistration "Hyderabad" ;
+                         ngo:description "A R EDUCATIONAL ACADEMY is located in Hyderabad Andhra Pradesh . A R EDUCATIONAL ACADEMY is registered as a Society at Hyderabad of state Andhra Pradesh with Ngo unique registration ID 'AP/2011/0042362' . The NGO registration is done by Registrar of Societies with registration number 781 on the date of 17-02-1997 , Its parent ORganaisation is PaulFoundation. The Chairman of A R EDUCATIONAL ACADEMY is K Santoshi Sharma and Chief functionary officer is K Santoshi Sharma." ;
+                         ngo:keyIssues "This A R EDUCATIONAL ACADEMY NGO charity is working on Key Issues of Animal Husbandry, Dairying & Fisheries, Agriculture, Biotechnology, Civic Issues, Drinking Water, Education & Literacy, Environment & Forests, Food Processing, HIV/AIDS, Housing, Legal Awareness & Aid, Labour & Employment, Micro Finance (SHGs), Minority Issues, Nutrition, Panchayati Raj, Rural Development & Poverty Alleviation, Tribal Affairs, Tourism, Urban Development & Poverty Alleviation, Vocational Training" ;
+                         ngo:mailingAddress "H.No.8-1-18/37/1, Second floor, Kranthi Nagar, R.R.District. 500 079." ;
+                         ngo:majorActivitiesAndAchievements "Community Health, RCH Awareness, Women and Child Welfare, Domestic violance" ;
+                         ngo:ngoID "AP/2011/0042362" ;
+                         ngo:ngoName "A R EDUCATIONAL ACADEMY" ;
+                         ngo:ngoType "Society" ;
+                         ngo:officePhone "0000-000000" ;
+                         ngo:orgEmail "wiwellindia@gmail.com" ;
+                         ngo:regDate "17-02-1997" ;
+                         ngo:registeredWith "Registrar of Societies" ;
+                         ngo:registrationNumber "781" ;
+                         ngo:secretaryName "A Raj Kumar" ;
+                         ngo:state "Andhra Pradesh" ;
+                         ngo:stateOfRegistration "Andhra Pradesh" ;
+                         ngo:totalIncome 0 ;
+                         ngo:treasurer "V Leela" ;
+                         rdfs:label "AR EDUCATIONAL ACADEMY" .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#AVI
 ngo:AVI rdf:type owl:NamedIndividual ,
                  ngo:MediaFormat ;
@@ -8306,14 +8341,8 @@ ngo:Complete rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#CurrentState
 ngo:CurrentState rdf:type owl:NamedIndividual ,
                           ngo:KGState ;
+                 ngo:currentUIProfile ngo:MDUIProfile ;
                  ngo:kgUser ngo:MichaelDeBellis .
-
-
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#CurrentUIProfile
-ngo:CurrentUIProfile rdf:type owl:NamedIndividual ,
-                              ngo:UIProfile ;
-                     ngo:sdgPreference sdg:Gender_Equality ,
-                                       sdg:a6ecf279-a5a7-4515-b53b-eee2e53c2309 .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#DOC
@@ -8460,6 +8489,26 @@ ngo:Dadra_and_Nagar_Haveli_and_Daman_and_Diu_Measure_Composite rdf:type owl:Name
                                                                         ngo:SDG_Place_Measure_Composite ;
                                                                ngo:percentageOfSDGAchieved 0.62 ;
                                                                rdfs:label "Dadra and Nagar Haveli and Daman and Diu Measure Composite" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#DaminiSocialEnterprises
+ngo:DaminiSocialEnterprises rdf:type owl:NamedIndividual ,
+                                     ngo:NGORecipient ;
+                            ngo:hasLocation ngo:Rajnandgaon ;
+                            ngo:requiresServices ngo:BusinessDevelopmentServices ,
+                                                 ngo:FinanceServices ,
+                                                 ngo:HumanResourcesServices ;
+                            ngo:avgMonthlyExpenditure "0" ;
+                            ngo:description "Damini works for encorgaging women and child empowerment through community approach where the sustainable development is encouraged through community development." ;
+                            ngo:ngoID "153.0" ;
+                            ngo:ngoName "Damini Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
+                            ngo:requiresHelpWith "Business Development, Finance, Human Resources" ;
+                            ngo:totalAssets "0" ;
+                            ngo:totalExpense 0.0 ;
+                            ngo:totalFundingGap "0" ;
+                            ngo:totalIncome 10000.0 ;
+                            ngo:vision "To encourage women empowerment and protecting child rights through advocacy.To propagate sustainable development at community level." ;
+                            rdfs:label "Damini Social Enterprises" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Dehli_State
@@ -8610,6 +8659,29 @@ ngo:Diamond rdf:type owl:NamedIndividual ,
             rdfs:label "Diamond" .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#DignityFoundationforIndia
+ngo:DignityFoundationforIndia rdf:type owl:NamedIndividual ,
+                                       ngo:NGORecipient ;
+                              ngo:hasLocation ngo:Rajnandgaon ;
+                              ngo:hasSDGGoal sdg:Gender_Equality ,
+                                             sdg:Quality_Education ;
+                              ngo:requiresServices ngo:BusinessDevelopmentServices ,
+                                                   ngo:FinanceServices ,
+                                                   ngo:HumanResourcesServices ;
+                              ngo:avgMonthlyExpenditure "27310000" ;
+                              ngo:description "Dignity Foundation is a not-for-profit organization that has been working in the field of Elder Care for over 18 years. Dignity offers the 50+ an enriching set of opportunities to lead a more dignified, secure, fun-filled and fulfilling life. Dignity provides social support services, knowledge, life enrichment, shelter and advocacy for senior citizens. It runs a number of programs like: - Helpline for senior citizens - to address elder abuse and other distress situations - Ration Service for BOP senior citizens - monthly basket of basic provisions for the very poor senior citizens - Dementia Day Care Centre - to provide therapies for persons with Dementia and relief to their caregivers - Senior Citizens ID Card - Govt. issued ID Cards to help avail various benefits - Counselling Services - for various legal, financial and other matters - Companionship - to mitigate loneliness for senior citizens who cannot step out of their homes - Life Enrichment Centres - a platform for regular social interaction and structured activities - Dignity on Wheels - an outreach programme for reaching out to poor senior citizens" ;
+                              ngo:ngoID "165.0" ;
+                              ngo:ngoName "Dignity Foundation Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
+                              ngo:orgWebsite "http://www.dignityfoundation.org" ;
+                              ngo:requiresHelpWith "Business Development, Finance" ;
+                              ngo:totalAssets "0" ;
+                              ngo:totalExpense 0.0 ;
+                              ngo:totalFundingGap "0" ;
+                              ngo:totalIncome 27310000.0 ;
+                              ngo:vision "Our VisionTo create an enlightened society in which senior citizens feel secure, confident and valued, and can live with dignity.Our MissionWe are committed to changing the way people look at ageing in India. We enable senior citizens to lead active lives through easy access to trusted information, opportunities for productive ageing and social support services." ;
+                              rdfs:label "Dignity Foundation for India" .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#DinaLearnsMath
 ngo:DinaLearnsMath rdf:type owl:NamedIndividual ,
                             ngo:Video ;
@@ -8662,6 +8734,26 @@ ngo:FoodDistributionProject rdf:type owl:NamedIndividual ,
 ngo:GIF rdf:type owl:NamedIndividual ,
                  ngo:MediaFormat ;
         rdfs:label "GIF" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#GauravJyotiWelfareSociety
+ngo:GauravJyotiWelfareSociety rdf:type owl:NamedIndividual ,
+                                       ngo:NGORecipient ;
+                              ngo:hasLocation ngo:Rajnandgaon ;
+                              ngo:requiresServices ngo:BusinessDevelopmentServices ,
+                                                   ngo:FinanceServices ,
+                                                   ngo:HumanResourcesServices ;
+                              ngo:avgMonthlyExpenditure "880000" ;
+                              ngo:description "The organisation functions primarily on the health care programs it has been associated . Gaurav Jyoti Welfare Society is keenly involved in spreading the concept of health education to the poor who have been subject of various health problems due to lack of proper means and knowldge in regard to health measures." ;
+                              ngo:ngoID "194.0" ;
+                              ngo:ngoName "Gaurav Jyoti Welfare Society Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
+                              ngo:requiresHelpWith "Business Development, Finance, Human Resources" ;
+                              ngo:totalAssets "0" ;
+                              ngo:totalExpense 0.0 ;
+                              ngo:totalFundingGap "0" ;
+                              ngo:totalIncome 880000.0 ;
+                              ngo:vision "To provide better health facilities to the poor.To encourage poor to develop better health seeking behaviour.To provide health education to the marginalised group." ;
+                              rdfs:label "Gaurav Jyoti Welfare Society" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#GlobalFoundationForEnvironmentHumanWellness
@@ -10381,6 +10473,14 @@ ngo:LarsenToubroLimited rdf:type owl:NamedIndividual ,
                         rdfs:label "Larsen Toubro Limited" .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#MDUIProfile
+ngo:MDUIProfile rdf:type owl:NamedIndividual ,
+                         ngo:UIProfile ;
+                ngo:locationPreference ngo:Chandigarh ;
+                ngo:sdgPreference sdg:Good_Health_And_Well_Being ;
+                ngo:maximumAnualBudget 90.0 .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#MP3
 ngo:MP3 rdf:type owl:NamedIndividual ,
                  ngo:MediaFormat ;
@@ -11009,7 +11109,8 @@ ngo:Meghalaya_Measure_Composite rdf:type owl:NamedIndividual ,
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#MichaelDeBellis
 ngo:MichaelDeBellis rdf:type owl:NamedIndividual ,
-                             prov:Person .
+                             prov:Person ;
+                    rdfs:label "Michael DeBellis" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Mizoram
@@ -13345,26 +13446,6 @@ ngo:ac7d61c5-84dd-493b-803d-8e51909d3643 rdf:type owl:NamedIndividual ,
                                          rdfs:label "AAINA Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
 
 
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#acb46dbb-c0f1-4015-a80e-bc921c20615a
-ngo:acb46dbb-c0f1-4015-a80e-bc921c20615a rdf:type owl:NamedIndividual ,
-                                                  ngo:NGORecipient ;
-                                         ngo:hasLocation ngo:Rajnandgaon ;
-                                         ngo:requiresServices ngo:BusinessDevelopmentServices ,
-                                                              ngo:FinanceServices ,
-                                                              ngo:HumanResourcesServices ;
-                                         ngo:avgMonthlyExpenditure "0" ;
-                                         ngo:description "Damini works for encorgaging women and child empowerment through community approach where the sustainable development is encouraged through community development." ;
-                                         ngo:ngoID "153.0" ;
-                                         ngo:ngoName "Damini Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
-                                         ngo:requiresHelpWith "Business Development, Finance, Human Resources" ;
-                                         ngo:totalAssets "0" ;
-                                         ngo:totalExpense 0.0 ;
-                                         ngo:totalFundingGap "0" ;
-                                         ngo:totalIncome 10000.0 ;
-                                         ngo:vision "To encourage women empowerment and protecting child rights through advocacy.To propagate sustainable development at community level." ;
-                                         rdfs:label "Damini Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
-
-
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#ad8cf335-eced-41eb-951b-d7295542ccd1
 ngo:ad8cf335-eced-41eb-951b-d7295542ccd1 rdf:type owl:NamedIndividual ,
                                                   ngo:NGORecipient ;
@@ -14847,6 +14928,7 @@ ngo:e5a886e9-352d-4841-a268-9a5a13d99a4c rdf:type owl:NamedIndividual ,
 ngo:e68f46d1-78a3-4fcc-9eba-953f1c19361c rdf:type owl:NamedIndividual ,
                                                   ngo:NGORecipient ;
                                          ngo:hasLocation ngo:Rajnandgaon ;
+                                         ngo:hasSDGGoal sdg:No_Poverty ;
                                          ngo:chairmanMobile "9848324044" ;
                                          ngo:chairmanName "MURALI MOHAN B" ;
                                          ngo:chiefFunctionary "MURALI MOHAN B" ;
@@ -14868,7 +14950,7 @@ ngo:e68f46d1-78a3-4fcc-9eba-953f1c19361c rdf:type owl:NamedIndividual ,
                                          ngo:stateOfRegistration "Andhra Pradesh" ;
                                          ngo:totalIncome 0 ;
                                          ngo:treasurer "SETHURAM A" ;
-                                         rdfs:label "A G R A" .
+                                         rdfs:label "AGRA" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#e703af31-4578-4bef-86ae-6fbc0cd5fbb9
@@ -15782,26 +15864,6 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
                                                                                        rdfs:label "JAMAL E WARSI AKHLAKE AALUMN EDUCATIONAL AND WELLFARE SOSAITY" .
 
 
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#038ca13f-5e4f-4a5b-99f1-f0f52c983b72
-<http://www.semanticweb.org/mdebe/ontologies/NGO#038ca13f-5e4f-4a5b-99f1-f0f52c983b72> rdf:type owl:NamedIndividual ,
-                                                                                                ngo:NGORecipient ;
-                                                                                       ngo:hasLocation ngo:Rajnandgaon ;
-                                                                                       ngo:requiresServices ngo:BusinessDevelopmentServices ,
-                                                                                                            ngo:FinanceServices ,
-                                                                                                            ngo:HumanResourcesServices ;
-                                                                                       ngo:avgMonthlyExpenditure "880000" ;
-                                                                                       ngo:description "The organisation functions primarily on the health care programs it has been associated . Gaurav Jyoti Welfare Society is keenly involved in spreading the concept of health education to the poor who have been subject of various health problems due to lack of proper means and knowldge in regard to health measures." ;
-                                                                                       ngo:ngoID "194.0" ;
-                                                                                       ngo:ngoName "Gaurav Jyoti Welfare Society Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
-                                                                                       ngo:requiresHelpWith "Business Development, Finance, Human Resources" ;
-                                                                                       ngo:totalAssets "0" ;
-                                                                                       ngo:totalExpense 0.0 ;
-                                                                                       ngo:totalFundingGap "0" ;
-                                                                                       ngo:totalIncome 880000.0 ;
-                                                                                       ngo:vision "To provide better health facilities to the poor.To encourage poor to develop better health seeking behaviour.To provide health education to the marginalised group." ;
-                                                                                       rdfs:label "Gaurav Jyoti Welfare Society Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
-
-
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#04ac104d-e640-4efb-9dc2-311efda524a5
 <http://www.semanticweb.org/mdebe/ontologies/NGO#04ac104d-e640-4efb-9dc2-311efda524a5> rdf:type owl:NamedIndividual ,
                                                                                                 ngo:NGORecipient ;
@@ -16323,35 +16385,6 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
                                                                                        rdfs:label "Ajit Foundation Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
 
 
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#163beccc-113d-4598-95b6-abd5d61da02d
-<http://www.semanticweb.org/mdebe/ontologies/NGO#163beccc-113d-4598-95b6-abd5d61da02d> rdf:type owl:NamedIndividual ,
-                                                                                                ngo:NGORecipient ;
-                                                                                       ngo:hasLocation ngo:Rajnandgaon ;
-                                                                                       ngo:chairmanMobile "9397942777" ;
-                                                                                       ngo:chairmanName "K Santoshi Sharma" ;
-                                                                                       ngo:chiefFunctionary "K Santoshi Sharma" ;
-                                                                                       ngo:city "Hyderabad" ;
-                                                                                       ngo:cityOfRegistration "Hyderabad" ;
-                                                                                       ngo:description "A R EDUCATIONAL ACADEMY is located in Hyderabad Andhra Pradesh . A R EDUCATIONAL ACADEMY is registered as a Society at Hyderabad of state Andhra Pradesh with Ngo unique registration ID 'AP/2011/0042362' . The NGO registration is done by Registrar of Societies with registration number 781 on the date of 17-02-1997 , Its parent ORganaisation is PaulFoundation. The Chairman of A R EDUCATIONAL ACADEMY is K Santoshi Sharma and Chief functionary officer is K Santoshi Sharma." ;
-                                                                                       ngo:keyIssues "This A R EDUCATIONAL ACADEMY NGO charity is working on Key Issues of Animal Husbandry, Dairying & Fisheries, Agriculture, Biotechnology, Civic Issues, Drinking Water, Education & Literacy, Environment & Forests, Food Processing, HIV/AIDS, Housing, Legal Awareness & Aid, Labour & Employment, Micro Finance (SHGs), Minority Issues, Nutrition, Panchayati Raj, Rural Development & Poverty Alleviation, Tribal Affairs, Tourism, Urban Development & Poverty Alleviation, Vocational Training" ;
-                                                                                       ngo:mailingAddress "H.No.8-1-18/37/1, Second floor, Kranthi Nagar, R.R.District. 500 079." ;
-                                                                                       ngo:majorActivitiesAndAchievements "Community Health, RCH Awareness, Women and Child Welfare, Domestic violance" ;
-                                                                                       ngo:ngoID "AP/2011/0042362" ;
-                                                                                       ngo:ngoName "A R EDUCATIONAL ACADEMY" ;
-                                                                                       ngo:ngoType "Society" ;
-                                                                                       ngo:officePhone "0000-000000" ;
-                                                                                       ngo:orgEmail "wiwellindia@gmail.com" ;
-                                                                                       ngo:regDate "17-02-1997" ;
-                                                                                       ngo:registeredWith "Registrar of Societies" ;
-                                                                                       ngo:registrationNumber "781" ;
-                                                                                       ngo:secretaryName "A Raj Kumar" ;
-                                                                                       ngo:state "Andhra Pradesh" ;
-                                                                                       ngo:stateOfRegistration "Andhra Pradesh" ;
-                                                                                       ngo:totalIncome 0 ;
-                                                                                       ngo:treasurer "V Leela" ;
-                                                                                       rdfs:label "A R EDUCATIONAL ACADEMY" .
-
-
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#17365849-979c-447f-8cd4-f6984999a359
 <http://www.semanticweb.org/mdebe/ontologies/NGO#17365849-979c-447f-8cd4-f6984999a359> rdf:type owl:NamedIndividual ,
                                                                                                 ngo:NGORecipient ;
@@ -16752,29 +16785,6 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
                                                                                        ngo:totalIncome 2400000.0 ;
                                                                                        ngo:vision "To facilitate in comprehensive rehabilitative services.To develop human resources. To support motivate & encourage persons with disability" ;
                                                                                        rdfs:label "Ayush Society Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
-
-
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#3a26f0f0-3904-42b1-8868-a213f94419dd
-<http://www.semanticweb.org/mdebe/ontologies/NGO#3a26f0f0-3904-42b1-8868-a213f94419dd> rdf:type owl:NamedIndividual ,
-                                                                                                ngo:NGORecipient ;
-                                                                                       ngo:hasLocation ngo:Rajnandgaon ;
-                                                                                       ngo:hasSDGGoal sdg:Gender_Equality ,
-                                                                                                      sdg:Quality_Education ;
-                                                                                       ngo:requiresServices ngo:BusinessDevelopmentServices ,
-                                                                                                            ngo:FinanceServices ,
-                                                                                                            ngo:HumanResourcesServices ;
-                                                                                       ngo:avgMonthlyExpenditure "27310000" ;
-                                                                                       ngo:description "Dignity Foundation is a not-for-profit organization that has been working in the field of Elder Care for over 18 years. Dignity offers the 50+ an enriching set of opportunities to lead a more dignified, secure, fun-filled and fulfilling life. Dignity provides social support services, knowledge, life enrichment, shelter and advocacy for senior citizens. It runs a number of programs like: - Helpline for senior citizens - to address elder abuse and other distress situations - Ration Service for BOP senior citizens - monthly basket of basic provisions for the very poor senior citizens - Dementia Day Care Centre - to provide therapies for persons with Dementia and relief to their caregivers - Senior Citizens ID Card - Govt. issued ID Cards to help avail various benefits - Counselling Services - for various legal, financial and other matters - Companionship - to mitigate loneliness for senior citizens who cannot step out of their homes - Life Enrichment Centres - a platform for regular social interaction and structured activities - Dignity on Wheels - an outreach programme for reaching out to poor senior citizens" ;
-                                                                                       ngo:ngoID "165.0" ;
-                                                                                       ngo:ngoName "Dignity Foundation Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
-                                                                                       ngo:orgWebsite "http://www.dignityfoundation.org" ;
-                                                                                       ngo:requiresHelpWith "Business Development, Finance" ;
-                                                                                       ngo:totalAssets "0" ;
-                                                                                       ngo:totalExpense 0.0 ;
-                                                                                       ngo:totalFundingGap "0" ;
-                                                                                       ngo:totalIncome 27310000.0 ;
-                                                                                       ngo:vision "Our VisionTo create an enlightened society in which senior citizens feel secure, confident and valued, and can live with dignity.Our MissionWe are committed to changing the way people look at ageing in India. We enable senior citizens to lead active lives through easy access to trusted information, opportunities for productive ageing and social support services." ;
-                                                                                       rdfs:label "Dignity Foundation Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#3a29b76f-320e-48bd-a958-c5ecbf5a2b99
@@ -18013,6 +18023,7 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
 <http://www.semanticweb.org/mdebe/ontologies/NGO#6f897910-a00f-4143-9af6-f404e15c6ce4> rdf:type owl:NamedIndividual ,
                                                                                                 ngo:NGORecipient ;
                                                                                        ngo:hasLocation ngo:Rajnandgaon ;
+                                                                                       ngo:hasSDGGoal sdg:Quality_Education ;
                                                                                        ngo:requiresServices ngo:BusinessDevelopmentServices ,
                                                                                                             ngo:FinanceServices ,
                                                                                                             ngo:HumanResourcesServices ;
@@ -18026,7 +18037,7 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
                                                                                        ngo:totalFundingGap "0" ;
                                                                                        ngo:totalIncome 1065000.0 ;
                                                                                        ngo:vision "To provide Capacity building to ngos .To implement various health & livelihood programs for the marginalised section" ;
-                                                                                       rdfs:label "Agragami India Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
+                                                                                       rdfs:label "Agragami India" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#60c87b20-5677-4d3a-8b5f-14a64029cfa8
@@ -19252,6 +19263,7 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
 <http://www.semanticweb.org/mdebe/ontologies/NGO#9abfaa44-bc47-4d2f-ab27-e4c900b5b039> rdf:type owl:NamedIndividual ,
                                                                                                 ngo:NGORecipient ;
                                                                                        ngo:hasLocation ngo:Rajnandgaon ;
+                                                                                       ngo:hasSDGGoal sdg:Quality_Education ;
                                                                                        ngo:chairmanMobile "09849599371" ;
                                                                                        ngo:chairmanName "RSKUMAR" ;
                                                                                        ngo:chiefFunctionary "RSKUMAR" ;
@@ -19927,4 +19939,4 @@ ngo:psdt rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
                                          ]
  ] .
 
-###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi
+###  Generated by the OWL API (version 4.5.24.2023-01-14T21:28:32Z) https://github.com/owlcs/owlapi
