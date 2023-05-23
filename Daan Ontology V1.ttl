@@ -169,6 +169,7 @@ ngo:url rdf:type owl:AnnotationProperty ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasIndicator
 sdg:hasIndicator rdf:type owl:ObjectProperty ;
+                 owl:inverseOf ngo:isIndicatorFor ;
                  rdfs:domain sdg:SDGTarget ;
                  rdfs:range sdg:SDGIndicator ;
                  rdfs:comment "This property relates specific SDG_Target goals to metrics that measure progress toward the target. These metrics are called SDG_Indicators." ;
@@ -407,6 +408,10 @@ ngo:isHigherRatingThan rdf:type owl:ObjectProperty ;
                        rdfs:domain ngo:NGORecipientDaanRating ;
                        rdfs:range ngo:NGORecipientDaanRating ;
                        rdfs:label "is Higher Rating Than" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#isIndicatorFor
+ngo:isIndicatorFor rdf:type owl:ObjectProperty .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#isIndicatorForNGO
@@ -2250,6 +2255,13 @@ ngo:NGORecipient rdf:type owl:Class ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipientDaanRating
 ngo:NGORecipientDaanRating rdf:type owl:Class ;
+                           owl:equivalentClass [ rdf:type owl:Class ;
+                                                 owl:oneOf ( ngo:Diamond
+                                                             ngo:Gold
+                                                             ngo:NoRating
+                                                             ngo:Platinum
+                                                           )
+                                               ] ;
                            rdfs:label "NGO Recipient Daan Rating" .
 
 
@@ -2815,11 +2827,11 @@ sdg:Clean_Water_And_Sanitation rdf:type owl:NamedIndividual ,
                                              <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#11602b33-00d8-4525-9163-864df66a3234> ,
                                              <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#21f4e017-057a-43b8-8ec3-46744c5e165c> ,
                                              <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#9a806a8a-75e2-42fc-b646-ae3727c54843> ;
-                               ngo:isSDGGoalFor ngo:a47eb33a-85ab-4bea-833b-66e8ebabdc0b ,
+                               ngo:isSDGGoalFor ngo:ActionOfHumanMovement ,
+                                                ngo:a47eb33a-85ab-4bea-833b-66e8ebabdc0b ,
                                                 ngo:c842229a-afe3-4427-a420-5be48ad44107 ,
                                                 ngo:cbb089d4-ea70-4bdc-9043-1fdea1f8a95f ,
                                                 ngo:e9a249f9-1914-4245-82d6-c8ecb3be4122 ,
-                                                <http://www.semanticweb.org/mdebe/ontologies/NGO#08ecfe52-6f60-40d2-9a91-086b550e2cf2> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#47d2a255-8cf2-4f94-8128-9cc671b8bee9> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#587fd12f-6d3b-4076-96ea-0635d4d150ba> ,
                                                 <http://www.semanticweb.org/mdebe/ontologies/NGO#671f22e5-d54c-45e0-bfbc-61ecbd9cf722> ,
@@ -2867,8 +2879,8 @@ sdg:Decent_Work_And_Economic_Growth rdf:type owl:NamedIndividual ,
                                                   <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#3a4b3661-2902-4609-b5a2-8b43242db61c> ,
                                                   <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#468fdebf-57e2-497e-808b-fa86831e01c7> ,
                                                   <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#6dd0c2d6-6ec4-4997-8347-edb41eafa5cb> ;
-                                    ngo:isSDGGoalFor ngo:a6ab8053-c0a4-4e7b-9a9e-89c457fce414 ,
-                                                     <http://www.semanticweb.org/mdebe/ontologies/NGO#08ecfe52-6f60-40d2-9a91-086b550e2cf2> ,
+                                    ngo:isSDGGoalFor ngo:ActionOfHumanMovement ,
+                                                     ngo:a6ab8053-c0a4-4e7b-9a9e-89c457fce414 ,
                                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#4c817e66-a043-480d-900b-965c0285bb5f> ,
                                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#709e20f9-8550-4c51-9a88-a68bda3f37c4> ,
                                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#78bee405-3c83-46ed-a1c5-5447123ff98c> ,
@@ -2918,13 +2930,14 @@ sdg:GenderEquality5b rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#Gender_Equality
 sdg:Gender_Equality rdf:type owl:NamedIndividual ,
                              sdg:SDGGoal ;
-                    ngo:isSDGGoalFor ngo:DaminiSocialEnterprises ,
+                    ngo:isSDGGoalFor ngo:ActionOfHumanMovement ,
+                                     ngo:CentreForAdvocasyAndResearch ,
+                                     ngo:DaminiSocialEnterprises ,
                                      ngo:HDFCBank ,
                                      ngo:ICICIBank ,
                                      ngo:KotakMahindraBank ,
                                      ngo:StateBankofIndia ,
                                      ngo:a0188f42-6fd1-495c-b69a-3c76bb4d775a ,
-                                     ngo:a6347a83-96f9-4a43-bf0f-2ff6d4e5ecb8 ,
                                      ngo:b6d18bc4-b777-41e1-aafa-a51930f27602 ,
                                      ngo:ba2e1113-3747-48f2-b4b0-30a6b99c1f96 ,
                                      ngo:c374ea0f-d124-41f4-ba83-9bafbf719990 ,
@@ -2947,7 +2960,6 @@ sdg:Gender_Equality rdf:type owl:NamedIndividual ,
                                      ngo:f41da17b-ef39-4d25-9e7f-4b5bf8cf4461 ,
                                      ngo:f94ec5f9-10d5-4358-bc03-6c85458e0cce ,
                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#040787a7-0a13-47f0-8de6-d1bc21e50776> ,
-                                     <http://www.semanticweb.org/mdebe/ontologies/NGO#08ecfe52-6f60-40d2-9a91-086b550e2cf2> ,
                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#11fe359c-a0c8-4b05-bb5c-656ee07058f7> ,
                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#13c40e13-fbc8-4272-8fab-02a293166ad4> ,
                                      <http://www.semanticweb.org/mdebe/ontologies/NGO#2b485382-ebf4-4b93-9578-5916d6706094> ,
@@ -3218,7 +3230,7 @@ sdg:Partnership_For_The_Goals rdf:type owl:NamedIndividual ,
                                             <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#79e210c0-3727-4fb1-8739-0a29bdaa4f2c> ,
                                             <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#8fc8f523-8d59-4531-8f39-34c2b76097cb> ,
                                             <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#9444656e-086e-4b7e-b1f6-5b2494cd96b0> ;
-                              ngo:isSDGGoalFor ngo:a6347a83-96f9-4a43-bf0f-2ff6d4e5ecb8 ,
+                              ngo:isSDGGoalFor ngo:CentreForAdvocasyAndResearch ,
                                                ngo:c842229a-afe3-4427-a420-5be48ad44107 ,
                                                ngo:ed1ea8f1-f53e-4091-87f9-3505824002b3 ,
                                                <http://www.semanticweb.org/mdebe/ontologies/NGO#09a9f2bc-4344-4889-bf3b-38cee15c8bc4> ,
@@ -3413,9 +3425,9 @@ sdg:Sustainable_Cities_And_Communities rdf:type owl:NamedIndividual ,
                                                      <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#639a22b1-1d98-4e99-ba5d-9ebda48497a6> ,
                                                      <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#7a76331c-f07c-4db5-8583-bc998704eae6> ,
                                                      <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#7235d706-a780-4588-95e9-375b4f1a9c3e> ;
-                                       ngo:isSDGGoalFor ngo:a0188f42-6fd1-495c-b69a-3c76bb4d775a ,
+                                       ngo:isSDGGoalFor ngo:CentreForAdvocasyAndResearch ,
+                                                        ngo:a0188f42-6fd1-495c-b69a-3c76bb4d775a ,
                                                         ngo:a47eb33a-85ab-4bea-833b-66e8ebabdc0b ,
-                                                        ngo:a6347a83-96f9-4a43-bf0f-2ff6d4e5ecb8 ,
                                                         ngo:b6d18bc4-b777-41e1-aafa-a51930f27602 ,
                                                         ngo:c2402e5b-aa2d-4d2a-ac48-87e3021ad180 ,
                                                         ngo:c7cfdad7-9d45-4237-8f02-83d4206d60c5 ,
@@ -7268,6 +7280,26 @@ ngo:AVI rdf:type owl:NamedIndividual ,
         rdfs:label "AVI" .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#ActionOfHumanMovement
+ngo:ActionOfHumanMovement rdf:type owl:NamedIndividual ,
+                                   ngo:NGORecipient ;
+                          ngo:hasLocation ngo:Rajnandgaon ;
+                          ngo:requiresServices ngo:BusinessDevelopmentServices ,
+                                               ngo:FinanceServices ,
+                                               ngo:HumanResourcesServices ;
+                          ngo:avgMonthlyExpenditure "330000" ;
+                          ngo:description "The Action of Human Movement (AHM) is a registered non political secular organization and established on 04.10.2004 with like minded social work professionals and youths. This organization is working for the deprived sections of rural youths, Women, Children and BPL (Below Poverty Line) community in India. AHM NGO mainly working for the women SHG member's skill traning and social enterprise development, rural computer literacy program, carrier guidance and job placement training for the 10th and +2 students, evening study centre for tribal children development , community based rehabilitation, safe drinking and sanitation programs in rural Tamil Nadu. The founder Mr.C.Arockia Raj M.A.,D.Cer.Tech., DOA, M.Phill., is a social entrepreneur and social activist.He taught social education for the rural youths. He has ten years experience in the social development field.The AHM was started in 2004 with the help of St.Arulanandar community college students.The students gave the subscription for the smooth functioning of the AHM. Their thought, Vision and Mission about AHM is really appreciable. AHM NGO registered under societies act 27 of 1975 and registered on 04.10.2004. It is registered under 12AA and 80G of I.T.Act 1961. AHM NGO registered under FCRA Act 2010." ;
+                          ngo:ngoID "40.0" ;
+                          ngo:ngoName "Action Of Human Movement (AHM) Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
+                          ngo:requiresHelpWith "Finance, Human Resources" ;
+                          ngo:totalAssets "0" ;
+                          ngo:totalExpense 0.0 ;
+                          ngo:totalFundingGap "0" ;
+                          ngo:totalIncome 330000.0 ;
+                          ngo:vision "Visionâ€œIncluding the excluded and giving the best to the leastâ€Missionâ€œEqual and integrated community development through mind, education, Employment and economicsâ€" ;
+                          rdfs:label "Action Of Human Movement (AHM)" .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Ahndra_Pradesh_Measure_1
 ngo:Ahndra_Pradesh_Measure_1 rdf:type owl:NamedIndividual ,
                                       ngo:SDG_Place_Measure_1 ;
@@ -8046,6 +8078,27 @@ ngo:Bilaspur rdf:type owl:NamedIndividual ,
 ngo:BusinessDevelopmentServices rdf:type owl:NamedIndividual ,
                                          ngo:Services ;
                                 rdfs:label "Business Development Services" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#CentreForAdvocasyAndResearch
+ngo:CentreForAdvocasyAndResearch rdf:type owl:NamedIndividual ,
+                                          ngo:NGORecipient ;
+                                 ngo:hasLocation ngo:Rajnandgaon ;
+                                 ngo:requiresServices ngo:BusinessDevelopmentServices ,
+                                                      ngo:FinanceServices ,
+                                                      ngo:HumanResourcesServices ;
+                                 ngo:avgMonthlyExpenditure "3300000" ;
+                                 ngo:description "The CFAR as an organisation is leading the crusade to mainstream marginalised communities like- sex workers, transgender and other sexual miniortiesÂ forums of single women, networks of HIV positive persons, injecting drug users, people living with disabilities, the urban and rural poor and the girl child - so that their issues can be understood and their concerns shared." ;
+                                 ngo:ngoID "121.0" ;
+                                 ngo:ngoName "CENTRE FOR ADVOCACY AND RESEARCH Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
+                                 ngo:orgWebsite "http://http://www.cfar.org.in/" ;
+                                 ngo:requiresHelpWith "Finance" ;
+                                 ngo:totalAssets "0" ;
+                                 ngo:totalExpense 0.0 ;
+                                 ngo:totalFundingGap "0" ;
+                                 ngo:totalIncome 3300000.0 ;
+                                 ngo:vision "To mainstream marginalised communities.It believes in   building the necessary synergy between communities, concerned stakeholders, the media and civil society through partnerships and awareness and capacity building at various levels." ;
+                                 rdfs:label "CENTRE FOR ADVOCACY AND RESEARCH" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Chandigarh
@@ -12123,8 +12176,7 @@ ngo:STEMForGirlsProject rdf:type owl:NamedIndividual ,
                         ngo:hasDocumentation ngo:DinaLearnsMath ;
                         ngo:hasFunder ngo:SNCFFoundationIndia ;
                         ngo:hasLocation ngo:AndamanandNicobarIslands ;
-                        ngo:hasSDGGoal sdg:GenderEquality5b ,
-                                       sdg:Gender_Equality ,
+                        ngo:hasSDGGoal sdg:Gender_Equality ,
                                        sdg:QualityEducation43 ,
                                        sdg:QualityEducation44 ,
                                        sdg:QualityEducation45 ,
@@ -13306,27 +13358,6 @@ ngo:a5291004-3018-4b11-964a-f3db16522ce1 rdf:type owl:NamedIndividual ,
                                          ngo:totalIncome 100000.0 ;
                                          ngo:vision "To providing free coaching classes to students hailing from J.J Colony" ;
                                          rdfs:label "Dastak Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
-
-
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#a6347a83-96f9-4a43-bf0f-2ff6d4e5ecb8
-ngo:a6347a83-96f9-4a43-bf0f-2ff6d4e5ecb8 rdf:type owl:NamedIndividual ,
-                                                  ngo:NGORecipient ;
-                                         ngo:hasLocation ngo:Rajnandgaon ;
-                                         ngo:requiresServices ngo:BusinessDevelopmentServices ,
-                                                              ngo:FinanceServices ,
-                                                              ngo:HumanResourcesServices ;
-                                         ngo:avgMonthlyExpenditure "3300000" ;
-                                         ngo:description "The CFAR as an organisation is leading the crusade to mainstream marginalised communities like- sex workers, transgender and other sexual miniortiesÂ forums of single women, networks of HIV positive persons, injecting drug users, people living with disabilities, the urban and rural poor and the girl child - so that their issues can be understood and their concerns shared." ;
-                                         ngo:ngoID "121.0" ;
-                                         ngo:ngoName "CENTRE FOR ADVOCACY AND RESEARCH Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
-                                         ngo:orgWebsite "http://http://www.cfar.org.in/" ;
-                                         ngo:requiresHelpWith "Finance" ;
-                                         ngo:totalAssets "0" ;
-                                         ngo:totalExpense 0.0 ;
-                                         ngo:totalFundingGap "0" ;
-                                         ngo:totalIncome 3300000.0 ;
-                                         ngo:vision "To mainstream marginalised communities.It believes in   building the necessary synergy between communities, concerned stakeholders, the media and civil society through partnerships and awareness and capacity building at various levels." ;
-                                         rdfs:label "CENTRE FOR ADVOCACY AND RESEARCH Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#a6ab8053-c0a4-4e7b-9a9e-89c457fce414
@@ -16028,26 +16059,6 @@ ngo:fc77df1e-6ae3-4491-b96d-e78eca4a511a rdf:type owl:NamedIndividual ,
                                                                                        ngo:totalIncome 4000000.0 ;
                                                                                        ngo:vision "To work on the livelihoods and poverty alleviation.To work for the upliftment  of marginalised section of the society." ;
                                                                                        rdfs:label "ACORD ASIA Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
-
-
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#08ecfe52-6f60-40d2-9a91-086b550e2cf2
-<http://www.semanticweb.org/mdebe/ontologies/NGO#08ecfe52-6f60-40d2-9a91-086b550e2cf2> rdf:type owl:NamedIndividual ,
-                                                                                                ngo:NGORecipient ;
-                                                                                       ngo:hasLocation ngo:Rajnandgaon ;
-                                                                                       ngo:requiresServices ngo:BusinessDevelopmentServices ,
-                                                                                                            ngo:FinanceServices ,
-                                                                                                            ngo:HumanResourcesServices ;
-                                                                                       ngo:avgMonthlyExpenditure "330000" ;
-                                                                                       ngo:description "The Action of Human Movement (AHM) is a registered non political secular organization and established on 04.10.2004 with like minded social work professionals and youths. This organization is working for the deprived sections of rural youths, Women, Children and BPL (Below Poverty Line) community in India. AHM NGO mainly working for the women SHG member's skill traning and social enterprise development, rural computer literacy program, carrier guidance and job placement training for the 10th and +2 students, evening study centre for tribal children development , community based rehabilitation, safe drinking and sanitation programs in rural Tamil Nadu. The founder Mr.C.Arockia Raj M.A.,D.Cer.Tech., DOA, M.Phill., is a social entrepreneur and social activist.He taught social education for the rural youths. He has ten years experience in the social development field.The AHM was started in 2004 with the help of St.Arulanandar community college students.The students gave the subscription for the smooth functioning of the AHM. Their thought, Vision and Mission about AHM is really appreciable. AHM NGO registered under societies act 27 of 1975 and registered on 04.10.2004. It is registered under 12AA and 80G of I.T.Act 1961. AHM NGO registered under FCRA Act 2010." ;
-                                                                                       ngo:ngoID "40.0" ;
-                                                                                       ngo:ngoName "Action Of Human Movement (AHM) Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
-                                                                                       ngo:requiresHelpWith "Finance, Human Resources" ;
-                                                                                       ngo:totalAssets "0" ;
-                                                                                       ngo:totalExpense 0.0 ;
-                                                                                       ngo:totalFundingGap "0" ;
-                                                                                       ngo:totalIncome 330000.0 ;
-                                                                                       ngo:vision "Visionâ€œIncluding the excluded and giving the best to the leastâ€Missionâ€œEqual and integrated community development through mind, education, Employment and economicsâ€" ;
-                                                                                       rdfs:label "Action Of Human Movement (AHM) Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#09a9f2bc-4344-4889-bf3b-38cee15c8bc4
