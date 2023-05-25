@@ -257,7 +257,7 @@ ngo:hasDocumentation rdf:type owl:ObjectProperty ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#hasEmployee
 ngo:hasEmployee rdf:type owl:ObjectProperty ;
-                owl:inverseOf ngo:worksForOrganization ;
+                owl:inverseOf ngo:isEmployedBy ;
                 rdfs:label "has Employee" .
 
 
@@ -389,6 +389,13 @@ ngo:isContainedIn rdf:type owl:ObjectProperty ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#isDocumentationFor
 ngo:isDocumentationFor rdf:type owl:ObjectProperty ;
                        rdfs:label "is Documentation For" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#isEmployedBy
+ngo:isEmployedBy rdf:type owl:ObjectProperty ;
+                 rdfs:domain prov:Person ;
+                 rdfs:range prov:Organization ;
+                 rdfs:label "works For Organization" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#isFinanceDataForNGO
@@ -538,13 +545,6 @@ ngo:sdgPreference rdf:type owl:ObjectProperty ;
                   ngo:defaultValue ngo:All_Goals ;
                   rdfs:comment "The SDG(s) that a funder prefers to focus on. Usually will be an instance of SDG_Goal but can be any SDG_Metric, i.e., including Targets or Indicators" ;
                   rdfs:label "sdg Preference" .
-
-
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#worksForOrganization
-ngo:worksForOrganization rdf:type owl:ObjectProperty ;
-                         rdfs:domain prov:Person ;
-                         rdfs:range prov:Organization ;
-                         rdfs:label "works For Organization" .
 
 
 ###  http://www.w3.org/ns/prov#wasGeneratedBy
@@ -11487,7 +11487,7 @@ ngo:NewDehli rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#NiveditaMiriyala
 ngo:NiveditaMiriyala rdf:type owl:NamedIndividual ,
                               ngo:CSRUser ;
-                     ngo:worksForOrganization ngo:IndianConsultingServices ;
+                     ngo:isEmployedBy ngo:IndianConsultingServices ;
                      ngo:firstName "Nivedita" ;
                      ngo:lastName "Miriyala" ;
                      rdfs:label "Nivedita Miriyala" .
@@ -12135,7 +12135,7 @@ ngo:RamanTechnologyProfile rdf:type owl:NamedIndividual ,
 ngo:ReemaRoy rdf:type owl:NamedIndividual ,
                       prov:Person ;
              ngo:createdEntity ngo:DinaLearnsMath ;
-             ngo:worksForOrganization ngo:WomenForIndia ;
+             ngo:isEmployedBy ngo:WomenForIndia ;
              rdfs:label "Reema Roy" .
 
 
@@ -12332,7 +12332,7 @@ ngo:StateBankofIndia rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#SudinDutta
 ngo:SudinDutta rdf:type owl:NamedIndividual ,
                         ngo:CSRUser ;
-               ngo:worksForOrganization ngo:RamanTechnologyCorporation ;
+               ngo:isEmployedBy ngo:RamanTechnologyCorporation ;
                ngo:firstName "Sudin" ;
                ngo:lastName "Dutta" ;
                rdfs:label "Sudin Dutta" .
