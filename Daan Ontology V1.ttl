@@ -342,7 +342,7 @@ ngo:hasSDGGoal rdf:type owl:ObjectProperty ;
                owl:inverseOf ngo:isSDGGoalFor ;
                rdfs:range sdg:Goal ;
                ngo:defaultValue ngo:All_Goals ;
-               rdfs:comment "Relates an NGO to any SDG metric: a Goal, Target, or Indicator" ;
+               rdfs:comment "Name is a bit misleading but \"has SDG Goal Target or Indicator\" is too long. Relates an NGO to any  SDG metric: a Goal, Target, or Indicator" ;
                rdfs:label "has SDG Goal" .
 
 
@@ -405,8 +405,8 @@ ngo:isFunderOf rdf:type owl:ObjectProperty ;
 ngo:isHigherRatingThan rdf:type owl:ObjectProperty ;
                        owl:inverseOf ngo:isLowerRatingThan ;
                        rdf:type owl:TransitiveProperty ;
-                       rdfs:domain ngo:NGORecipientDaanRating ;
-                       rdfs:range ngo:NGORecipientDaanRating ;
+                       rdfs:domain ngo:DaanRating ;
+                       rdfs:range ngo:DaanRating ;
                        rdfs:label "is Higher Rating Than" .
 
 
@@ -469,7 +469,7 @@ ngo:isRegistrationFor rdf:type owl:ObjectProperty ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#isSDGGoalFor
 ngo:isSDGGoalFor rdf:type owl:ObjectProperty ;
-                 rdfs:label "is Goal For NGO" .
+                 rdfs:label "is SDG Goal For" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#isSecondaryPOC
@@ -2017,6 +2017,18 @@ ngo:City rdf:type owl:Class ;
          rdfs:label "City" .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#DaanRating
+ngo:DaanRating rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( ngo:Diamond
+                                                 ngo:Gold
+                                                 ngo:NoRating
+                                                 ngo:Platinum
+                                               )
+                                   ] ;
+               rdfs:label "Daan Rating" .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Dadra_and_Nagar_Haveli_and_Daman_and_Diu_SDG_Measure
 ngo:Dadra_and_Nagar_Haveli_and_Daman_and_Diu_SDG_Measure rdf:type owl:Class ;
                                                          owl:equivalentClass [ owl:intersectionOf ( ngo:SDG_Measure_By_Place
@@ -2251,18 +2263,6 @@ ngo:NGORecipient rdf:type owl:Class ;
                                  ngo:Recipient ;
                  rdfs:comment "An NGO that recieves Grants from a Funder" ;
                  rdfs:label "NGO Recipient" .
-
-
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipientDaanRating
-ngo:NGORecipientDaanRating rdf:type owl:Class ;
-                           owl:equivalentClass [ rdf:type owl:Class ;
-                                                 owl:oneOf ( ngo:Diamond
-                                                             ngo:Gold
-                                                             ngo:NoRating
-                                                             ngo:Platinum
-                                                           )
-                                               ] ;
-                           rdfs:label "NGO Recipient Daan Rating" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#NGORegistration
@@ -8707,7 +8707,7 @@ ngo:Delhi_Territory_Measure_Composite rdf:type owl:NamedIndividual ,
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Diamond
 ngo:Diamond rdf:type owl:NamedIndividual ,
-                     ngo:NGORecipientDaanRating ;
+                     ngo:DaanRating ;
             ngo:isHigherRatingThan ngo:Platinum ;
             rdfs:label "Diamond" .
 
@@ -8971,7 +8971,7 @@ ngo:Goa_Measure_Composite rdf:type owl:NamedIndividual ,
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Gold
 ngo:Gold rdf:type owl:NamedIndividual ,
-                  ngo:NGORecipientDaanRating ;
+                  ngo:DaanRating ;
          ngo:isHigherRatingThan ngo:NoRating ;
          rdfs:label "Gold" .
 
@@ -11495,7 +11495,7 @@ ngo:NiveditaMiriyala rdf:type owl:NamedIndividual ,
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#NoRating
 ngo:NoRating rdf:type owl:NamedIndividual ,
-                      ngo:NGORecipientDaanRating ;
+                      ngo:DaanRating ;
              rdfs:label "No Rating" .
 
 
@@ -11637,7 +11637,7 @@ ngo:Pending rdf:type owl:NamedIndividual ,
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Platinum
 ngo:Platinum rdf:type owl:NamedIndividual ,
-                      ngo:NGORecipientDaanRating ;
+                      ngo:DaanRating ;
              ngo:isHigherRatingThan ngo:Gold ;
              rdfs:label "Platinum" .
 
@@ -12482,6 +12482,23 @@ ngo:TataConsultancyServices rdf:type owl:NamedIndividual ,
                             rdfs:label "Tata Consultancy Services" .
 
 
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#TechForHumanity
+ngo:TechForHumanity rdf:type owl:NamedIndividual ,
+                             ngo:NGORecipient ;
+                    ngo:description "Our goal is to promote the development of technology infrastructure and education for those who most need it to lead a better life." ;
+                    rdfs:comment "A fictitous NGO created for Demo purposes" ;
+                    rdfs:label "Tech For Humanity" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#TechForWomen
+ngo:TechForWomen rdf:type owl:NamedIndividual ,
+                          ngo:NGORecipient ;
+                 ngo:hasSDGGoal sdg:Gender_Equality ;
+                 ngo:description "" ;
+                 rdfs:comment "A fictional NGO for demo purposes" ;
+                 rdfs:label "Tech For Women" .
+
+
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Telangana
 ngo:Telangana rdf:type owl:NamedIndividual ,
                        ngo:IndianState ;
@@ -12756,7 +12773,7 @@ ngo:UnreliableNGO1 rdf:type owl:NamedIndividual ,
                             ngo:NGORecipient ;
                    ngo:hasLocation ngo:Chandigarh ;
                    ngo:hasSDGGoal sdg:Gender_Equality ;
-                   rdfs:comment "Created to test the query that retrieves NGOs that match a SPARQL query generated from a CSR Profile" ;
+                   rdfs:comment "A fictitous NGO created for Demo purposes. Created to test the query that retrieves NGOs that match a SPARQL query generated from a CSR Profile" ;
                    rdfs:label "Unreliable NGO1" .
 
 
@@ -13205,6 +13222,14 @@ ngo:WomenForIndia rdf:type owl:NamedIndividual ,
                   ngo:receivesFundingFrom ngo:SNCFFoundationIndia ;
                   ngo:url <https://womenforindia.org/> ;
                   rdfs:label "Women For India" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#WomenForWomenWebSiteProject
+ngo:WomenForWomenWebSiteProject rdf:type owl:NamedIndividual ,
+                                         ngo:Project ;
+                                ngo:projectExecutedBy ngo:TechForWomen ;
+                                rdfs:comment "Test data, not real" ;
+                                rdfs:label "WomenForWomen Web Site Project" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#XLSX
@@ -14160,7 +14185,7 @@ ngo:cbb089d4-ea70-4bdc-9043-1fdea1f8a95f rdf:type owl:NamedIndividual ,
                                          ngo:totalFundingGap "0" ;
                                          ngo:totalIncome 370000.0 ;
                                          ngo:vision "OUR MISSIONTo restore the lost childhood of deprived, neglected , street and working children and the lesser privilegedÂ—To develop a world which protects childrenâ€™s rights. A world that treats every child as equal without discrimination based on caste, creed and gender OUR VISSIONRestoring smile on the faces of the neglected and deprived, and bringing them in the societyTo fight for equality of every child, and his basic rights of food, education, health and shelterTo work for women empowerment and development" ;
-                                         rdfs:label "ALL INDIA PRAKASH SOCIETY Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" .
+                                         rdfs:label "ALL INDIA PRAKASH SOCIETY" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#cc4dba64-f395-4aa3-a213-02857deb02ca
