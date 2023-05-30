@@ -111,9 +111,7 @@ Nothing in this Public License constitutes or may be interpreted as a limitation
 Creative Commons is not a party to its public licenses. Notwithstanding, Creative Commons may elect to apply one of its public licenses to material it publishes and in those instances will be considered the “Licensor.” The text of the Creative Commons public licenses is dedicated to the public domain under the CC0 Public Domain Dedication. Except for the limited purpose of indicating that material is shared under a Creative Commons public license or as otherwise permitted by the Creative Commons policies published at creativecommons.org/policies, Creative Commons does not authorize the use of the trademark “Creative Commons” or any other trademark or logo of Creative Commons without its prior written consent including, without limitation, in connection with any unauthorized modifications to any of its public licenses or any other arrangements, understandings, or agreements concerning use of licensed material. For the avoidance of doubt, this paragraph does not form part of the public licenses.
 
 Creative Commons may be contacted at creativecommons.org.""" ;
-                                                   rdfs:comment """The NGO ontolology is licensed under the GNU Affero General Public License v3.0
-Permissions of this strongest copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights. When a modified version is used to provide a service over a network, the complete source code of the modified version must be made available.""" ,
-                                                                """This ontology utilizes the UN Sustainable Development Goals ontology: https://github.com/mdebellis/UNSDG 
+                                                   rdfs:comment """This ontology utilizes the UN Sustainable Development Goals ontology: https://github.com/mdebellis/UNSDG 
 
 The ontology was developed by Michael DeBellis, Vishnu Suresh, and Tejas Jyothi.  Direct questions to mdebellissf@gmail.com""" .
 
@@ -257,6 +255,13 @@ ngo:hasCityOfRegistration rdf:type owl:ObjectProperty ;
                           rdfs:domain ngo:NGORecipient ;
                           rdfs:range ngo:City ;
                           rdfs:label "has City Of Registration" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#hasDaanRating
+ngo:hasDaanRating rdf:type owl:ObjectProperty ;
+                  rdfs:domain ngo:Recipient ;
+                  rdfs:range ngo:DaanRating ;
+                  rdfs:comment "has Daan Rating" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#hasDocumentation
@@ -1849,7 +1854,7 @@ ngo:whatsapp rdf:type owl:DatatypeProperty ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#yearEstablished
 ngo:yearEstablished rdf:type owl:DatatypeProperty ;
-                    rdfs:subPropertyOf ngo:ngoBackgroundProperty ;
+                    rdfs:subPropertyOf ngo:ngoContactPropery ;
                     rdfs:label "year Established" .
 
 
@@ -7296,6 +7301,7 @@ ngo:AVI rdf:type owl:NamedIndividual ,
 ngo:ActionOfHumanMovement rdf:type owl:NamedIndividual ,
                                    ngo:NGORecipient ;
                           ngo:hasLocation ngo:Rajnandgaon ;
+                          ngo:hasSDGGoal sdg:GenderEquality5b ;
                           ngo:requiresServices ngo:BusinessDevelopmentServices ,
                                                ngo:FinanceServices ,
                                                ngo:HumanResourcesServices ;
@@ -8090,6 +8096,13 @@ ngo:Bilaspur rdf:type owl:NamedIndividual ,
 ngo:BusinessDevelopmentServices rdf:type owl:NamedIndividual ,
                                          ngo:Services ;
                                 rdfs:label "Business Development Services" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#CellServiceForWomenInCrisis
+ngo:CellServiceForWomenInCrisis rdf:type owl:NamedIndividual ,
+                                         ngo:Project ;
+                                ngo:hasStatus ngo:InProcess ;
+                                ngo:projectExecutedBy ngo:TechForWomen .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#CentreForAdvocasyAndResearch
@@ -12147,7 +12160,7 @@ ngo:RamanTechnologyProfile rdf:type owl:NamedIndividual ,
 ngo:ReemaRoy rdf:type owl:NamedIndividual ,
                       prov:Person ;
              ngo:createdEntity ngo:DinaLearnsMath ;
-             ngo:isEmployedBy ngo:WomenForIndia ;
+             ngo:isEmployedBy ngo:TechForWomen ;
              rdfs:label "Reema Roy" .
 
 
@@ -12197,6 +12210,15 @@ ngo:STEMForGirlsProject rdf:type owl:NamedIndividual ,
                         ngo:endDate "2021-04-07T00:00:00"^^xsd:dateTime ;
                         ngo:startDate "2021-02-01T00:00:00"^^xsd:dateTime ;
                         rdfs:label "STEM For Girls Project" .
+
+
+###  http://www.semanticweb.org/mdebe/ontologies/NGO#SampleNGO2
+ngo:SampleNGO2 rdf:type owl:NamedIndividual ,
+                        ngo:NGORecipient ;
+               ngo:hasSDGGoal sdg:Gender_Equality ;
+               ngo:description "Tech for Women provides technology education, infrastructure, and tools to promote gender equality for girls and women of India" ;
+               rdfs:comment "A fictional NGO for demo purposes" ;
+               rdfs:label "Sample NGO2" .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#Sikkim
@@ -12497,6 +12519,8 @@ ngo:TataConsultancyServices rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#TechForHumanity
 ngo:TechForHumanity rdf:type owl:NamedIndividual ,
                              ngo:NGORecipient ;
+                    ngo:hasSDGGoal sdg:GenderEquality5b ,
+                                   <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#55eadffb-38b2-4f6b-b9ef-f378b17a155b> ;
                     ngo:description "Our goal is to promote the development of technology infrastructure and education for those who most need it to lead a better life." ;
                     rdfs:comment "A fictitous NGO created for Demo purposes" ;
                     rdfs:label "Tech For Humanity" .
@@ -12505,9 +12529,28 @@ ngo:TechForHumanity rdf:type owl:NamedIndividual ,
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#TechForWomen
 ngo:TechForWomen rdf:type owl:NamedIndividual ,
                           ngo:NGORecipient ;
-                 ngo:hasSDGGoal sdg:Gender_Equality ;
-                 ngo:description "" ;
-                 rdfs:comment "A fictional NGO for demo purposes" ;
+                 ngo:executesProject ngo:STEMForGirlsProject ;
+                 ngo:hasDaanRating ngo:Platinum ;
+                 ngo:hasLocation ngo:Rajnandgaon ;
+                 ngo:hasSDGGoal sdg:GenderEquality5b ,
+                                sdg:Gender_Equality ,
+                                sdg:QualityEducation43 ,
+                                sdg:QualityEducation44 ,
+                                sdg:QualityEducation45 ,
+                                sdg:Quality_Education ,
+                                <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#55eadffb-38b2-4f6b-b9ef-f378b17a155b> ;
+                 ngo:providesServicesInLocation ngo:AndamanandNicobarIslands ,
+                                                ngo:India ;
+                 ngo:receivesFundingFrom ngo:SNCFFoundationIndia ;
+                 ngo:missionStatement "Empower women via technology" ;
+                 ngo:orgEmail "ndhutta@techforwomen.org"^^xsd:anyURI ;
+                 ngo:orgWebsite "http://www.techforwomen.org"^^xsd:anyURI ;
+                 ngo:primaryPoc "Nivedita Dhutta" ;
+                 ngo:primaryPocPhone "+91 5555-123456" ;
+                 ngo:regNo "123971" ;
+                 ngo:totalIncome 800000.0 ;
+                 ngo:vision "Use technology to promote gender equality" ;
+                 ngo:url <https://womenforindia.org/> ;
                  rdfs:label "Tech For Women" .
 
 
@@ -13220,26 +13263,11 @@ ngo:West_Bengal_Measure_Composite rdf:type owl:NamedIndividual ,
                                   rdfs:label "West Bengal Measure Composite" .
 
 
-###  http://www.semanticweb.org/mdebe/ontologies/NGO#WomenForIndia
-ngo:WomenForIndia rdf:type owl:NamedIndividual ,
-                           ngo:NGORecipient ;
-                  ngo:executesProject ngo:STEMForGirlsProject ;
-                  ngo:hasSDGGoal sdg:GenderEquality5b ,
-                                 sdg:Gender_Equality ,
-                                 sdg:QualityEducation43 ,
-                                 sdg:QualityEducation44 ,
-                                 sdg:QualityEducation45 ,
-                                 sdg:Quality_Education ;
-                  ngo:providesServicesInLocation ngo:AndamanandNicobarIslands ;
-                  ngo:receivesFundingFrom ngo:SNCFFoundationIndia ;
-                  ngo:url <https://womenforindia.org/> ;
-                  rdfs:label "Women For India" .
-
-
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#WomenForWomenWebSiteProject
 ngo:WomenForWomenWebSiteProject rdf:type owl:NamedIndividual ,
                                          ngo:Project ;
-                                ngo:projectExecutedBy ngo:TechForWomen ;
+                                ngo:hasStatus ngo:Complete ;
+                                ngo:projectExecutedBy ngo:SampleNGO2 ;
                                 rdfs:comment "Test data, not real" ;
                                 rdfs:label "WomenForWomen Web Site Project" .
 
@@ -19987,4 +20015,4 @@ ngo:psdt rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
                                          ]
  ] .
 
-###  Generated by the OWL API (version 4.5.24.2023-01-14T21:28:32Z) https://github.com/owlcs/owlapi
+###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi
