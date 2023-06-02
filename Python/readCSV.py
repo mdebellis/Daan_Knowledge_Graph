@@ -49,7 +49,7 @@ assistantSecretaryEmailProp = conn.createURI("http://www.semanticweb.org/mdebe/o
 ngoTypeProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoType")
 
 
-with open('NgoContact_final.csv', mode='r') as csv_file:
+with open('NgoContact_final.csv', mode='r', encoding='utf-8') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     row_count = 0
@@ -179,7 +179,7 @@ with open('NgoContact_final.csv', mode='r') as csv_file:
             if ngoType != "":
                 conn.add(NewNGO, ngoTypeProp, ngoType)
 
-            print(f'New NGO is {NewNGOString} ngoID is {ngoID} ngoName is {ngoName}')
+            print(f'New NGO: {NewNGOString} ')
 
             line_count += 1
     print(f'Processed {line_count} lines.')
