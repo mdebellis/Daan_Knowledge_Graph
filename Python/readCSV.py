@@ -2,8 +2,8 @@ from franz.openrdf.sail.allegrographserver import AllegroGraphServer
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 import csv
-conn = ag_connect('NGO',  host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+conn = ag_connect('NGO',  host='localhost', port='NNNNN',
+                  user='xxxxxxxxx', password='xxxxxxx')
 
 NGOClass = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient")
 ngoIDProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoID")
