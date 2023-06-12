@@ -1326,9 +1326,7 @@ ngo:ngoFinanceProperty rdf:type owl:DatatypeProperty ;
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#ngoId
-ngo:ngoId rdf:type owl:DatatypeProperty ;
-          rdfs:comment "Number used to identify goals and other measures" ;
-          rdfs:label "ngo Id" .
+ngo:ngoId rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#ngoName
@@ -1345,7 +1343,6 @@ ngo:ngoRegistrationProperty rdf:type owl:DatatypeProperty ;
 
 ###  http://www.semanticweb.org/mdebe/ontologies/NGO#ngoType
 ngo:ngoType rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf ngo:ngoRegistrationProperty ;
             rdfs:label "type Of N G O" .
 
 
@@ -7025,7 +7022,7 @@ ngo:AREducationalAcadamy rdf:type owl:NamedIndividual ,
                          ngo:keyIssues "This A R EDUCATIONAL ACADEMY NGO charity is working on Key Issues of Animal Husbandry, Dairying & Fisheries, Agriculture, Biotechnology, Civic Issues, Drinking Water, Education & Literacy, Environment & Forests, Food Processing, HIV/AIDS, Housing, Legal Awareness & Aid, Labour & Employment, Micro Finance (SHGs), Minority Issues, Nutrition, Panchayati Raj, Rural Development & Poverty Alleviation, Tribal Affairs, Tourism, Urban Development & Poverty Alleviation, Vocational Training" ;
                          ngo:mailingAddress "H.No.8-1-18/37/1, Second floor, Kranthi Nagar, R.R.District. 500 079." ;
                          ngo:majorActivitiesAndAchievements "Community Health, RCH Awareness, Women and Child Welfare, Domestic violance" ;
-                         ngo:ngoId "AP/2011/0042362" ;
+                         ngo:ngoId "NGO2" ;
                          ngo:ngoName "A R EDUCATIONAL ACADEMY" ;
                          ngo:ngoType "Society" ;
                          ngo:officePhone "0000-000000" ;
@@ -7058,7 +7055,7 @@ ngo:ActionOfHumanMovement rdf:type owl:NamedIndividual ,
                                                ngo:HumanResourcesServices ;
                           ngo:avgMonthlyExpenditure "330000" ;
                           ngo:description "The Action of Human Movement (AHM) is a registered non political secular organization and established on 04.10.2004 with like minded social work professionals and youths. This organization is working for the deprived sections of rural youths, Women, Children and BPL (Below Poverty Line) community in India. AHM NGO mainly working for the women SHG member's skill traning and social enterprise development, rural computer literacy program, carrier guidance and job placement training for the 10th and +2 students, evening study centre for tribal children development , community based rehabilitation, safe drinking and sanitation programs in rural Tamil Nadu. The founder Mr.C.Arockia Raj M.A.,D.Cer.Tech., DOA, M.Phill., is a social entrepreneur and social activist.He taught social education for the rural youths. He has ten years experience in the social development field.The AHM was started in 2004 with the help of St.Arulanandar community college students.The students gave the subscription for the smooth functioning of the AHM. Their thought, Vision and Mission about AHM is really appreciable. AHM NGO registered under societies act 27 of 1975 and registered on 04.10.2004. It is registered under 12AA and 80G of I.T.Act 1961. AHM NGO registered under FCRA Act 2010." ;
-                          ngo:ngoId "40.0" ;
+                          ngo:ngoId "NGO1" ;
                           ngo:ngoName "Action Of Human Movement (AHM) Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
                           ngo:requiresHelpWith "Finance, Human Resources" ;
                           ngo:totalAssets "0" ;
@@ -7866,7 +7863,7 @@ ngo:CentreForAdvocasyAndResearch rdf:type owl:NamedIndividual ,
                                                       ngo:HumanResourcesServices ;
                                  ngo:avgMonthlyExpenditure "3300000" ;
                                  ngo:description "The CFAR as an organisation is leading the crusade to mainstream marginalised communities like- sex workers, transgender and other sexual miniortiesÂ forums of single women, networks of HIV positive persons, injecting drug users, people living with disabilities, the urban and rural poor and the girl child - so that their issues can be understood and their concerns shared." ;
-                                 ngo:ngoId "121.0" ;
+                                 ngo:ngoId "NGO3" ;
                                  ngo:ngoName "CENTRE FOR ADVOCACY AND RESEARCH Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
                                  ngo:orgWebsite "http://http://www.cfar.org.in/" ;
                                  ngo:requiresHelpWith "Finance" ;
@@ -8331,7 +8328,7 @@ ngo:DaminiSocialEnterprises rdf:type owl:NamedIndividual ,
                                                  ngo:HumanResourcesServices ;
                             ngo:avgMonthlyExpenditure "0" ;
                             ngo:description "Damini works for encorgaging women and child empowerment through community approach where the sustainable development is encouraged through community development." ;
-                            ngo:ngoId "153.0" ;
+                            ngo:ngoId "NGO4" ;
                             ngo:ngoName "Damini Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
                             ngo:requiresHelpWith "Business Development, Finance, Human Resources" ;
                             ngo:totalAssets "0" ;
@@ -8502,7 +8499,7 @@ ngo:DignityFoundationforIndia rdf:type owl:NamedIndividual ,
                                                    ngo:HumanResourcesServices ;
                               ngo:avgMonthlyExpenditure "27310000" ;
                               ngo:description "Dignity Foundation is a not-for-profit organization that has been working in the field of Elder Care for over 18 years. Dignity offers the 50+ an enriching set of opportunities to lead a more dignified, secure, fun-filled and fulfilling life. Dignity provides social support services, knowledge, life enrichment, shelter and advocacy for senior citizens. It runs a number of programs like: - Helpline for senior citizens - to address elder abuse and other distress situations - Ration Service for BOP senior citizens - monthly basket of basic provisions for the very poor senior citizens - Dementia Day Care Centre - to provide therapies for persons with Dementia and relief to their caregivers - Senior Citizens ID Card - Govt. issued ID Cards to help avail various benefits - Counselling Services - for various legal, financial and other matters - Companionship - to mitigate loneliness for senior citizens who cannot step out of their homes - Life Enrichment Centres - a platform for regular social interaction and structured activities - Dignity on Wheels - an outreach programme for reaching out to poor senior citizens" ;
-                              ngo:ngoId "165.0" ;
+                              ngo:ngoId "NGO5" ;
                               ngo:ngoName "Dignity Foundation Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
                               ngo:orgWebsite "http://www.dignityfoundation.org" ;
                               ngo:requiresHelpWith "Business Development, Finance" ;
@@ -8578,7 +8575,7 @@ ngo:GauravJyotiWelfareSociety rdf:type owl:NamedIndividual ,
                                                    ngo:HumanResourcesServices ;
                               ngo:avgMonthlyExpenditure "880000" ;
                               ngo:description "The organisation functions primarily on the health care programs it has been associated . Gaurav Jyoti Welfare Society is keenly involved in spreading the concept of health education to the poor who have been subject of various health problems due to lack of proper means and knowldge in regard to health measures." ;
-                              ngo:ngoId "194.0" ;
+                              ngo:ngoId "NGO6" ;
                               ngo:ngoName "Gaurav Jyoti Welfare Society Best Non-Government Organizations & Social Enterprises in India â€“ NGO Impact" ;
                               ngo:requiresHelpWith "Business Development, Finance, Human Resources" ;
                               ngo:totalAssets "0" ;
@@ -11970,6 +11967,7 @@ ngo:SampleNGO2 rdf:type owl:NamedIndividual ,
                         ngo:TestData ;
                ngo:hasSDGGoal sdg:Gender_Equality ;
                ngo:description "Tech for Women provides technology education, infrastructure, and tools to promote gender equality for girls and women of India" ;
+               ngo:ngoId "NGO7" ;
                rdfs:comment "A fictional NGO for demo purposes" ;
                rdfs:label "Sample NGO2" .
 
@@ -12276,6 +12274,7 @@ ngo:TechForHumanity rdf:type owl:NamedIndividual ,
                     ngo:hasSDGGoal sdg:GenderEquality5b ,
                                    <http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#55eadffb-38b2-4f6b-b9ef-f378b17a155b> ;
                     ngo:description "Our goal is to promote the development of technology infrastructure and education for those who most need it to lead a better life." ;
+                    ngo:ngoId "NGO8" ;
                     rdfs:comment "A fictitous NGO created for Demo purposes" ;
                     rdfs:label "Tech For Humanity" .
 
@@ -12298,6 +12297,7 @@ ngo:TechForWomen rdf:type owl:NamedIndividual ,
                                                 ngo:India ;
                  ngo:receivesFundingFrom ngo:SNCFFoundationIndia ;
                  ngo:missionStatement "Empower women via technology" ;
+                 ngo:ngoId "NGO9" ;
                  ngo:orgEmail "ndhutta@techforwomen.org"^^xsd:anyURI ;
                  ngo:orgWebsite "http://www.techforwomen.org"^^xsd:anyURI ;
                  ngo:primaryPoc "Nivedita Dhutta" ;
@@ -12584,6 +12584,7 @@ ngo:UnreliableNGO1 rdf:type owl:NamedIndividual ,
                             ngo:TestData ;
                    ngo:hasLocation ngo:Chandigarh ;
                    ngo:hasSDGGoal sdg:Gender_Equality ;
+                   ngo:ngoId "NGO10" ;
                    rdfs:comment "A fictitous NGO created for Demo purposes. Created to test the query that retrieves NGOs that match a SPARQL query generated from a CSR Profile" ;
                    rdfs:label "Unreliable NGO1" .
 
