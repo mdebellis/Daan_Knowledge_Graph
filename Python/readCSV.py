@@ -2,28 +2,40 @@ from franz.openrdf.sail.allegrographserver import AllegroGraphServer
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 import csv
-# Deleted connection details for security
-conn = ag_connect('NGO', host='XXXXXX', port='XXXXXX',
-                  user='XXXXXX', password='XXXXX')
+
+conn = ag_connect('NGO', host='XXXXX', port='XXXXX',
+                  user='XXXXX', password='XXXXXX')
+# Deleted server info for security
 ngostr = "http://www.semanticweb.org/mdebe/ontologies/NGO#"
 
 
 def makeNGOIRIstr (inputstr):
     return ngostr + inputstr
 
-
 owl_named_individual = conn.createURI("http://www.w3.org/2002/07/owl#NamedIndividual")
 owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypeProperty")
-ngoIDProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoID")
+ngoIDProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoId")
+totalAssets = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#totalAssets")
 ngoNameProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoName")
-bpath = 'NGOBackground_final.csv'
+bpath = "NGOContact_final.csv"
 NGOClass = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient")
 
 
 def findNGO(idstr):
-    # print(f'Idstring {idstr}')
-    for ft_triple in conn.evalFreeTextSearch(idstr, index="FindNGO"):
-        return conn.createURI(ft_triple[0])
+    statements = conn.getStatements(None, ngoIDProp, idstr)
+    with statements:
+        for statement in statements:
+            if len(statements) > 1:
+                print(f'Error two or more Individuals with ngoID: {idstr}')
+                return statement[0]
+            elif len(statements) == 1:
+                print(f'Found NGO with ngoID: {idstr}')
+                return statement[0]
+            else:
+                print(f'No NGO with ngoID: {idstr}')
+                return None
+
+
 
 # def find_property(prop_str):
 #     iri_str = makeNGOIRIstr(prop_str)
@@ -51,10 +63,13 @@ def read_csv(path):
             if line_count == 0:
                 # Process the first row of property names. Convert each word to a property and put the
                 # property in proplist in the same order so for the subsequent rows, row[i] goes in proplist[i]
-                print(f'Line {line_count}')
+                # the first column is the ID property that uniquely identifies each instance and determines if an
+                # individual already exists for that row, in which case add the data to that existing individual
                 while i < row_count:
                     newpropstr = makeNGOIRIstr(row[i])
-                    newprop = conn.createURI(newpropstr)
+                    newprop = ngoIDProp
+                    if i > 0:
+                        newprop = conn.createURI(newpropstr)
                     proplist.append(newprop)
                     # print(f'Proplist: {proplist}')
                     i += 1
@@ -62,8 +77,8 @@ def read_csv(path):
                 print(f'prop list: {proplist}')
             elif findNGO(row[0]) is not None:
                 # For subsequent rows there are two conditions: either the Individual already exists (in which case
-                # the fingNGO FTI will find it that is this condition
-                print(f'Line {line_count}')
+                # the fingNGO FTI will find it) that is this condition
+                print(f'Found NGO Line {line_count}')
                 found_ngo = findNGO(row[0])
                 while i < row_count:
                     nextval = row[i]
@@ -73,11 +88,12 @@ def read_csv(path):
                 line_count += 1
             else:
                 # If the Individual doesn't exist then it will be created
-                print(f'Line {line_count}')
+                print(f'New NGO Line {line_count}')
                 new_ngo_iri = conn.createURI(
                     'http://www.semanticweb.org/mdebe/ontologies/NGO#NGO2000000' + str(line_count))
                 conn.add(new_ngo_iri, RDF.TYPE, NGOClass)
                 conn.add(new_ngo_iri, RDF.TYPE, owl_named_individual)
+                print(f'New NGO {new_ngo_iri}')
                 while i < row_count:
                     nextval = row[i]
                     if nextval != "":
@@ -89,4 +105,6 @@ def read_csv(path):
 
 
 read_csv(bpath)
+
+
 
