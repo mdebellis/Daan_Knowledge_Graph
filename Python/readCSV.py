@@ -3,9 +3,8 @@ from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 import csv
 
-conn = ag_connect('NGO', host='XXXXX', port='XXXXX',
-                  user='XXXXX', password='XXXXXX')
-# Deleted server info for security
+conn = ag_connect('NGO', host='xxxx', port='xxxxx',
+                  user='xxxxxx', password='xxxxx')
 ngostr = "http://www.semanticweb.org/mdebe/ontologies/NGO#"
 
 
@@ -90,7 +89,7 @@ def read_csv(path):
                 # If the Individual doesn't exist then it will be created
                 print(f'New NGO Line {line_count}')
                 new_ngo_iri = conn.createURI(
-                    'http://www.semanticweb.org/mdebe/ontologies/NGO#NGO2000000' + str(line_count))
+                    'http://www.semanticweb.org/mdebe/ontologies/NGO#NGO' + str(line_count))
                 conn.add(new_ngo_iri, RDF.TYPE, NGOClass)
                 conn.add(new_ngo_iri, RDF.TYPE, owl_named_individual)
                 print(f'New NGO {new_ngo_iri}')
@@ -107,4 +106,5 @@ def read_csv(path):
 read_csv(bpath)
 
 
+# findNGO("NGO200000014")
 
