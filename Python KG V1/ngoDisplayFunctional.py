@@ -4,6 +4,8 @@ from PySide6.QtCore import *
 from PySide6 import QtCore
 from PySide6.QtGui import *
 from franz.openrdf.connect import ag_connect
+# Must pip install PySide6 before running
+# establish connection to repo on line 24
 
 class NGOScreen(QWidget):
 
@@ -19,8 +21,8 @@ class NGOScreen(QWidget):
         self.ngo = ngo
         
         info = []
-        self.conn = ag_connect('minitest', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        self.conn = ag_connect('enter repo', host='localhost', port='10035',
+                               user='xxx', password='xxx')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         iris = [self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement'),
@@ -31,7 +33,7 @@ class NGOScreen(QWidget):
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#officePhone')]
         for iri in range(len(iris)):
                 l = '"Not Found"'
-                for labelstments in self.conn.getStatements(ngo, iris[iri], None):
+                for labelstments in self.conn.getStatements(self.ngo, iris[iri], None):
                     l = str(labelstments[2])
                 label = QLabel(l[1:len(l)-1])
                 label.setWordWrap(True)

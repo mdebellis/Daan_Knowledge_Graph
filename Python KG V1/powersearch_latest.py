@@ -7,19 +7,21 @@ from ngoDisplayFunctional import NGOScreen
 from functools import partial
 from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
-from temp import *
+from dropdownMS import *
 import re
-
+# Must pip install PySide6 before running
+# establish connection to repo on lines 19 and 389
 
 class Window(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.conn = ag_connect('NGO', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        self.conn = ag_connect('enter repo', host='localhost', port='10035',
+                               user='xxx', password='xxx')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
-        self.setWindowTitle('NGO Search')
+        self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
+        self.setWindowTitle('Search')
         self.vert = QVBoxLayout()  # general outer layout
         self.inputs = QFormLayout()  # format for entering in the rest of data
         self.row1 = QHBoxLayout()  # format for location row row
@@ -34,7 +36,7 @@ class Window(QWidget):
         self.resultsbuttons = []  # list of buttons to link results to ngo pages
         self.ngoScreen = None
         self.sdgIRI = {}
-        self.resize(900, 800)
+        self.resize(1400, 900)
         
         self.n = 10
         self.nums = QLabel('Results: (Showing ' + str(self.n) + ' of 300,000)')
@@ -46,7 +48,10 @@ class Window(QWidget):
                                  "Telangana","Uttar Pradesh","Uttarakhand","West Bengal","Andaman & Nicobar","Chandigarh",
                                  "Dadra & Nagar Haveli and Daman & Diu","Delhi","Jammu & Kashmir","Ladakh","Lakshadweep","Puducherry (UT)"])
 
-        # self.row1.addWidget(self.statedrop)
+        self.type = QComboBox()
+        self.type.addItems(['All', 'NGO', 'CSR'])
+        self.type.currentTextChanged.connect(self.corp)
+        self.row1.addWidget(self.type)
 
         self.scroll = QScrollArea()  # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QWidget()  # Widget that contains the collection of Vertical Box
@@ -94,13 +99,34 @@ class Window(QWidget):
         self.maxnumsearch = QLineEdit()
         self.maxnumsearch.setPlaceholderText("10")
 
+        self.row3 = QHBoxLayout()
+        self.row3.addWidget(QLabel('Organization Type:'))
+        self.row3.addLayout(self.horz)
+        
+        self.orgframe = QFrame()
+        self.orgframe.setLayout(self.row3)
+        self.orgframe.hide()
+
+        self.row4 = QHBoxLayout()
+        self.row4.addWidget(QLabel('Organization Class:'))
+        self.clas = QComboBox()
+        self.clas.addItems(['All', 'Private', 'Public'])
+        self.row4.addWidget(self.clas)
+        self.clasframe = QFrame()
+        self.clasframe.setLayout(self.row4)
+        self.clasframe.hide()
+    
+        
+        self.inputs.addRow(self.row1)
         self.inputs.addRow(QLabel('Locations:'), self.statedrop)
         self.inputs.addRow(QLabel('SDGs:'), self.row2)
-        self.inputs.addRow(QLabel('Organization Type:'), self.horz)
+        self.inputs.addRow(self.orgframe)
+        self.inputs.addRow(self.clasframe)
         self.inputs.addRow(QLabel('Minimum Annual Budget:'), self.minf)
         self.inputs.addRow(QLabel('Maximum Annual Budget:'), self.maxf)
         self.inputs.addRow(QLabel('Text Search:'), self.textS)
         self.inputs.addRow(QLabel('Maximum Number of NGOs:'), self.maxnumsearch)
+        
 
         searchB = QPushButton("Search")
         searchB.clicked.connect(self.doQuery)
@@ -148,6 +174,17 @@ class Window(QWidget):
         self.sdgIRI = irimapper
         self.t.close()
     
+    def corp(self):
+        if self.type.currentText() == 'All':
+            self.orgframe.hide()
+            self.clasframe.hide()
+        if self.type.currentText() == 'NGO':
+            self.orgframe.show()
+            self.clasframe.hide()
+        if self.type.currentText() == 'CSR':
+            self.orgframe.hide()
+            self.clasframe.show()
+        self.show()
     def get_name_from_iri(self, iri):
         iri_str = str(iri)
         iri_str = iri_str.replace('<', '')
@@ -158,8 +195,16 @@ class Window(QWidget):
             iri_str = iri_str.replace('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#', 'sdg:')
         return iri_str
 
-    def generateQuery(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[],orgTypeList = [], qlimit ="20",fti_string=""):
-        qstring = "SELECT * WHERE {?ngoRecipient a ngo:NGORecipient. "
+    def generateQuery(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[],orgTypeList = [], classtype = 'All', qlimit ="20",fti_string=""):
+        ctype = ''
+        if self.type.currentText() == 'All':
+            ctype = 'prov:Organization'
+        elif self.type.currentText() == 'NGO':
+            ctype = 'ngo:NGORecipient'
+        else:
+            ctype = 'ngo:CSRProgram'
+            
+        qstring = "SELECT * WHERE {?ngoRecipient a " + ctype  + ". "
         org_type_test_string = "?ngoRecipient ngo:orgType ?orgType."
         org_type_query_string = ""
         loc_string = "?ngoRecipient ngo:state ?state."
@@ -175,11 +220,15 @@ class Window(QWidget):
             loc_filter = loc_filter +  "|| ?state =  \"" + loc + "\" "
         if loc_list !=[]:
             qstring = qstring + loc_string + " Filter(" + loc_filter[3:] + ")"
-        for orgType in orgTypeList:
-            org_type_query_string = org_type_query_string + "|| ?orgType =  \"" + orgType + "\" "
-        if orgTypeList !=[]:
-            org_type_query_string = org_type_test_string + " Filter(" + org_type_query_string[3:] + ")"
-            qstring = qstring + org_type_query_string
+        if ctype == 'ngo:NGORecipient':
+            for orgType in orgTypeList:
+                org_type_query_string = org_type_query_string + "|| ?orgType =  \"" + orgType + "\" "
+            if orgTypeList !=[]:
+                org_type_query_string = org_type_test_string + " Filter(" + org_type_query_string[3:] + ")"
+                qstring = qstring + org_type_query_string
+        if ctype == 'ngo:CSRProgram' and classtype != 'All':
+             cs = '?ngoRecipient ngo:class \"' + classtype + "\"."
+             qstring = qstring + cs
         for sdg in sdgs:
             sdgname = self.get_name_from_iri(sdg)
             sdg_test_string = " ?ngoRecipient ngo:hasSDGGoal " + sdgname + ". "
@@ -190,8 +239,8 @@ class Window(QWidget):
         qstring = qstring + "} LIMIT " + qlimit
         return qstring
 
-    def query(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[], orgTypeList = [], qlimit ="20",fti_string=""):
-        query_string = self.generateQuery(sdgs, maxBudget, minBudget, loc_list, orgTypeList, qlimit,fti_string)
+    def query(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[], orgTypeList = [], classtype = 'All', qlimit ="20",fti_string=""):
+        query_string = self.generateQuery(sdgs, maxBudget, minBudget, loc_list, orgTypeList, classtype, qlimit,fti_string)
         tuple_query = self.conn.prepareTupleQuery(QueryLanguage.SPARQL, query_string)
         result = tuple_query.evaluate()
         ngor_list = []
@@ -236,14 +285,14 @@ class Window(QWidget):
             sdglist.append(self.sdgIRI[s.text()])
 
         self.resultList = self.query(sdgs=sdglist, maxBudget = maxbudget, minBudget = minbudget, 
-                                     loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, qlimit = src)
+                                     loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, 
+                                     classtype = self.clas.currentText(), qlimit = src)
         
         iris = [self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#avgMonthlyExpenditure'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgType')]
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#avgMonthlyExpenditure')]
         
         for param in self.allResults:
             param.deleteLater()
@@ -254,16 +303,21 @@ class Window(QWidget):
             for iri in range(len(iris)):
                 for labelstments in self.conn.getStatements(self.resultList[ngorecip], iris[iri], None):
                     l = str(labelstments[2])
+                    if iris[iri] == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'):
+                        for script in self.conn.getStatements(labelstments[2], 
+                                                              self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#goalDescription'), None):
+                            l = str(script[2])     
                     if len(l) > 1000:
                         l = l[:1001]
                     label = QLabel(l[1:len(l)-1])
                     label.setWordWrap(True)
                     self.allResults.append(label)
                     self.results.addWidget(label, ngorecip + 1, iri)
+                    break
         self.resultsbuttons = []
         
         for i in range(len(self.resultList)): #adds all buttons into results display
-            self.resultsbuttons.append(QPushButton('See NGO'))
+            self.resultsbuttons.append(QPushButton('See Corporation'))
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
         
@@ -276,12 +330,12 @@ class Window(QWidget):
 
     def setResults(self):  # set the labels for formatting the results, should only be called once
 
-        name1 = QLabel('NGO Name')
+        name1 = QLabel('Name')
         font = name1.font()
         font.setBold(True)
         name1.setFont(font)
         self.results.addWidget(name1, 0, 0)
-        name2 = QLabel('NGO Objective')
+        name2 = QLabel('Objective')
         name2.setFont(font)
         self.results.addWidget(name2, 0, 1)
         name3 = QLabel('SDG Focus')
@@ -293,9 +347,6 @@ class Window(QWidget):
         name5 = QLabel('Monthly Budget')
         name5.setFont(font)
         self.results.addWidget(name5, 0, 4)
-        name6 = QLabel('Organization Type')
-        name6.setFont(font)
-        self.results.addWidget(name6, 0, 5)
 
         self.doQuery()
 
@@ -335,8 +386,8 @@ class Tree(QWidget):
         self.selects = []
         items = []
         self.irimapper = {}
-        conn = ag_connect('minitest', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        conn = ag_connect('enter repo', host='localhost', port='10035',
+                               user='xxx', password='xxx')
         conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         sdg_class = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#SDGGoal')
         targetIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasTarget')

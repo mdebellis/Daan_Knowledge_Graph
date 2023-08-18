@@ -1,3 +1,4 @@
+# https://gis.stackexchange.com/questions/350148/qcombobox-multiple-selection-pyqt5
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
