@@ -7,17 +7,16 @@ from ngoDisplayFunctional import NGOScreen
 from functools import partial
 from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
-from dropdownMS import *
+from temp import *
 import re
-# Must pip install PySide6 before running
-# establish connection to repo on lines 19 and 389
+
 
 class Window(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.conn = ag_connect('enter repo', host='localhost', port='10035',
-                               user='xxx', password='xxx')
+        self.conn = ag_connect('NGOLinks', host='localhost', port='10035',
+                               user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
         self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
@@ -37,6 +36,13 @@ class Window(QWidget):
         self.ngoScreen = None
         self.sdgIRI = {}
         self.resize(1400, 900)
+        
+        #fti creation
+        mission_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement')
+        vision_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#vision')
+        objective_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives')
+        description_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#description')
+        self.conn.createFreeTextIndex("NGO-INDEX", predicates=[description_prop,mission_prop,vision_prop,objective_prop], wordFilters=["stem.english"])
         
         self.n = 10
         self.nums = QLabel('Results: (Showing ' + str(self.n) + ' of 300,000)')
@@ -286,7 +292,7 @@ class Window(QWidget):
 
         self.resultList = self.query(sdgs=sdglist, maxBudget = maxbudget, minBudget = minbudget, 
                                      loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, 
-                                     classtype = self.clas.currentText(), qlimit = src)
+                                     classtype = self.clas.currentText(), qlimit = src, fti_string = self.textS.text())
         
         iris = [self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
@@ -301,19 +307,26 @@ class Window(QWidget):
         
         for ngorecip in range(len(self.resultList)): #adds all parameters of specified number of ngos into display
             for iri in range(len(iris)):
+                sdglabel = ''
                 for labelstments in self.conn.getStatements(self.resultList[ngorecip], iris[iri], None):
-                    l = str(labelstments[2])
                     if iris[iri] == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'):
                         for script in self.conn.getStatements(labelstments[2], 
                                                               self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#goalDescription'), None):
-                            l = str(script[2])     
-                    if len(l) > 1000:
-                        l = l[:1001]
-                    label = QLabel(l[1:len(l)-1])
+                            sdglabel = sdglabel + str(script[2]) + '\n' 
+                    else:  
+                        l = str(labelstments[2])
+                        if len(l) > 1000:
+                            l = l[:1001]
+                        label = QLabel(l[1:len(l)-1])
+                        label.setWordWrap(True)
+                        self.allResults.append(label)
+                        self.results.addWidget(label, ngorecip + 1, iri)
+                        break
+                if iris[iri] == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'):
+                    label = QLabel(sdglabel[1:len(sdglabel)-1])
                     label.setWordWrap(True)
                     self.allResults.append(label)
                     self.results.addWidget(label, ngorecip + 1, iri)
-                    break
         self.resultsbuttons = []
         
         for i in range(len(self.resultList)): #adds all buttons into results display
@@ -386,8 +399,8 @@ class Tree(QWidget):
         self.selects = []
         items = []
         self.irimapper = {}
-        conn = ag_connect('enter repo', host='localhost', port='10035',
-                               user='xxx', password='xxx')
+        conn = ag_connect('NGOLinks', host='localhost', port='10035',
+                               user='test', password='xyzzy')
         conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         sdg_class = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#SDGGoal')
         targetIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasTarget')
