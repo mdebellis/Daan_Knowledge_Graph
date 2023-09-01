@@ -36,7 +36,7 @@ class Window(QWidget):
         self.resultsbuttons = []  # list of buttons to link results to ngo pages
         self.ngoScreen = None
         self.sdgIRI = {}
-        self.resize(1400, 900)
+        self.resize(1514, 844)
         
         #fti creation
         mission_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement')
@@ -294,7 +294,6 @@ class Window(QWidget):
         self.resultList = self.query(sdgs=sdglist, maxBudget = maxbudget, minBudget = minbudget, 
                                      loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, 
                                      classtype = self.clas.currentText(), qlimit = src, fti_string = self.textS.text())
-        print(len(self.resultList))
         
         iris = [self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
@@ -338,7 +337,6 @@ class Window(QWidget):
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
         
         self.nums.setText('Results: (Showing ' + src + ' of 300,000)')
-        
         
     def getNGOScreen(self, ngo): # function to call last specific ngo screen
         self.ngoScreen = NGOScreen(ngo)
@@ -465,7 +463,7 @@ class Tree(QWidget):
 app = QApplication(sys.argv)
 # app.setStyle(QStyleFactory.create('Windows'))
 # Create and show the form
-apply_stylesheet(app, theme='dark_red.xml')
+apply_stylesheet(app, theme='light_blue.xml', invert_secondary=True)
 w = Window()
 # Run the main Qt 
 sys.exit(app.exec())
