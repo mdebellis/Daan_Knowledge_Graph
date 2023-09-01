@@ -8,6 +8,7 @@ from functools import partial
 from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
 from temp import *
+from qt_material import apply_stylesheet
 import re
 
 
@@ -293,6 +294,7 @@ class Window(QWidget):
         self.resultList = self.query(sdgs=sdglist, maxBudget = maxbudget, minBudget = minbudget, 
                                      loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, 
                                      classtype = self.clas.currentText(), qlimit = src, fti_string = self.textS.text())
+        print(len(self.resultList))
         
         iris = [self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
@@ -331,6 +333,7 @@ class Window(QWidget):
         
         for i in range(len(self.resultList)): #adds all buttons into results display
             self.resultsbuttons.append(QPushButton('See Corporation'))
+            self.allResults.append(self.resultsbuttons[i])
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
         
@@ -460,7 +463,9 @@ class Tree(QWidget):
 
 
 app = QApplication(sys.argv)
+# app.setStyle(QStyleFactory.create('Windows'))
 # Create and show the form
+apply_stylesheet(app, theme='dark_red.xml')
 w = Window()
 # Run the main Qt 
 sys.exit(app.exec())
