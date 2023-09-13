@@ -129,8 +129,8 @@ class Window(QWidget):
         self.inputs.addRow(QLabel('SDGs:'), self.row2)
         self.inputs.addRow(self.orgframe)
         self.inputs.addRow(self.clasframe)
-        self.inputs.addRow(QLabel('Minimum Annual Budget:'), self.minf)
-        self.inputs.addRow(QLabel('Maximum Annual Budget:'), self.maxf)
+        self.inputs.addRow(QLabel('Minimum Monthly Expenditure:'), self.minf)
+        self.inputs.addRow(QLabel('Maximum Monthly Expenditure:'), self.maxf)
         self.inputs.addRow(QLabel('Text Search:'), self.textS)
         self.inputs.addRow(QLabel('Maximum Results:'), self.maxnumsearch)
         
@@ -331,7 +331,7 @@ class Window(QWidget):
         self.resultsbuttons = []
         
         for i in range(len(self.resultList)): #adds all buttons into results display
-            self.resultsbuttons.append(QPushButton('See Corporation'))
+            self.resultsbuttons.append(QPushButton('See Details'))
             self.allResults.append(self.resultsbuttons[i])
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
