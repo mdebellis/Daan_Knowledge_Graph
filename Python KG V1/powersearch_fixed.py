@@ -331,7 +331,7 @@ class Window(QWidget):
         self.resultsbuttons = []
         
         for i in range(len(self.resultList)): #adds all buttons into results display
-            self.resultsbuttons.append(QPushButton('See Corporation'))
+            self.resultsbuttons.append(QPushButton('See Details'))
             self.allResults.append(self.resultsbuttons[i])
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
