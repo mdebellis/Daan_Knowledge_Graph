@@ -211,7 +211,7 @@ class Window(QWidget):
         else:
             ctype = 'ngo:CSRProgram'
             
-        qstring = "SELECT * WHERE {?ngoRecipient a " + ctype  + ". "
+        qstring = "SELECT * WHERE {?ngoRecipient a " + ctype  + "; rdfs:label ?label."
         org_type_test_string = "?ngoRecipient ngo:orgType ?orgType."
         org_type_query_string = ""
         loc_string = "?ngoRecipient ngo:state ?state."
@@ -243,7 +243,7 @@ class Window(QWidget):
         if fti_string != "":
             ftiqs = "?ngoRecipient fti:match " + "\"" + fti_string + "\"" ". "
             qstring = qstring + ftiqs
-        qstring = qstring + "}"
+        qstring = qstring + "} ORDER BY ?label"
         return qstring
 
     def query(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[], orgTypeList = [], classtype = 'All', qlimit ="20",fti_string=""):
