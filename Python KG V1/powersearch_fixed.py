@@ -21,6 +21,7 @@ class Window(QWidget):
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
         self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
+        self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         self.setWindowTitle('Search')
         self.vert = QVBoxLayout()  # general outer layout
         self.inputs = QFormLayout()  # format for entering in the rest of data
@@ -404,6 +405,7 @@ class Tree(QWidget):
         conn = ag_connect('NGOLinks', host='localhost', port='10035',
                                user='test', password='xyzzy')
         conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
+        conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         sdg_class = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#SDGGoal')
         targetIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasTarget')
         indicatorIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasIndicator')
