@@ -16,11 +16,12 @@ class Window(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.conn = ag_connect('NGOLinks', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        self.conn = ag_connect('NGO', host='localhost', port='10035',
+                               user='mdebellis', password='df1559')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
         self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
+        self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         self.setWindowTitle('Search')
         self.vert = QVBoxLayout()  # general outer layout
         self.inputs = QFormLayout()  # format for entering in the rest of data
@@ -243,7 +244,7 @@ class Window(QWidget):
         if fti_string != "":
             ftiqs = "?ngoRecipient fti:match " + "\"" + fti_string + "\"" ". "
             qstring = qstring + ftiqs
-        qstring = qstring + "} ORDER BY ?label"
+        qstring = qstring + "} ORDER BY ?label LIMIT " + qlimit
         return qstring
 
     def query(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[], orgTypeList = [], classtype = 'All', qlimit ="20",fti_string=""):
@@ -401,9 +402,11 @@ class Tree(QWidget):
         self.selects = []
         items = []
         self.irimapper = {}
-        conn = ag_connect('NGOLinks', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        conn = ag_connect('NGO', host='localhost', port='10035',
+                               user='mdebellis', password='df1559')
         conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
+        conn.setNamespace('rdfs', 'hhttp://www.w3.org/2000/01/rdf-schema#')
+        conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         sdg_class = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#SDGGoal')
         targetIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasTarget')
         indicatorIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#hasIndicator')

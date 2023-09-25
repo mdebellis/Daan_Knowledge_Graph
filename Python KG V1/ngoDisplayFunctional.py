@@ -20,8 +20,8 @@ class NGOScreen(QWidget):
         self.ngo = ngo
         
         info = []
-        self.conn = ag_connect('NGOLinks', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        self.conn = ag_connect('NGO', host='localhost', port='10035',
+                               user='mdebellis', password='df1559')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         iris = [
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement'),
