@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5660a-353c-4dac-85c8-0e73adc31e15" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python KG V1/ngoDisplayFunctional.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python KG V1/ngoDisplayFunctional.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Python KG V1/powersearch_fixed.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python KG V1/powersearch_fixed.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1695152209474</updated>
       <workItem from="1695152216016" duration="1367000" />
-      <workItem from="1695321165032" duration="14335000" />
+      <workItem from="1695321165032" duration="17691000" />
     </task>
     <servers />
   </component>
@@ -58,6 +57,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Daan_Knowledge_Graph$ngoDisplayFunctional.coverage" NAME="ngoDisplayFunctional Coverage Results" MODIFIED="1695690977495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python KG V1" />
-    <SUITE FILE_PATH="coverage/Daan_Knowledge_Graph$powersearch_fixed.coverage" NAME="powersearch_fixed Coverage Results" MODIFIED="1695690986952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python KG V1" />
+    <SUITE FILE_PATH="coverage/Daan_Knowledge_Graph$powersearch_fixed.coverage" NAME="powersearch_fixed Coverage Results" MODIFIED="1695746469338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python KG V1" />
   </component>
 </project>

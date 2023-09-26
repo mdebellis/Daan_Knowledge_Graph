@@ -213,6 +213,8 @@ class Window(QWidget):
             ctype = 'ngo:CSRProgram'
             
         qstring = "SELECT * WHERE {?ngoRecipient a " + ctype  + "; rdfs:label ?label."
+        if ctype == 'ngo:NGORecipient':
+            qstring = qstring + " FILTER(EXISTS {?ngoRecipient ngo:missionStatement ?mission} || (EXISTS {?ngoRecipient ngo:objectives ?obj})) "
         org_type_test_string = "?ngoRecipient ngo:orgType ?orgType."
         org_type_query_string = ""
         loc_string = "?ngoRecipient ngo:state ?state."
