@@ -130,8 +130,8 @@ class Window(QWidget):
         self.inputs.addRow(QLabel('SDGs:'), self.row2)
         self.inputs.addRow(self.orgframe)
         self.inputs.addRow(self.clasframe)
-        self.inputs.addRow(QLabel('Minimum Annual Budget:'), self.minf)
-        self.inputs.addRow(QLabel('Maximum Annual Budget:'), self.maxf)
+        self.inputs.addRow(QLabel('Minimum Monthly Budget:'), self.minf)
+        self.inputs.addRow(QLabel('Maximum Monthly Budget:'), self.maxf)
         self.inputs.addRow(QLabel('Text Search:'), self.textS)
         self.inputs.addRow(QLabel('Maximum Results:'), self.maxnumsearch)
         

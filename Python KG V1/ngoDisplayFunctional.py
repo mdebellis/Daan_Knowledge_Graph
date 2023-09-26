@@ -41,7 +41,7 @@ class NGOScreen(QWidget):
             label = QLabel(l[1:len(l)-1])
             label.setWordWrap(True)
             if l != '"Not Found"':
-                for name in self.conn.getStatements(iris[iri], self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
+                for name in self.conn.getStatements(iris[iri], self.conn.createURI('http://www.w3.org/2004/02/skos/core#prefLabel'), None):
                     n = str(name[2])
                     n1 = QLabel(n[1:len(n)-1] + ':')
                     font = n1.font()
