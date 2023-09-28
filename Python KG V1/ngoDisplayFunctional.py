@@ -4,6 +4,7 @@ from PySide6.QtCore import *
 from PySide6 import QtCore
 from PySide6.QtGui import *
 from franz.openrdf.connect import ag_connect
+from franz.openrdf.vocabulary import RDF
 
 class NGOScreen(QWidget):
 
@@ -19,9 +20,9 @@ class NGOScreen(QWidget):
         self.resize(700,500)
         self.ngo = ngo
         
-        info = []
+        
         self.conn = ag_connect('NGO', host='localhost', port='10035',
-                               user='mdebellis', password='df1559')
+                               user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         iris = [
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement'),
@@ -34,6 +35,13 @@ class NGOScreen(QWidget):
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgType'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#officePhone')]
+        # n = None
+        # for i in self.conn.getStatements(self.ngo, RDF.TYPE, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient')):
+        #     n = i[0]
+        # if self.ngo != n:
+        #     iris = [
+                
+        #     ]
         for iri in range(len(iris)):
             l = '"Not Found"'
             for labelstments in self.conn.getStatements(self.ngo, iris[iri], None):

@@ -17,7 +17,7 @@ class Window(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.conn = ag_connect('NGO', host='localhost', port='10035',
-                               user='mdebellis', password='df1559')
+                               user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
         self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
@@ -322,6 +322,8 @@ class Window(QWidget):
                         if len(l) > 1000:
                             l = l[:1001]
                         label = QLabel(l[1:len(l)-1])
+                        if iri == 4:
+                            label = QLabel(l[1:len(l)-45])
                         label.setWordWrap(True)
                         self.allResults.append(label)
                         self.results.addWidget(label, ngorecip + 1, iri)
