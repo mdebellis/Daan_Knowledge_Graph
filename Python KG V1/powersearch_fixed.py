@@ -8,6 +8,8 @@ from functools import partial
 from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
 from dropdownMS import *
+import webbrowser
+import subprocess
 # from qt_material import apply_stylesheet
 import re
 
@@ -16,12 +18,14 @@ class Window(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        
         self.conn = ag_connect('NGO', host='localhost', port='10035',
                                user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
         self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
         self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
+        
         self.setWindowTitle('Search')
         self.vert = QVBoxLayout()  # general outer layout
         self.inputs = QFormLayout()  # format for entering in the rest of data
@@ -35,6 +39,7 @@ class Window(QWidget):
         self.resultList = []  # list of ngo IRIs from query
         self.allResults = []  # list of every ngo's characteristics, needed for re searching(hold an instance to delete)
         self.resultsbuttons = []  # list of buttons to link results to ngo pages
+        self.setR = []
         self.ngoScreen = None
         self.sdgIRI = {}
         self.resize(1514, 844)
@@ -123,7 +128,8 @@ class Window(QWidget):
         self.clasframe = QFrame()
         self.clasframe.setLayout(self.row4)
         self.clasframe.hide()
-    
+        
+
         
         self.inputs.addRow(self.row1)
         self.inputs.addRow(QLabel('Locations:'), self.statedrop)
@@ -135,21 +141,23 @@ class Window(QWidget):
         self.inputs.addRow(QLabel('Text Search:'), self.textS)
         self.inputs.addRow(QLabel('Maximum Results:'), self.maxnumsearch)
         
-
         searchB = QPushButton("Search")
         searchB.clicked.connect(self.doQuery)
         resetB = QPushButton("Reset Search")
         resetB.clicked.connect(self.reset)
+        self.graph = QPushButton('See Graph')
+        self.graph.clicked.connect(self.browser)
         doneB = QPushButton("Done")
         doneB.clicked.connect(self.exit)
 
         self.rowbottom.addWidget(searchB)
         self.rowbottom.addWidget(resetB)
+        self.rowbottom.addWidget(self.graph)
         self.rowbottom.addWidget(doneB)
 
         # results grid
-        self.setResults()
-
+        self.doQuery()
+        
         self.scroll2 = QScrollArea()  # Scroll Area which contains the widgets, set as the centralWidget
         self.widget2 = QWidget()  # Widget that contains the collection of Vertical Box
         self.widget2.setLayout(self.results)
@@ -246,7 +254,7 @@ class Window(QWidget):
         if fti_string != "":
             ftiqs = "?ngoRecipient fti:match " + "\"" + fti_string + "\"" ". "
             qstring = qstring + ftiqs
-        qstring = qstring + "} ORDER BY ?label LIMIT " + qlimit
+        qstring = qstring + "} ORDER BY ?label "
         return qstring
 
     def query(self, sdgs=[], maxBudget = None, minBudget = None, loc_list =[], orgTypeList = [], classtype = 'All', qlimit ="20",fti_string=""):
@@ -293,17 +301,26 @@ class Window(QWidget):
             if s.text() == 'All':
                 break
             sdglist.append(self.sdgIRI[s.text()])
-
         self.resultList = self.query(sdgs=sdglist, maxBudget = maxbudget, minBudget = minbudget, 
                                      loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, 
-                                     classtype = self.clas.currentText(),qlimit = src, fti_string = self.textS.text())[:int(src)]
+                                     classtype = self.clas.currentText(),qlimit = src, fti_string = self.textS.text())
+        m = len(self.resultList)
+        self.resultList = self.resultList[:int(src)]
         
         iris = [self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#avgMonthlyExpenditure')]
-        
+        if self.type.currentText() == 'CSR':
+            iris = [
+                self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#class'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#subCategory'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#avgMonthlyExpenditure'),
+            ]
+        self.setResults()
         for param in self.allResults:
             param.deleteLater()
             self.results.removeWidget(param)
@@ -341,33 +358,48 @@ class Window(QWidget):
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
         
-        self.nums.setText('Results: (Showing ' + src + ' of 300,000)')
+        self.nums.setText('Results: (Showing ' + src + ' of ' + str(m) + ')')
         
     def getNGOScreen(self, ngo): # function to call last specific ngo screen
         self.ngoScreen = NGOScreen(ngo)
         
-
+    def browser(self):
+        # subprocess.Popen((sys.executable, 'powersearch_latest.py'))
+        webbrowser.open_new('http://localhost:10035')
+        
     def setResults(self):  # set the labels for formatting the results, should only be called once
-
-        name1 = QLabel('Name')
-        font = name1.font()
-        font.setBold(True)
-        name1.setFont(font)
-        self.results.addWidget(name1, 0, 0)
-        name2 = QLabel('Objective')
-        name2.setFont(font)
-        self.results.addWidget(name2, 0, 1)
-        name3 = QLabel('SDG Focus')
-        name3.setFont(font)
-        self.results.addWidget(name3, 0, 2)
-        name4 = QLabel('State')
-        name4.setFont(font)
-        self.results.addWidget(name4, 0, 3)
-        name5 = QLabel('Monthly Budget')
-        name5.setFont(font)
-        self.results.addWidget(name5, 0, 4)
-
-        self.doQuery()
+        if self.setR != []:
+            for i in self.setR:
+                i.deleteLater()
+                self.results.removeWidget(i)
+        if self.type.currentText() == 'CSR':
+            self.setR = [QLabel('Name'), QLabel('Class'), QLabel('Organization Type'), QLabel('State'), QLabel('Monthly Budget')]
+            font = self.setR[0].font()
+            font.setBold(True)
+            self.setR[0].setFont(font)
+            self.results.addWidget(self.setR[0], 0, 0)
+            self.setR[1].setFont(font)
+            self.results.addWidget(self.setR[1], 0, 1)
+            self.setR[2].setFont(font)
+            self.results.addWidget(self.setR[2], 0, 2)
+            self.setR[3].setFont(font)
+            self.results.addWidget(self.setR[3], 0, 3)
+            self.setR[4].setFont(font)
+            self.results.addWidget(self.setR[4], 0, 4)
+        else:
+            self.setR = [QLabel('Name'), QLabel('Objective'), QLabel('SDG Focus'), QLabel('State'), QLabel('Monthly Budget')]
+            font = self.setR[0].font()
+            font.setBold(True)
+            self.setR[0].setFont(font)
+            self.results.addWidget(self.setR[0], 0, 0)
+            self.setR[1].setFont(font)
+            self.results.addWidget(self.setR[1], 0, 1)
+            self.setR[2].setFont(font)
+            self.results.addWidget(self.setR[2], 0, 2)
+            self.setR[3].setFont(font)
+            self.results.addWidget(self.setR[3], 0, 3)
+            self.setR[4].setFont(font)
+            self.results.addWidget(self.setR[4], 0, 4)
 
     def reset(self): # resets all inputs
         self.check1.setChecked(True)
