@@ -229,10 +229,10 @@ class Window(QWidget):
         loc_filter = ""
         i = 0
         if maxBudget != None:
-            mbstring = " ?ngoRecipient ngo:avgMonthlyExpenditure ?avm. Filter(?avm < " + str(maxBudget) + ")"
+            mbstring = " ?ngoRecipient ngo:avgMonthlyExpenditure ?avm. Filter(?avm <= " + str(maxBudget) + ")"
             qstring = qstring + mbstring
         if minBudget != None:
-            mbstring = " ?ngoRecipient ngo:avgMonthlyExpenditure ?avm. Filter(?avm > " + str(minBudget) + ")"
+            mbstring = " ?ngoRecipient ngo:avgMonthlyExpenditure ?avm. Filter(?avm >= " + str(minBudget) + ")"
             qstring = qstring + mbstring
         for loc in loc_list:
             loc_filter = loc_filter +  "|| ?state =  \"" + loc + "\" "
