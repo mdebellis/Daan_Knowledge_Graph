@@ -26,14 +26,15 @@ class NGOScreen(QWidget):
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         iris = [
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#email'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#chairmanName'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#areasOfOperation'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#email'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#mailingAddress'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#primaryPOC'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgType'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#officePhone')]
         n = None
@@ -42,19 +43,23 @@ class NGOScreen(QWidget):
         if self.ngo != n:
             iris = [
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'),
+                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#dateOfIncorporation'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#class'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#mailingAddress'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#subCategory'),
                 self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'),
             ]
         for iri in range(len(iris)):
             l = '"Not Found"'
             for labelstments in self.conn.getStatements(self.ngo, iris[iri], None):
-                l = str(labelstments[2])
-            label = QLabel(l[1:len(l)-1])
+                l = str(labelstments[2])[1:1001]
+            label = QLabel(l[:len(l)-1])
             label.setWordWrap(True)
+            if iri ==0:
+                label.setText('<a href="' + l + '>' + l[:len(l)-1] + '</a>')
+                label.setOpenExternalLinks(True)
+                
             if l != '"Not Found"':
                 for name in self.conn.getStatements(iris[iri], self.conn.createURI('http://www.w3.org/2004/02/skos/core#prefLabel'), None):
                     n = str(name[2])

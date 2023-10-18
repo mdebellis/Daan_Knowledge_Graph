@@ -357,7 +357,8 @@ class Window(QWidget):
             self.allResults.append(self.resultsbuttons[i])
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
-        
+        if int(src) > m:
+            src = str(m)
         self.nums.setText('Results: (Showing ' + src + ' of ' + str(m) + ')')
         
     def getNGOScreen(self, ngo): # function to call last specific ngo screen
