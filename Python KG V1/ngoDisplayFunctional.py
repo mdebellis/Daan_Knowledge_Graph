@@ -26,14 +26,31 @@ class NGOScreen(QWidget):
                            self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#scrapeSource'),
                            self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#websiteIsValid')]
         
+        finance_properties = [
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#netWorthFY2015-16"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#netWorthFY2016-17"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#netWorthFY2014-15"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#turnOverFY2014-15"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#netProfitFY2016-17"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#turnOverFY2015-16"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#netProfitFY2014-15"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#paidUpCapital"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#turnOverFY2016-17"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#authorizedCapital"),
+            self.conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#netProfitFY2015-16")]
         iris = self.get_instance_values(self.ngo)
         for iri, obj in iris:
             label = None
             if obj == None:
                 for labelstments in self.conn.getStatements(self.ngo, iri, None):
                     l = str(labelstments[2])[1:1001]
-                label = QLabel(l[:len(l)-1])
+                    l = l[:len(l)-1]
+                    if iri in finance_properties:
+                        l = "₹" + l + " (in INR Cr.)"
+                label = QLabel(l)
                 label.setWordWrap(True)
+                
+                    
                 if iri == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'):
                     label.setText('<a href="' + l + '>' + l[:len(l)-1] + '</a>')
                     label.setOpenExternalLinks(True)
