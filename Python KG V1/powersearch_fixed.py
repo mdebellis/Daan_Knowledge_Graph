@@ -9,8 +9,7 @@ from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
 from dropdownMS import *
 import webbrowser
-import subprocess
-# from qt_material import apply_stylesheet
+# from qt_material import apply_stylesheet #library for themes
 import re
 
 
@@ -19,6 +18,7 @@ class Window(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         
+        # Allegrograph presets
         self.conn = ag_connect('NGO', host='localhost', port='10035',
                                user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
@@ -27,22 +27,18 @@ class Window(QWidget):
         self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         
         self.setWindowTitle('Search')
-        self.vert = QVBoxLayout()  # general outer layout
-        self.inputs = QFormLayout()  # format for entering in the rest of data
-        self.row1 = QHBoxLayout()  # format for location row row
-        self.row2 = QHBoxLayout()  # format for sdgs row
-        self.rowbottom = QHBoxLayout()  # layout for the bottom row buttons (search, reset, done)
-        self.orgTypes = []
-        self.results = QGridLayout()  # layout to show results
+        self.resize(1514, 844)
+    
+        self.orgTypes = [] # list to hold org types for the query
         self.t = None  # instance to call sdg tree class
         self.sdgs = []  # list to track all sdgs selected, this is needed for reselection(hold an instance to delete)
         self.resultList = []  # list of ngo IRIs from query
         self.allResults = []  # list of every ngo's characteristics, needed for re searching(hold an instance to delete)
         self.resultsbuttons = []  # list of buttons to link results to ngo pages
-        self.setR = []
-        self.ngoScreen = None
-        self.sdgIRI = {}
-        self.resize(1514, 844)
+        self.setR = [] # list that holds result labels, these are changed between CSR and NGOs
+        self.ngoScreen = None # variable that calls ngoDisplay to see more info on NGO
+        self.sdgIRI = {} # mapper for sdgs and their iris
+        self.nums = QLabel('')
         
         #fti creation
         mission_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement')
@@ -51,21 +47,21 @@ class Window(QWidget):
         description_prop = self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#description')
         self.conn.createFreeTextIndex("NGO-INDEX", predicates=[description_prop,mission_prop,vision_prop,objective_prop], wordFilters=["stem.english"])
         
-        self.n = 10
-        self.nums = QLabel('Results: (Showing ' + str(self.n) + ' of 300,000)')
+        # organization type construction
+        self.type = QComboBox()
+        self.type.addItems(['All', 'NGO', 'CSR'])
+        self.type.currentTextChanged.connect(self.corp)
         
+        # location construction
         self.statedrop = MultiComboBox()
         self.statedrop.addItems(["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana",
                                  "Himachal Pradesh","Jharkhand","Karnataka","Kerala","Maharashtra","Madhya Pradesh","Manipur",
                                  "Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Tripura",
                                  "Telangana","Uttar Pradesh","Uttarakhand","West Bengal","Andaman & Nicobar","Chandigarh",
                                  "Dadra & Nagar Haveli and Daman & Diu","Delhi","Jammu & Kashmir","Ladakh","Lakshadweep","Puducherry (UT)"])
-
-        self.type = QComboBox()
-        self.type.addItems(['All', 'NGO', 'CSR'])
-        self.type.currentTextChanged.connect(self.corp)
-        self.row1.addWidget(self.type)
-
+        
+        #sdg scrolling construction
+        self.sdgRow = QHBoxLayout()
         self.scroll = QScrollArea()  # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QWidget()  # Widget that contains the collection of Vertical Box
         self.vbox = QVBoxLayout()
@@ -77,11 +73,13 @@ class Window(QWidget):
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(self.widget)
-        self.row2.addWidget(self.scroll)
+        self.sdgRow.addWidget(self.scroll)
         self.sdgEdit = QPushButton("Edit SDGs")
         self.sdgEdit.clicked.connect(self.sdgtree)
-        self.row2.addWidget(self.sdgEdit)
-
+        self.sdgRow.addWidget(self.sdgEdit)
+        
+        # Checkable construction of org types, only shows under CSR
+        self.checkRow = QHBoxLayout()
         self.check1 = QCheckBox('Cooperative Society')
         self.check2 = QCheckBox('Academic Institutions (Private)')
         self.check3 = QCheckBox('Other Registered Entities (Non-Government)')
@@ -94,53 +92,69 @@ class Window(QWidget):
         self.check4.setChecked(True)
         self.check5.setChecked(True)
         self.check6.setChecked(True)
-        self.horz = QHBoxLayout()
-        self.horz.addWidget(self.check1)
-        self.horz.addWidget(self.check2)
-        self.horz.addWidget(self.check3)
-        self.horz.addWidget(self.check4)
-        self.horz.addWidget(self.check5)
-        self.horz.addWidget(self.check6)
+        self.checkRow.addWidget(self.check1)
+        self.checkRow.addWidget(self.check2)
+        self.checkRow.addWidget(self.check3)
+        self.checkRow.addWidget(self.check4)
+        self.checkRow.addWidget(self.check5)
+        self.checkRow.addWidget(self.check6)
+        self.orgTypeRow = QHBoxLayout()
+        self.orgTypeRow.addWidget(QLabel('Organization Type:'))
+        self.orgTypeRow.addLayout(self.checkRow)
+        self.orgframe = QFrame()
+        self.orgframe.setLayout(self.orgTypeRow)
+        self.orgframe.hide()
+        
+        # org class construction, only shows under ngo
+        self.orgClassRow = QHBoxLayout()
+        self.orgClassRow.addWidget(QLabel('Organization Class:'))
+        self.clas = QComboBox()
+        self.clas.addItems(['All', 'Private', 'Public'])
+        self.orgClassRow.addWidget(self.clas)
+        self.clasframe = QFrame()
+        self.clasframe.setLayout(self.orgClassRow)
+        self.clasframe.hide()
 
+        # finance construction
         self.minf = QLineEdit()
         self.minf.setPlaceholderText("₹0")  # no input this returns empty string not 0
         self.maxf = QLineEdit()
         self.maxf.setPlaceholderText("no limit")
 
+        # text search
         self.textS = QLineEdit()
 
+        # number search
         self.maxnumsearch = QLineEdit()
-        self.maxnumsearch.setPlaceholderText("10")
-
-        self.row3 = QHBoxLayout()
-        self.row3.addWidget(QLabel('Organization Type:'))
-        self.row3.addLayout(self.horz)
+        self.maxnumsearch.setPlaceholderText("10")        
         
-        self.orgframe = QFrame()
-        self.orgframe.setLayout(self.row3)
-        self.orgframe.hide()
-
-        self.row4 = QHBoxLayout()
-        self.row4.addWidget(QLabel('Organization Class:'))
-        self.clas = QComboBox()
-        self.clas.addItems(['All', 'Private', 'Public'])
-        self.row4.addWidget(self.clas)
-        self.clasframe = QFrame()
-        self.clasframe.setLayout(self.row4)
-        self.clasframe.hide()
-        
-
-        
-        self.inputs.addRow(self.row1)
+        # add all inputs into an organizer
+        self.inputs = QFormLayout()
+        self.inputs.addRow(self.type)
         self.inputs.addRow(QLabel('Locations:'), self.statedrop)
-        self.inputs.addRow(QLabel('SDGs:'), self.row2)
+        self.inputs.addRow(QLabel('SDGs:'), self.sdgRow)
         self.inputs.addRow(self.orgframe)
         self.inputs.addRow(self.clasframe)
         self.inputs.addRow(QLabel('Minimum Monthly Budget:'), self.minf)
         self.inputs.addRow(QLabel('Maximum Monthly Budget:'), self.maxf)
         self.inputs.addRow(QLabel('Text Search:'), self.textS)
         self.inputs.addRow(QLabel('Maximum Results:'), self.maxnumsearch)
+
+        # results grid construction
+        self.results = QGridLayout()
+        self.doQuery()
         
+        # scroll area for results
+        self.scroll2 = QScrollArea()
+        self.widget2 = QWidget()
+        self.widget2.setLayout(self.results)
+        self.scroll2.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll2.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll2.setWidgetResizable(True)
+        self.scroll2.setWidget(self.widget2)
+        
+        # bottom row of buttons
+        self.rowbottom = QHBoxLayout()
         searchB = QPushButton("Search")
         searchB.clicked.connect(self.doQuery)
         resetB = QPushButton("Reset Search")
@@ -149,28 +163,17 @@ class Window(QWidget):
         self.graph.clicked.connect(self.browser)
         doneB = QPushButton("Done")
         doneB.clicked.connect(self.exit)
-
         self.rowbottom.addWidget(searchB)
         self.rowbottom.addWidget(resetB)
         self.rowbottom.addWidget(self.graph)
         self.rowbottom.addWidget(doneB)
 
-        # results grid
-        self.doQuery()
-        
-        self.scroll2 = QScrollArea()  # Scroll Area which contains the widgets, set as the centralWidget
-        self.widget2 = QWidget()  # Widget that contains the collection of Vertical Box
-        self.widget2.setLayout(self.results)
-        self.scroll2.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.scroll2.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.scroll2.setWidgetResizable(True)
-        self.scroll2.setWidget(self.widget2)
-
-        self.vert.addLayout(self.inputs)
-        
-        self.vert.addWidget(self.nums)
-        self.vert.addWidget(self.scroll2)
-        self.vert.addLayout(self.rowbottom)
+        # adding all sub layouts and widgets to main vertical layout
+        self.vert = QVBoxLayout() 
+        self.vert.addLayout(self.inputs) # all user inputs for the query
+        self.vert.addWidget(self.nums) # line for 'showing n of m results' constructed in doquery()
+        self.vert.addWidget(self.scroll2) # scroll area displaying results
+        self.vert.addLayout(self.rowbottom) # bottom row buttons
 
         self.setLayout(self.vert)
         self.show()
@@ -201,6 +204,7 @@ class Window(QWidget):
             self.orgframe.hide()
             self.clasframe.show()
         self.show()
+        
     def get_name_from_iri(self, iri):
         iri_str = str(iri)
         iri_str = iri_str.replace('<', '')
@@ -295,12 +299,13 @@ class Window(QWidget):
             src = '10'
         else:
             src = self.maxnumsearch.text()
-        #textsearch = self.textS.text() look at this later
+        
         sdglist = []
         for s in self.sdgs:
             if s.text() == 'All':
                 break
             sdglist.append(self.sdgIRI[s.text()])
+            
         self.resultList = self.query(sdgs=sdglist, maxBudget = maxbudget, minBudget = minbudget, 
                                      loc_list = self.statedrop.currentData(), orgTypeList = self.orgTypes, 
                                      classtype = self.clas.currentText(),qlimit = src, fti_string = self.textS.text())
@@ -337,9 +342,9 @@ class Window(QWidget):
                     else:  
                         l = str(labelstments[2])
                         if len(l) > 1000:
-                            l = l[:1001]
+                            l = l[:1001] # character cap so descriptions don't run too long
                         label = QLabel(l[1:len(l)-1])
-                        if iri == 4:
+                        if iri == 4: # very important it avg monthly cost with cost, for formatting
                             label = QLabel(l[1:len(l)-45])
                         label.setWordWrap(True)
                         self.allResults.append(label)
@@ -350,13 +355,14 @@ class Window(QWidget):
                     label.setWordWrap(True)
                     self.allResults.append(label)
                     self.results.addWidget(label, ngorecip + 1, iri)
+                    
         self.resultsbuttons = []
-        
         for i in range(len(self.resultList)): #adds all buttons into results display
             self.resultsbuttons.append(QPushButton('See Details'))
             self.allResults.append(self.resultsbuttons[i])
             self.results.addWidget(self.resultsbuttons[i], i + 1, 6)
             self.resultsbuttons[i].clicked.connect(partial(self.getNGOScreen, self.resultList[i]))
+            
         if int(src) > m:
             src = str(m)
         self.nums.setText('Results: (Showing ' + src + ' of ' + str(m) + ')')
@@ -365,7 +371,6 @@ class Window(QWidget):
         self.ngoScreen = NGOScreen(ngo)
         
     def browser(self):
-        # subprocess.Popen((sys.executable, 'powersearch_latest.py'))
         webbrowser.open_new('http://localhost:10035')
         
     def setResults(self):  # set the labels for formatting the results, should only be called once
@@ -421,7 +426,6 @@ class Window(QWidget):
         self.sdgs.append(QLabel('All'))
         self.vbox.addWidget(self.sdgs[0])
         self.doQuery() # when all parameters are reset, a base set of results will be displayed
-        self.nums = QLabel('Results: (Showing ' + str(self.n) + ' of 300,000)')
     
     def exit(self):
         self.close()
@@ -501,10 +505,9 @@ class Tree(QWidget):
         w.setSDG(self.selects, self.irimapper)
 
 
-app = QApplication(sys.argv)
+app = QApplication(sys.argv) 
 # app.setStyle(QStyleFactory.create('Windows'))
-# Create and show the form
-# apply_stylesheet(app, theme='mt.xml', invert_secondary=True)
-w = Window()
-# Run the main Qt 
+# apply_stylesheet(app, theme='mt.xml', invert_secondary=True) for the changing themes
+
+w = Window() # Run the main Qt 
 sys.exit(app.exec())

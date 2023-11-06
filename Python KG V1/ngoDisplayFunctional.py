@@ -20,51 +20,37 @@ class NGOScreen(QWidget):
                                user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
-        iris = [
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#email'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#missionStatement'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#objectives'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#chairmanName'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#areasOfOperation'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#mailingAddress'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#primaryPOC'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgType'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#officePhone')]
-        n = None
-        for i in self.conn.getStatements(self.ngo, RDF.TYPE, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient')):
-            n = i[0]    
-        if self.ngo != n:
-            iris = [
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#dateOfIncorporation'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#class'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#mailingAddress'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#subCategory'),
-                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#state'),
-            ]
-        for iri in range(len(iris)):
-            l = '"Not Found"'
-            for labelstments in self.conn.getStatements(self.ngo, iris[iri], None):
-                l = str(labelstments[2])[1:1001]
-            label = QLabel(l[:len(l)-1])
-            label.setWordWrap(True)
-            if iri ==0:
-                label.setText('<a href="' + l + '>' + l[:len(l)-1] + '</a>')
-                label.setOpenExternalLinks(True)
+        self.stop_properties = [self.conn.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), 
+                           self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'),
+                           self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#ngoName'),
+                           self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#scrapeSource'),
+                           self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#websiteIsValid')]
+        
+        iris = self.get_instance_values(self.ngo)
+        for iri, obj in iris:
+            label = None
+            if obj == None:
+                for labelstments in self.conn.getStatements(self.ngo, iri, None):
+                    l = str(labelstments[2])[1:1001]
+                label = QLabel(l[:len(l)-1])
+                label.setWordWrap(True)
+                if iri == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgWebsite'):
+                    label.setText('<a href="' + l + '>' + l[:len(l)-1] + '</a>')
+                    label.setOpenExternalLinks(True)
+            else:
+                label = QLabel(str(obj)[1:len(str(obj))-1])
+                label.setWordWrap(True)
                 
-            if l != '"Not Found"':
-                for name in self.conn.getStatements(iris[iri], self.conn.createURI('http://www.w3.org/2004/02/skos/core#prefLabel'), None):
-                    n = str(name[2])
-                    n1 = QLabel(n[1:len(n)-1] + ':')
-                    font = n1.font()
-                    font.setBold(True)
-                    n1.setFont(font)
-                    tempf.addRow(n1, label)
-
-
+            for name in self.conn.getStatements(iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
+                n = str(name[2])
+                n = n[1:len(n)-1] + ':'
+                n1 = QLabel(n.capitalize())
+                font = n1.font()
+                font.setBold(True)
+                n1.setFont(font)
+                tempf.addRow(n1, label)
+#self.conn.createURI('http://www.w3.org/2004/02/skos/core#prefLabel')
+        
         title = None
         for n in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
             t = str(n[2])
@@ -74,11 +60,36 @@ class NGOScreen(QWidget):
             title = label
             title.setFont(QFont('Times', 12))
             title.setAlignment(QtCore.Qt.AlignCenter)
-            break
-
-        
+            break        
         outer.addWidget(title)
         outer.addLayout(tempf)
         self.setLayout(outer)
         
         self.show()
+        
+    
+    def is_object_prop(self, prop_iri):
+        statements = self.conn.getStatements(prop_iri, self.conn.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), None)
+        for statement in statements:
+            if statement[2] == self.conn.createURI("http://www.w3.org/2002/07/owl#ObjectProperty"):
+                return True
+        return False
+
+
+    def get_instance_values(self, subject_iri):
+        i_statements = self.conn.getStatements(subject_iri, None, None)
+        result_statements = []
+        for statement in i_statements:
+            print(statement[1])
+            prop_iri = statement[1]
+            lab = None
+            if prop_iri not in self.stop_properties:
+                if self.is_object_prop(prop_iri):
+                    print(1)
+                    obj_iri = statement[2]
+                    label = self.conn.getStatements(obj_iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
+                    for i in label:
+                        lab = i[2]
+                        print(lab)
+                result_statements.append((statement[1], lab))
+        return result_statements
