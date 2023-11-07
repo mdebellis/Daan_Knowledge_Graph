@@ -19,7 +19,7 @@ class Window(QWidget):
         super().__init__(parent)
         
         # Allegrograph presets
-        self.conn = ag_connect('NGO', host='localhost', port='10035',
+        self.conn = ag_connect('NGO2', host='localhost', port='10035',
                                user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
@@ -443,8 +443,8 @@ class Tree(QWidget):
         self.selects = []
         items = []
         self.irimapper = {}
-        conn = ag_connect('NGO', host='localhost', port='10035',
-                               user='mdebellis', password='df1559')
+        conn = ag_connect('NGO2', host='localhost', port='10035',
+                               user='test', password='xyzzy')
         conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         conn.setNamespace('rdfs', 'hhttp://www.w3.org/2000/01/rdf-schema#')
         conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')

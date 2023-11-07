@@ -16,7 +16,7 @@ class NGOScreen(QWidget):
         self.ngo = ngo
         
         
-        self.conn = ag_connect('NGO', host='localhost', port='10035',
+        self.conn = ag_connect('NGO2', host='localhost', port='10035',
                                user='test', password='xyzzy')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
