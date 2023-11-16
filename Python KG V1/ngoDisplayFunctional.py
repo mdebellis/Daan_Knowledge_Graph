@@ -5,6 +5,7 @@ from PySide6 import QtCore
 from PySide6.QtGui import *
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
+import webbrowser
 
 class NGOScreen(QWidget):
 
@@ -77,14 +78,50 @@ class NGOScreen(QWidget):
             title = label
             title.setFont(QFont('Times', 12))
             title.setAlignment(QtCore.Qt.AlignCenter)
-            break        
+            break     
+        
+        botbuttons = QHBoxLayout()
+        doneB = QPushButton("Done")
+        doneB.clicked.connect(self.exit)
+        contactB = QPushButton("Contact")
+        contactB.clicked.connect(self.mail)
+        rfpB = QPushButton('Send RFP')
+        rfpB.clicked.connect(self.rfpmail)
+        botbuttons.addWidget(doneB)
+        botbuttons.addWidget(contactB)
+        botbuttons.addWidget(rfpB)
+        
         outer.addWidget(title)
         outer.addLayout(tempf)
+        outer.addLayout(botbuttons)
+        
         self.setLayout(outer)
         
         self.show()
         
-    
+    def exit(self):
+        self.close()
+        
+    def mail(self):
+        m = 1
+        for emailtriple in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None):
+            email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
+            webbrowser.open("mailto:?to="+email.lower(), new=1)
+            m = 0
+        if m:
+            webbrowser.open("mailto:?to=No Email Found", new=1)
+            
+    def rfpmail(self):
+        m = 1
+        body = "Dear <primary contact name>, %0D%0A%0D%0AI represent the <Current Funder Name>. We have an RFP for <RFP Topic> that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: <RFP With Instructions URL>  If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address> "
+        for emailtriple in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None):
+            email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
+         
+            webbrowser.open("mailto:?to="+email.lower()+"&subject=RFP&body="+body, new=1)
+            m = 0
+        if m:
+            webbrowser.open("mailto:?to=No Email Found", new=1)
+        
     def is_object_prop(self, prop_iri):
         statements = self.conn.getStatements(prop_iri, self.conn.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), None)
         for statement in statements:
@@ -97,16 +134,16 @@ class NGOScreen(QWidget):
         i_statements = self.conn.getStatements(subject_iri, None, None)
         result_statements = []
         for statement in i_statements:
-            print(statement[1])
+            # print(statement[1])
             prop_iri = statement[1]
             lab = None
             if prop_iri not in self.stop_properties:
                 if self.is_object_prop(prop_iri):
-                    print(1)
+                    # print(1)
                     obj_iri = statement[2]
                     label = self.conn.getStatements(obj_iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
                     for i in label:
                         lab = i[2]
-                        print(lab)
+                        # print(lab)
                 result_statements.append((statement[1], lab))
         return result_statements
