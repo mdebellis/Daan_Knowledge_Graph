@@ -87,6 +87,13 @@ class NGOScreen(QWidget):
         contactB.clicked.connect(self.mail)
         rfpB = QPushButton('Send RFP')
         rfpB.clicked.connect(self.rfpmail)
+        n = None
+        for i in self.conn.getStatements(self.ngo, RDF.TYPE, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient')):
+            n = i[0]   
+        if self.ngo != n:
+            rfpB.setDisabled(True)
+        else:
+            rfpB.setDisabled(False)
         botbuttons.addWidget(doneB)
         botbuttons.addWidget(contactB)
         botbuttons.addWidget(rfpB)
@@ -113,7 +120,12 @@ class NGOScreen(QWidget):
             
     def rfpmail(self):
         m = 1
-        body = "Dear <primary contact name>, %0D%0A%0D%0AI represent the <Current Funder Name>. We have an RFP for <RFP Topic> that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: <RFP With Instructions URL>  If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address> "
+        l = "English"
+        for lang in self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#preferredLanguage>'), None):
+            l = str(lang[2])[1:len(str(lang[2]))-1]
+        body = "Dear <primary contact name>, %0D%0A%0D%0AI represent the <Current Funder Name>. We have an RFP for <RFP Topic> that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: <RFP With Instructions URL>  If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
+        if l == "Hindi":
+            body = "प्रिय <primary contact name>,%0D%0A%0D%0Aमैं प्रतिनिधित्व करता हूं <Current Funder Name>  हमारे पास इसके लिए एक आरएफपी है <RFP Topic> मुझे विश्वास है कि आप इसके लिए योग्य हो सकते हैं।. यदि आप रुचि रखते हैं तो कृपया आरएफपी और उत्तर देने के निर्देश देखने के लिए निम्नलिखित पृष्ठ पर जाएँ:  <RFP With Instructions URL>  यदि आपके कोई प्रश्न हैं तो आप इस ईमेल का उत्तर दे सकते हैं या मुझसे यहां संपर्क कर सकते हैं: <Current User Phone>. %0D%0A%0D%0Aईमानदारी से,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
         for emailtriple in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None):
             email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
          
