@@ -12,7 +12,7 @@ class NGOScreen(QWidget):
     def __init__(self, ngo, parent=None):
         super().__init__(parent)
         outer = QVBoxLayout()
-        tempf = QFormLayout()
+        infoHolder = QFormLayout()
         self.resize(700,500)
         self.ngo = ngo
         
@@ -66,7 +66,7 @@ class NGOScreen(QWidget):
                 font = n1.font()
                 font.setBold(True)
                 n1.setFont(font)
-                tempf.addRow(n1, label)
+                infoHolder.addRow(n1, label)
 #self.conn.createURI('http://www.w3.org/2004/02/skos/core#prefLabel')
         
         title = None
@@ -98,8 +98,15 @@ class NGOScreen(QWidget):
         botbuttons.addWidget(contactB)
         botbuttons.addWidget(rfpB)
         
+        scroll = QScrollArea()
+        widget = QWidget()
+        widget.setLayout(infoHolder)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(widget)
+        
         outer.addWidget(title)
-        outer.addLayout(tempf)
+        outer.addWidget(scroll)
         outer.addLayout(botbuttons)
         
         self.setLayout(outer)
@@ -119,21 +126,28 @@ class NGOScreen(QWidget):
             webbrowser.open("mailto:?to=No Email Found", new=1)
             
     def rfpmail(self):
+        rfp_current_funder = "UN Women Organization"
+        rfp_topic = "Strengthening ecosystem for gender equality: Prevention and Response to Gender based Violence in Goa, India"
+        rfp_url = "https://ngobox.org/full_rfp_eoi_RFP---Strengthening-ecosystem-for-gender-equality--Prevention-and-Response-to-Gender-based-Violence-in-Goa,-India-UN-Women-_15842"
+        primaryContact = 'NGO'
+        for cont in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
+            primaryContact = str(cont[2])[1:len(str(cont[2]))-1]
+        for cont in self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#primaryPoc>'), None):
+            primaryContact = str(cont[2])[1:len(str(cont[2]))-1]
+            
         m = 1
-        l = "English"
+        l = "English"   
         for lang in self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#preferredLanguage>'), None):
             l = str(lang[2])[1:len(str(lang[2]))-1]
-        body = "Dear <primary contact name>, %0D%0A%0D%0AI represent the <Current Funder Name>. We have an RFP for <RFP Topic> that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: <RFP With Instructions URL>  If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
+        body = "Dear " + primaryContact + ", %0D%0A%0D%0AI represent the " + rfp_current_funder + ". We have an RFP for "  + rfp_topic + " that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: " + rfp_url + " If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
         if l == "Hindi":
-            body = "प्रिय <primary contact name>,%0D%0A%0D%0Aमैं प्रतिनिधित्व करता हूं <Current Funder Name>  हमारे पास इसके लिए एक आरएफपी है <RFP Topic> मुझे विश्वास है कि आप इसके लिए योग्य हो सकते हैं।. यदि आप रुचि रखते हैं तो कृपया आरएफपी और उत्तर देने के निर्देश देखने के लिए निम्नलिखित पृष्ठ पर जाएँ:  <RFP With Instructions URL>  यदि आपके कोई प्रश्न हैं तो आप इस ईमेल का उत्तर दे सकते हैं या मुझसे यहां संपर्क कर सकते हैं: <Current User Phone>. %0D%0A%0D%0Aईमानदारी से,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
+            body = "प्रिय " + primaryContact + ", %0D%0A%0D%0Aमैं प्रतिनिधित्व करता हूं" + rfp_current_funder +  ". हमारे पास इसके लिए एक आरएफपी है "  + rfp_topic + " मुझे विश्वास है कि आप इसके लिए योग्य हो सकते हैं।. यदि आप रुचि रखते हैं तो कृपया आरएफपी और उत्तर देने के निर्देश देखने के लिए निम्नलिखित पृष्ठ पर जाएँ:  " + rfp_url + "  यदि आपके कोई प्रश्न हैं तो आप इस ईमेल का उत्तर दे सकते हैं या मुझसे यहां संपर्क कर सकते हैं: <Current User Phone>. %0D%0A%0D%0Aईमानदारी से,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
         for emailtriple in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None):
             email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
-         
             webbrowser.open("mailto:?to="+email.lower()+"&subject=RFP&body="+body, new=1)
             m = 0
         if m:
             webbrowser.open("mailto:?to=No Email Found", new=1)
-        
     def is_object_prop(self, prop_iri):
         statements = self.conn.getStatements(prop_iri, self.conn.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), None)
         for statement in statements:
