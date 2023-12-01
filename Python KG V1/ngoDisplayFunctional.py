@@ -43,11 +43,13 @@ class NGOScreen(QWidget):
         for iri, obj in iris:
             label = None
             if obj == None:
-                for labelstments in self.conn.getStatements(self.ngo, iri, None):
-                    l = str(labelstments[2])[1:1001]
-                    l = l[:len(l)-1]
-                    if iri in finance_properties:
-                        l = "₹" + l + " (in INR Cr.)"
+                statements = self.conn.getStatements(self.ngo, iri, None)
+                with statements:
+                    for labelstments in statements:
+                        l = str(labelstments[2])[1:1001]
+                        l = l[:len(l)-1]
+                        if iri in finance_properties:
+                            l = "₹" + l + " (in INR Cr.)"
                 label = QLabel(l)
                 label.setWordWrap(True)
                 
@@ -59,26 +61,30 @@ class NGOScreen(QWidget):
                 label = QLabel(str(obj)[1:len(str(obj))-1])
                 label.setWordWrap(True)
                 
-            for name in self.conn.getStatements(iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
-                n = str(name[2])
-                n = n[1:len(n)-1] + ':'
-                n1 = QLabel(n.capitalize())
-                font = n1.font()
-                font.setBold(True)
-                n1.setFont(font)
-                infoHolder.addRow(n1, label)
+            states = self.conn.getStatements(iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
+            with states:
+                for name in states:
+                    n = str(name[2])
+                    n = n[1:len(n)-1] + ':'
+                    n1 = QLabel(n.capitalize())
+                    font = n1.font()
+                    font.setBold(True)
+                    n1.setFont(font)
+                    infoHolder.addRow(n1, label)
 #self.conn.createURI('http://www.w3.org/2004/02/skos/core#prefLabel')
         
         title = None
-        for n in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
-            t = str(n[2])
-            label = QLabel(t[1:len(t)-1])
-            label.setWordWrap(True)
-            self.setWindowTitle(label.text())
-            title = label
-            title.setFont(QFont('Times', 12))
-            title.setAlignment(QtCore.Qt.AlignCenter)
-            break     
+        state = self.conn.getStatements(self.ngo, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
+        with state:
+            for n in state:
+                t = str(n[2])
+                label = QLabel(t[1:len(t)-1])
+                label.setWordWrap(True)
+                self.setWindowTitle(label.text())
+                title = label
+                title.setFont(QFont('Times', 12))
+                title.setAlignment(QtCore.Qt.AlignCenter)
+                break     
         
         botbuttons = QHBoxLayout()
         doneB = QPushButton("Done")
@@ -88,8 +94,10 @@ class NGOScreen(QWidget):
         rfpB = QPushButton('Send RFP')
         rfpB.clicked.connect(self.rfpmail)
         n = None
-        for i in self.conn.getStatements(self.ngo, RDF.TYPE, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient')):
-            n = i[0]   
+        stats = self.conn.getStatements(self.ngo, RDF.TYPE, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient'))
+        with stats:
+            for i in stats:
+                n = i[0]   
         if self.ngo != n:
             rfpB.setDisabled(True)
         else:
@@ -115,13 +123,16 @@ class NGOScreen(QWidget):
         
     def exit(self):
         self.close()
+        a = NGOScreen(self.ngo)
         
     def mail(self):
         m = 1
-        for emailtriple in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None):
-            email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
-            webbrowser.open("mailto:?to="+email.lower(), new=1)
-            m = 0
+        stat = self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None)
+        with stat:
+            for emailtriple in stat:
+                email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
+                webbrowser.open("mailto:?to="+email.lower(), new=1)
+                m = 0
         if m:
             webbrowser.open("mailto:?to=No Email Found", new=1)
             
@@ -130,46 +141,58 @@ class NGOScreen(QWidget):
         rfp_topic = "Strengthening ecosystem for gender equality: Prevention and Response to Gender based Violence in Goa, India"
         rfp_url = "https://ngobox.org/full_rfp_eoi_RFP---Strengthening-ecosystem-for-gender-equality--Prevention-and-Response-to-Gender-based-Violence-in-Goa,-India-UN-Women-_15842"
         primaryContact = 'NGO'
-        for cont in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None):
-            primaryContact = str(cont[2])[1:len(str(cont[2]))-1]
-        for cont in self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#primaryPoc>'), None):
-            primaryContact = str(cont[2])[1:len(str(cont[2]))-1]
+        sta = self.conn.getStatements(self.ngo, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
+        with sta:
+            for cont in sta:
+                primaryContact = str(cont[2])[1:len(str(cont[2]))-1]
+        st = self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#primaryPoc>'), None)        
+        with st:
+            for cont in st:
+                primaryContact = str(cont[2])[1:len(str(cont[2]))-1]
             
         m = 1
-        l = "English"   
-        for lang in self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#preferredLanguage>'), None):
-            l = str(lang[2])[1:len(str(lang[2]))-1]
+        l = "English"
+        s1 = self.conn.getStatements(self.ngo, self.conn.createURI('<http://www.semanticweb.org/mdebe/ontologies/NGO#preferredLanguage>'), None)
+        with s1:   
+            for lang in s1:
+                l = str(lang[2])[1:len(str(lang[2]))-1]
         body = "Dear " + primaryContact + ", %0D%0A%0D%0AI represent the " + rfp_current_funder + ". We have an RFP for "  + rfp_topic + " that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: " + rfp_url + " If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
         if l == "Hindi":
             body = "प्रिय " + primaryContact + ", %0D%0A%0D%0Aमैं प्रतिनिधित्व करता हूं" + rfp_current_funder +  ". हमारे पास इसके लिए एक आरएफपी है "  + rfp_topic + " मुझे विश्वास है कि आप इसके लिए योग्य हो सकते हैं।. यदि आप रुचि रखते हैं तो कृपया आरएफपी और उत्तर देने के निर्देश देखने के लिए निम्नलिखित पृष्ठ पर जाएँ:  " + rfp_url + "  यदि आपके कोई प्रश्न हैं तो आप इस ईमेल का उत्तर दे सकते हैं या मुझसे यहां संपर्क कर सकते हैं: <Current User Phone>. %0D%0A%0D%0Aईमानदारी से,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
-        for emailtriple in self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None):
-            email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
-            webbrowser.open("mailto:?to="+email.lower()+"&subject=RFP&body="+body, new=1)
-            m = 0
+        s2 = self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None)
+        with s2:
+            for emailtriple in s2:
+                email = str(emailtriple[2])[1:len(str(emailtriple[2]))-1]
+                webbrowser.open("mailto:?to="+email.lower()+"&subject=RFP&body="+body, new=1)
+                m = 0
         if m:
             webbrowser.open("mailto:?to=No Email Found", new=1)
+            
     def is_object_prop(self, prop_iri):
         statements = self.conn.getStatements(prop_iri, self.conn.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), None)
-        for statement in statements:
-            if statement[2] == self.conn.createURI("http://www.w3.org/2002/07/owl#ObjectProperty"):
-                return True
+        with statements:
+            for statement in statements:
+                if statement[2] == self.conn.createURI("http://www.w3.org/2002/07/owl#ObjectProperty"):
+                    return True
         return False
 
 
     def get_instance_values(self, subject_iri):
         i_statements = self.conn.getStatements(subject_iri, None, None)
         result_statements = []
-        for statement in i_statements:
-            # print(statement[1])
-            prop_iri = statement[1]
-            lab = None
-            if prop_iri not in self.stop_properties:
-                if self.is_object_prop(prop_iri):
-                    # print(1)
-                    obj_iri = statement[2]
-                    label = self.conn.getStatements(obj_iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
-                    for i in label:
-                        lab = i[2]
-                        # print(lab)
-                result_statements.append((statement[1], lab))
+        with i_statements:
+            for statement in i_statements:
+                # print(statement[1])
+                prop_iri = statement[1]
+                lab = None
+                if prop_iri not in self.stop_properties:
+                    if self.is_object_prop(prop_iri):
+                        # print(1)
+                        obj_iri = statement[2]
+                        label = self.conn.getStatements(obj_iri, self.conn.createURI('http://www.w3.org/2000/01/rdf-schema#label'), None)
+                        with label:
+                            for i in label:
+                                lab = i[2]
+                                # print(lab)
+                    result_statements.append((statement[1], lab))
         return result_statements

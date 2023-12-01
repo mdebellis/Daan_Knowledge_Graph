@@ -334,22 +334,26 @@ class Window(QWidget):
         for ngorecip in range(len(self.resultList)): #adds all parameters of specified number of ngos into display
             for iri in range(len(iris)):
                 sdglabel = ''
-                for labelstments in self.conn.getStatements(self.resultList[ngorecip], iris[iri], None):
-                    if iris[iri] == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'):
-                        for script in self.conn.getStatements(labelstments[2], 
-                                                              self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#goalDescription'), None):
-                            sdglabel = sdglabel + str(script[2]) + '\n' 
-                    else:  
-                        l = str(labelstments[2])
-                        if len(l) > 1000:
-                            l = l[:1001] # character cap so descriptions don't run too long
-                        label = QLabel(l[1:len(l)-1])
-                        if iri == 4: # very important it avg monthly cost with cost, for formatting
-                            label = QLabel(l[1:len(l)-45])
-                        label.setWordWrap(True)
-                        self.allResults.append(label)
-                        self.results.addWidget(label, ngorecip + 1, iri)
-                        break
+                statements = self.conn.getStatements(self.resultList[ngorecip], iris[iri], None)
+                with statements:
+                    for labelstments in statements:
+                        if iris[iri] == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'):
+                            stat = self.conn.getStatements(labelstments[2], 
+                                                                self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#goalDescription'), None)
+                            with stat:
+                                for script in stat:
+                                    sdglabel = sdglabel + str(script[2]) + '\n' 
+                        else:  
+                            l = str(labelstments[2])
+                            if len(l) > 1000:
+                                l = l[:1001] # character cap so descriptions don't run too long
+                            label = QLabel(l[1:len(l)-1])
+                            if iri == 4: # very important it avg monthly cost with cost, for formatting
+                                label = QLabel(l[1:len(l)-45])
+                            label.setWordWrap(True)
+                            self.allResults.append(label)
+                            self.results.addWidget(label, ngorecip + 1, iri)
+                            break
                 if iris[iri] == self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#hasSDGGoal'):
                     label = QLabel(sdglabel[1:len(sdglabel)-1])
                     label.setWordWrap(True)
@@ -454,30 +458,42 @@ class Tree(QWidget):
         descriptionIRI = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#goalDescription')
         indicatorDesc = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#indicatorDescription')
         l1 = []
-        for sdg in conn.getStatements(None, RDF.TYPE, sdg_class):
-            for descrip in conn.getStatements(sdg[0], descriptionIRI, None): #should only iterate once
-                sdgLabel = str(descrip[2])[1:len(str(descrip[2]))-1]
-                self.irimapper[sdgLabel] = sdg[0]
-                l1.append(sdgLabel)
+        statements = conn.getStatements(None, RDF.TYPE, sdg_class)
+        with statements:
+            for sdg in statements:
+                states = conn.getStatements(sdg[0], descriptionIRI, None)
+                with states:
+                    for descrip in states: #should only iterate once
+                        sdgLabel = str(descrip[2])[1:len(str(descrip[2]))-1]
+                        self.irimapper[sdgLabel] = sdg[0]
+                        l1.append(sdgLabel)
         l1.sort(key=lambda x: int(re.findall("\s(\d+)\.",x)[0]))
         for sd in l1:
             item = QTreeWidgetItem([sd])
             l2 = []
-            for target in conn.getStatements(self.irimapper[sd], targetIRI, None):
-                for tcrip in conn.getStatements(target[2], descriptionIRI, None): #should only iterate once
-                    targetLabel = str(tcrip[2])[1:len(str(tcrip[2]))-1]
-                    self.irimapper[targetLabel] = target[2]
-                    l2.append(targetLabel)
+            stats = conn.getStatements(self.irimapper[sd], targetIRI, None)
+            with stats:
+                for target in stats:
+                    sta = conn.getStatements(target[2], descriptionIRI, None)
+                    with sta:
+                        for tcrip in sta: #should only iterate once
+                            targetLabel = str(tcrip[2])[1:len(str(tcrip[2]))-1]
+                            self.irimapper[targetLabel] = target[2]
+                            l2.append(targetLabel)
             l2.sort(key=lambda x: int((re.findall("\.(.+?)\s",x)[0])) if re.findall("\.(.+?)\s",x)[0].isnumeric() else ord((re.findall("\.(.+?)\s",x)[0])))
             for t in l2:
                 child1 = QTreeWidgetItem([t])
                 item.addChild(child1)
                 l3 = []
-                for indicator in conn.getStatements(self.irimapper[t], indicatorIRI, None):
-                    for icrip in conn.getStatements(indicator[2], indicatorDesc, None): #should only iterate once
-                        indicatorLabel = str(icrip[2])[1:len(str(icrip[2]))-1]
-                        self.irimapper[indicatorLabel] = indicator[2]
-                        l3.append(indicatorLabel)
+                st = conn.getStatements(self.irimapper[t], indicatorIRI, None)
+                with st:
+                    for indicator in st:
+                        s = conn.getStatements(indicator[2], indicatorDesc, None)
+                        with s:
+                            for icrip in s: #should only iterate once
+                                indicatorLabel = str(icrip[2])[1:len(str(icrip[2]))-1]
+                                self.irimapper[indicatorLabel] = indicator[2]
+                                l3.append(indicatorLabel)
                 l3.sort()
                 for i in l3:
                     child2 = QTreeWidgetItem([i])
@@ -506,6 +522,7 @@ class Tree(QWidget):
 
 
 app = QApplication(sys.argv) 
+app.setStyleSheet("QLabel{font-size: 12pt;}")
 # app.setStyle(QStyleFactory.create('Windows'))
 # apply_stylesheet(app, theme='mt.xml', invert_secondary=True) for the changing themes
 
