@@ -418,7 +418,13 @@ class Window(QWidget):
         self.check4.setChecked(True)
         self.check5.setChecked(True)
         self.check6.setChecked(True)
-        self.statedrop.setCurrentText('Select')
+        self.statedrop.clear()
+        self.statedrop.setCurrentText('Select') #bug fix
+        self.statedrop.addItems(["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana",
+                                 "Himachal Pradesh","Jharkhand","Karnataka","Kerala","Maharashtra","Madhya Pradesh","Manipur",
+                                 "Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Tripura",
+                                 "Telangana","Uttar Pradesh","Uttarakhand","West Bengal","Andaman & Nicobar","Chandigarh",
+                                 "Dadra & Nagar Haveli and Daman & Diu","Delhi","Jammu & Kashmir","Ladakh","Lakshadweep","Puducherry (UT)"])
         self.minf.clear()
         self.maxf.clear()
         self.textS.clear()
@@ -429,6 +435,7 @@ class Window(QWidget):
         self.sdgs.clear()
         self.sdgs.append(QLabel('All'))
         self.vbox.addWidget(self.sdgs[0])
+        
         self.doQuery() # when all parameters are reset, a base set of results will be displayed
     
     def exit(self):
