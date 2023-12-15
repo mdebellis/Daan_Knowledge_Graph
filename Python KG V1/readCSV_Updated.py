@@ -16,6 +16,7 @@ owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypePr
 ngoIDProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoId")
 totalAssets = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#totalAssets")
 ngoNameProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoName")
+owl_annotation_property = conn.createURI("http://www.w3.org/2002/07/owl#AnnotationProperty")
 bpath = "GlobalGiving.csv"
 NGOClass = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient")
 
@@ -41,6 +42,8 @@ def find_property(prop_str):
     iri_str = makeNGOIRIstr(prop_str)
     prop = conn.createURI(iri_str)
     for _ in conn.getStatements(prop, RDF.TYPE, owl_datatype_property):
+        return prop
+    for _ in conn.getStatements(prop, RDF.TYPE, owl_annotation_property):
         return prop
     print(f'Error {prop_str} is not a data property')
     return None
