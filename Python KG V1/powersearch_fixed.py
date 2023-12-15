@@ -19,8 +19,8 @@ class Window(QWidget):
         super().__init__(parent)
         
         # Allegrograph presets
-        self.conn = ag_connect('NGO2', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        self.conn = ag_connect('NGO', host='localhost', port='10035',
+                               user='mdebellis', password='df1559')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('sdg', 'http://www.semanticweb.org/mdebe/ontologies/2022/10/UNSDG#')
         self.conn.setNamespace('prov', 'https://www.w3.org/TR/prov-o/#')
@@ -77,6 +77,9 @@ class Window(QWidget):
         self.sdgEdit = QPushButton("Edit SDGs")
         self.sdgEdit.clicked.connect(self.sdgtree)
         self.sdgRow.addWidget(self.sdgEdit)
+
+        # distance search
+        #self.distanceS = QLineEdit()
         
         # Checkable construction of org types, only shows under CSR
         self.checkRow = QHBoxLayout()
@@ -132,6 +135,7 @@ class Window(QWidget):
         self.inputs = QFormLayout()
         self.inputs.addRow(self.type)
         self.inputs.addRow(QLabel('Locations:'), self.statedrop)
+        #self.inputs.addRow(QLabel('Distance:'), self.distanceS)
         self.inputs.addRow(QLabel('SDGs:'), self.sdgRow)
         self.inputs.addRow(self.orgframe)
         self.inputs.addRow(self.clasframe)
@@ -454,8 +458,8 @@ class Tree(QWidget):
         self.selects = []
         items = []
         self.irimapper = {}
-        conn = ag_connect('NGO2', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        conn = ag_connect('NGO', host='localhost', port='10035',
+                               user='mdebellis', password='df1559')
         conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         conn.setNamespace('rdfs', 'hhttp://www.w3.org/2000/01/rdf-schema#')
         conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')

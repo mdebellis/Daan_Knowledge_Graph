@@ -17,8 +17,8 @@ class NGOScreen(QWidget):
         self.ngo = ngo
         
         
-        self.conn = ag_connect('NGO2', host='localhost', port='10035',
-                               user='test', password='xyzzy')
+        self.conn = ag_connect('NGO', host='localhost', port='10035',
+                               user='mdebellis', password='df1559')
         self.conn.setNamespace('ngo', 'http://www.semanticweb.org/mdebe/ontologies/NGO#')
         self.conn.setNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
         self.stop_properties = [self.conn.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), 
@@ -156,7 +156,7 @@ class NGOScreen(QWidget):
         with s1:   
             for lang in s1:
                 l = str(lang[2])[1:len(str(lang[2]))-1]
-        body = "Dear " + primaryContact + ", %0D%0A%0D%0AI represent the " + rfp_current_funder + ". We have an RFP for "  + rfp_topic + " that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: " + rfp_url + " If you have questions you can reply to this email or reach me at: <Current User Phone>.%0D%0A%0D%0ASincerely,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
+        body = "Dear " + primaryContact + ", %0D%0A%0D%0AI represent the " + rfp_current_funder + ". We have an RFP for "  + rfp_topic + " that I believe you may be qualified for. Please visit the following page to see the RFP and instructions for how to reply if you are interested: " + rfp_url + " If you have questions you can reply to this email or reach me at: +1 (415) 555-5555.%0D%0A%0D%0ASincerely,%0D%0AMichael DeBellis%0D%0A+1 (415) 555-5555%0D%0AUN Women%0D%0Ahttps://www.unwomen.org/ "
         if l == "Hindi":
             body = "प्रिय " + primaryContact + ", %0D%0A%0D%0Aमैं प्रतिनिधित्व करता हूं" + rfp_current_funder +  ". हमारे पास इसके लिए एक आरएफपी है "  + rfp_topic + " मुझे विश्वास है कि आप इसके लिए योग्य हो सकते हैं।. यदि आप रुचि रखते हैं तो कृपया आरएफपी और उत्तर देने के निर्देश देखने के लिए निम्नलिखित पृष्ठ पर जाएँ:  " + rfp_url + "  यदि आपके कोई प्रश्न हैं तो आप इस ईमेल का उत्तर दे सकते हैं या मुझसे यहां संपर्क कर सकते हैं: <Current User Phone>. %0D%0A%0D%0Aईमानदारी से,%0D%0A<Current User>%0D%0A<Current User Phone>%0D%0A<Current Funder Name and Address>"
         s2 = self.conn.getStatements(self.ngo, self.conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#orgEmail'), None)

@@ -60,8 +60,6 @@ def create_sdg_links_for_goals():
                 conn.add(sdg, is_SDG_goal_for_prop, ngo)
 
 def create_sdg_links_for_targets():
-    print(has_SDG_goal_prop)
-    print(is_SDG_goal_for_prop)
     for sdg_statement in conn.getStatements(None, rdf_type, target_class):
         sdg = sdg_statement[0]
         kw_results = conn.getStatements(sdg, ngo_keyword_property, None)

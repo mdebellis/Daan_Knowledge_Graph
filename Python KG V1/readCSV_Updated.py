@@ -3,8 +3,8 @@ from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 import csv
 
-conn = ag_connect('NGO2', host='localhost', port='10035',
-                  user='test', password='xyzzy')
+conn = ag_connect('NGO', host='localhost', port='10035',
+                  user='mdebellis', password='df1559')
 ngostr = "http://www.semanticweb.org/mdebe/ontologies/NGO#"
 
 
@@ -16,7 +16,7 @@ owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypePr
 ngoIDProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoId")
 totalAssets = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#totalAssets")
 ngoNameProp = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#ngoName")
-bpath = "NgoContact_final.csv"
+bpath = "GlobalGiving.csv"
 NGOClass = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#NGORecipient")
 
 
