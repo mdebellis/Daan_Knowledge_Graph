@@ -4,7 +4,7 @@ from franz.openrdf.vocabulary import RDF
 import csv
 
 conn = ag_connect('NGO', host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+                  user='mdebellis', password='XXXXX')
 ngostr = "http://www.semanticweb.org/mdebe/ontologies/NGO#"
 
 
